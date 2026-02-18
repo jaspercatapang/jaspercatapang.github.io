@@ -181,9 +181,43 @@ const EXPERIENCE_ENTRIES = [
   },
 ]
 
+function MobileIntro() {
+  const navItems = [
+    { href: '#skills', label: 'Technical skills' },
+    { href: '#about', label: 'About' },
+    { href: '#experience', label: 'Experience' },
+    { href: '#research', label: 'Research' },
+    { href: '#publications', label: 'Publications' },
+  ]
+  return (
+    <div className="md:hidden px-6 py-8 border-b border-gray-200 bg-surface">
+      <h1 className="font-sans text-2xl font-bold tracking-tight text-black mb-2">Jasper Kyle Catapang</h1>
+      <p className="text-base text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
+      <p className="text-sm text-gray-600 italic mb-4">Tokyo, Japan · PhD Candidate, Tokyo University of Foreign Studies</p>
+      <div className="space-y-2 mb-6">
+        <a href="mailto:jasperkylecatapang@gmail.com" className="block font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
+        <div className="flex flex-wrap gap-1">
+          <IconLink href="https://www.linkedin.com/in/jcatapang/" label="LinkedIn"><LinkedInIcon /></IconLink>
+          <IconLink href="https://www.facebook.com/jcatapang07/" label="Facebook"><FacebookIcon /></IconLink>
+          <IconLink href="https://scholar.google.com/citations?user=yNIX3HQAAAAJ" label="Google Scholar"><GoogleScholarIcon /></IconLink>
+          <IconLink href="https://orcid.org/0000-0002-4510-0975" label="ORCID"><OrcidIcon /></IconLink>
+        </div>
+        <p className="text-sm text-gray-600 m-0">Suginami, Tokyo, Japan</p>
+      </div>
+      <nav className="flex flex-wrap gap-3">
+        {navItems.map(({ href, label }) => (
+          <a key={href} href={href} className="text-sm font-medium uppercase tracking-widest text-gray-600 hover:text-accent transition-colors">
+            {label}
+          </a>
+        ))}
+      </nav>
+    </div>
+  )
+}
+
 function Sidebar() {
   return (
-    <aside className="w-full md:w-72 shrink-0 border-b md:border-b-0 md:border-r border-gray-200 bg-surface md:min-h-screen md:sticky md:top-0 py-8 px-6">
+    <aside className="hidden md:block w-72 shrink-0 border-r border-gray-200 bg-surface min-h-screen sticky top-0 py-8 px-6">
       <div className="space-y-10">
         <div>
           <h2 className="font-sans text-sm font-semibold uppercase tracking-widest text-gray-600 mb-4 pb-2 border-b border-gray-200">
@@ -233,10 +267,11 @@ export default function App() {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
+      <MobileIntro />
       <Sidebar />
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="sticky top-0 z-10 bg-white/92 backdrop-blur-md border-b border-gray-200">
+        <header className="hidden md:block sticky top-0 z-10 bg-white/92 backdrop-blur-md border-b border-gray-200">
           <nav className="px-8 py-6 flex flex-wrap gap-4">
             {['About', 'Experience', 'Research', 'Publications'].map((label) => (
               <a
@@ -250,13 +285,25 @@ export default function App() {
           </nav>
         </header>
 
-        <main className="flex-1 px-8 pb-10 max-w-prose">
-          <section id="hero" className="py-12 border-b border-gray-200">
+        <main className="flex-1 px-6 md:px-8 pb-10 max-w-prose">
+          <section id="hero" className="hidden md:block py-12 border-b border-gray-200">
             <h1 className="font-sans text-3xl md:text-4xl font-bold tracking-tight text-black mb-1.5">
               Jasper Kyle Catapang
             </h1>
             <p className="text-lg text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
             <p className="text-[0.95rem] text-gray-600 italic">Tokyo, Japan · PhD Candidate, Tokyo University of Foreign Studies</p>
+          </section>
+
+          <section id="skills" className="md:hidden py-8 border-b border-gray-200">
+            <h2 className="font-sans text-xl font-semibold uppercase tracking-widest text-gray-600 mb-4 pb-2 border-b border-gray-200">Technical Skills</h2>
+            <div className="space-y-4">
+              {SKILLS.map(({ title, text }) => (
+                <div key={title} className="p-3 pl-4 bg-surface rounded border-l-4 border-accent">
+                  <h4 className="font-sans text-xs font-semibold uppercase tracking-wide text-accent m-0 mb-1">{title}</h4>
+                  <p className="text-[0.875rem] m-0 text-gray-700">{text}</p>
+                </div>
+              ))}
+            </div>
           </section>
 
           <Section id="about" title="About">
