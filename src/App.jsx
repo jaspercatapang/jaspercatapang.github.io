@@ -327,6 +327,7 @@ const EXPERIENCE_ENTRIES = [
     company: 'Augmented Intelligence Pros',
     date: 'Feb 2021 – Apr 2022',
     location: 'Silicon Valley, CA, USA',
+    desc: 'Researched and developed AI and NLP frameworks and models across the company\'s product modules in online gaming and learning management systems.',
     bullets: [
       '<strong>Chat Deviation Handler:</strong> Transformer-based handling of conversation deviation via PPO reinforcement learning; lessened unhandled user message cases by 75%.',
     ],
@@ -369,26 +370,24 @@ function MobileIntro() {
   ]
   return (
     <div className="md:hidden print:hidden px-6 py-8 border-b border-gray-200 bg-surface">
-      <div className="flex gap-4 items-start mb-6">
-        <img src="/professional_headshot.jpeg" alt="" width={88} height={88} className="w-[88px] h-[88px] shrink-0 rounded-full object-cover" />
-        <div className="min-w-0 flex-1">
-          <h1 className="font-sans text-2xl font-bold tracking-tight text-black mb-2">Jasper Kyle Catapang</h1>
-          <p className="text-base text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
-          <p className="text-sm text-gray-600 italic mb-4">PhD Candidate, Tokyo University of Foreign Studies</p>
-          <div className="space-y-2">
-        <a href="mailto:jasperkylecatapang@gmail.com" className="block font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
-        <div className="flex flex-wrap gap-1">
-          <IconLink href="https://www.linkedin.com/in/jcatapang/" label="LinkedIn"><LinkedInIcon /></IconLink>
-          <IconLink href="https://www.facebook.com/jcatapang07/" label="Facebook"><FacebookIcon /></IconLink>
-          <IconLink href="https://scholar.google.com/citations?user=yNIX3HQAAAAJ" label="Google Scholar"><GoogleScholarIcon /></IconLink>
-          <IconLink href="https://orcid.org/0000-0002-4510-0975" label="ORCID"><OrcidIcon /></IconLink>
-          <IconLink href="https://huggingface.co/jaspercatapang" label="Hugging Face"><HuggingFaceIcon /></IconLink>
-        </div>
-        <p className="text-sm text-gray-600 m-0">Suginami, Tokyo, Japan</p>
+      <div className="flex flex-col items-center text-center mb-6">
+        <img src="/professional_headshot.jpeg?v=2" alt="" width={88} height={88} className="w-[88px] h-[88px] shrink-0 rounded-full object-cover mb-4" />
+        <h1 className="font-sans text-2xl font-bold tracking-tight text-black mb-2">Jasper Kyle Catapang</h1>
+        <p className="text-base text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
+        <p className="text-sm text-gray-600 italic mb-4">PhD Candidate, Tokyo University of Foreign Studies</p>
+        <div className="space-y-2 flex flex-col items-center">
+          <a href="mailto:jasperkylecatapang@gmail.com" className="font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
+          <div className="flex flex-wrap gap-1 justify-center">
+            <IconLink href="https://www.linkedin.com/in/jcatapang/" label="LinkedIn"><LinkedInIcon /></IconLink>
+            <IconLink href="https://www.facebook.com/jcatapang07/" label="Facebook"><FacebookIcon /></IconLink>
+            <IconLink href="https://scholar.google.com/citations?user=yNIX3HQAAAAJ" label="Google Scholar"><GoogleScholarIcon /></IconLink>
+            <IconLink href="https://orcid.org/0000-0002-4510-0975" label="ORCID"><OrcidIcon /></IconLink>
+            <IconLink href="https://huggingface.co/jaspercatapang" label="Hugging Face"><HuggingFaceIcon /></IconLink>
           </div>
+          <p className="text-sm text-gray-600 m-0">Suginami, Tokyo, Japan</p>
         </div>
       </div>
-      <nav className="flex flex-wrap gap-3">
+      <nav className="flex flex-wrap gap-3 justify-center">
         {navItems.map(({ href, label }) => (
           <a key={href} href={href} className="text-sm font-medium uppercase tracking-widest text-gray-600 hover:text-accent transition-colors">
             {label}
@@ -481,7 +480,7 @@ export default function App() {
         <main id="main-content" className="flex-1 px-6 md:px-8 pb-10 max-w-4xl" tabIndex={-1}>
           <section id="hero" className="hidden md:block py-12 border-b border-gray-200">
             <div className="flex gap-6 items-center">
-              <img src="/professional_headshot.jpeg" alt="" width={128} height={128} className="w-32 h-32 shrink-0 rounded-full object-cover aspect-square" />
+              <img src="/professional_headshot.jpeg?v=2" alt="" width={128} height={128} className="w-32 h-32 shrink-0 rounded-full object-cover aspect-square" />
               <div className="min-w-0">
                 <h1 className="font-sans text-3xl md:text-4xl font-bold tracking-tight text-black mb-1.5">
                   Jasper Kyle Catapang
