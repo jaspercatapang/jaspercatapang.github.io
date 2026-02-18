@@ -354,6 +354,7 @@ function MobileIntro() {
     { href: '#about', label: 'About' },
     { href: '#experience', label: 'Experience' },
     { href: '#research', label: 'Research' },
+    { href: '#grants', label: 'Grants' },
     { href: '#publications', label: 'Publications' },
     { href: '#media', label: 'Media' },
   ]
@@ -441,7 +442,7 @@ export default function App() {
       <div className="flex-1 flex flex-col min-w-0">
         <header className="hidden md:block sticky top-0 z-10 bg-white/92 backdrop-blur-md border-b border-gray-200">
           <nav className="px-8 py-6 flex flex-wrap gap-4">
-            {['About', 'Experience', 'Research', 'Publications', 'Media'].map((label) => (
+            {['About', 'Experience', 'Research', 'Grants', 'Publications', 'Media'].map((label) => (
               <a
                 key={label}
                 href={`#${label.toLowerCase()}`}
@@ -570,10 +571,13 @@ export default function App() {
               location="Manila, Philippines"
               desc="Advised and assisted on NLP code-switching research about COVID-19 misinformation in the Philippines. Technologies: Python, scikit-learn."
             />
-            <div className="p-5 mt-4 rounded border-l-4 border-accent bg-accent-soft">
+          </Section>
+
+          <Section id="grants" title="Grants and Funding">
+            <div className="p-5 rounded border border-gray-200 bg-white">
               <h4 className="font-sans text-base font-semibold m-0 mb-2">UP ISC Research Grant 2025–2026</h4>
               <p className="text-[0.95rem] m-0">
-                UP Intelligent Systems Center, Manila. Research Project: Design, Development, and Evaluation of a Filipino Conversational Agent for the Self-management of Type 2 Diabetes Mellitus. Co-investigator. Funding: PHP 8,360,056 (≈ JPY 22M).
+                UP Intelligent Systems Center. Research Project: Design, Development, and Evaluation of a Filipino Conversational Agent for the Self-management of Type 2 Diabetes Mellitus. Co-investigator.
               </p>
             </div>
           </Section>
