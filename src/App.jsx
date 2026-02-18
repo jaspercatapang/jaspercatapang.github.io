@@ -15,6 +15,32 @@ const SubsectionTitle = ({ children }) => (
   </h3>
 )
 
+const MediaCard = ({ title, url, outlet, domain, date, credit }) => (
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="block p-4 rounded border border-gray-200 bg-white hover:border-accent hover:bg-accent/5 transition-colors group"
+  >
+    <div className="flex items-center gap-2 mb-2">
+      <img
+        src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
+        alt=""
+        width={20}
+        height={20}
+        className="w-5 h-5 shrink-0"
+      />
+      <span className="text-sm font-medium text-gray-600">{outlet}</span>
+      <span className="text-sm text-gray-400">·</span>
+      <span className="text-sm text-gray-500">{date}</span>
+    </div>
+    <h4 className="font-sans text-[1rem] font-semibold text-black group-hover:text-accent transition-colors mb-1">
+      {title}
+    </h4>
+    {credit && <p className="text-sm text-gray-500 m-0">{credit}</p>}
+  </a>
+)
+
 const Entry = ({ role, company, date, location, desc, bullets, meta }) => (
   <article className="pb-10 mb-10 border-b border-gray-200 last:border-b-0 last:pb-0 last:mb-0">
     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-1">
@@ -79,6 +105,25 @@ const SKILLS = [
   { title: 'LLM & Post-Training', text: 'SFT, RLHF, Model Alignment, Prompt Engineering, RAG, Agentic AI, Hallucination Reduction, Evaluation Pipeline.' },
   { title: 'Frameworks & Tools', text: 'PyTorch, LangChain, HuggingFace Transformers, Azure OpenAI, WandB, Docker, Cursor.' },
   { title: 'Languages', text: 'Python, SQL, JavaScript, C++.' },
+]
+
+const MEDIA_ITEMS = [
+  {
+    title: 'Breaking the illusion of language data scarcity in the Philippines',
+    url: 'https://www.manilatimes.net/2024/11/10/opinion/columns/breaking-the-illusion-of-language-data-scarcity-in-the-philippines/2001098',
+    outlet: 'The Manila Times',
+    domain: 'manilatimes.net',
+    date: 'November 10, 2024',
+    credit: 'Guest column',
+  },
+  {
+    title: 'Maya PH\'s open-source LLM, Godzilla 2, surpasses ChatGPT in truthfulness',
+    url: 'https://www.rappler.com/technology/maya-philippines-open-source-llm-godzilla-2-surpasses-chatgpt-truthfulness/',
+    outlet: 'Rappler',
+    domain: 'rappler.com',
+    date: 'September 6, 2023',
+    credit: 'Reported by Jessica Bonifacio',
+  },
 ]
 
 const EXPERIENCE_ENTRIES = [
@@ -188,12 +233,13 @@ function MobileIntro() {
     { href: '#experience', label: 'Experience' },
     { href: '#research', label: 'Research' },
     { href: '#publications', label: 'Publications' },
+    { href: '#media', label: 'Media' },
   ]
   return (
     <div className="md:hidden px-6 py-8 border-b border-gray-200 bg-surface">
       <h1 className="font-sans text-2xl font-bold tracking-tight text-black mb-2">Jasper Kyle Catapang</h1>
       <p className="text-base text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
-      <p className="text-sm text-gray-600 italic mb-4">Tokyo, Japan · PhD Candidate, Tokyo University of Foreign Studies</p>
+      <p className="text-sm text-gray-600 italic mb-4">PhD Candidate, Tokyo University of Foreign Studies</p>
       <div className="space-y-2 mb-6">
         <a href="mailto:jasperkylecatapang@gmail.com" className="block font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
         <div className="flex flex-wrap gap-1">
@@ -273,7 +319,7 @@ export default function App() {
       <div className="flex-1 flex flex-col min-w-0">
         <header className="hidden md:block sticky top-0 z-10 bg-white/92 backdrop-blur-md border-b border-gray-200">
           <nav className="px-8 py-6 flex flex-wrap gap-4">
-            {['About', 'Experience', 'Research', 'Publications'].map((label) => (
+            {['About', 'Experience', 'Research', 'Publications', 'Media'].map((label) => (
               <a
                 key={label}
                 href={`#${label.toLowerCase()}`}
@@ -285,13 +331,13 @@ export default function App() {
           </nav>
         </header>
 
-        <main className="flex-1 px-6 md:px-8 pb-10 max-w-prose">
+        <main className="flex-1 px-6 md:px-8 pb-10 max-w-4xl">
           <section id="hero" className="hidden md:block py-12 border-b border-gray-200">
             <h1 className="font-sans text-3xl md:text-4xl font-bold tracking-tight text-black mb-1.5">
               Jasper Kyle Catapang
             </h1>
             <p className="text-lg text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
-            <p className="text-[0.95rem] text-gray-600 italic">Tokyo, Japan · PhD Candidate, Tokyo University of Foreign Studies</p>
+            <p className="text-[0.95rem] text-gray-600 italic">PhD Candidate, Tokyo University of Foreign Studies</p>
           </section>
 
           <section id="skills" className="md:hidden py-8 border-b border-gray-200">
@@ -465,6 +511,22 @@ export default function App() {
               <li>Data Talk: Open Citizens Data with NLPinas. (May 15, 2021). Eskwelabs.</li>
               <li>Life of AI 2.0. (March 19, 2021). De La Salle-College of Saint Benilde.</li>
             </ul>
+          </Section>
+
+          <Section id="media" title="Media" className="pb-10">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {MEDIA_ITEMS.map((item) => (
+                <MediaCard
+                  key={item.url}
+                  title={item.title}
+                  url={item.url}
+                  outlet={item.outlet}
+                  domain={item.domain}
+                  date={item.date}
+                  credit={item.credit}
+                />
+              ))}
+            </div>
           </Section>
         </main>
 
