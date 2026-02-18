@@ -10,3 +10,50 @@
     @apply font-sans text-[1.0625rem] leading-relaxed text-black bg-white antialiased;
   }
 }
+
+/* Print: CV-style layout — main content only (nav/sidebar/footer hidden via print:hidden) */
+@media print {
+  /* Main: full width, no max-width, minimal padding */
+  #main-content {
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 1rem !important;
+  }
+
+  /* Sections: reduce padding, keep borders subtle */
+  #main-content section {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    break-inside: avoid;
+  }
+  #main-content section:not([id="hero"]) {
+    border-bottom-color: #e5e7eb !important;
+  }
+
+  /* Headings: compact */
+  #main-content h2 {
+    margin-bottom: 0.5rem !important;
+    padding-bottom: 0.25rem !important;
+  }
+
+  /* Cards / articles: no shadows, thin borders */
+  #main-content article,
+  #main-content [class*="rounded"][class*="border"] {
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  /* Links: keep readable (don’t rely on color only) */
+  #main-content a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  /* Modal: hide if open */
+  [role="dialog"] { display: none !important; }
+
+  body {
+    background: #fff !important;
+  }
+}

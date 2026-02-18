@@ -203,10 +203,16 @@ const OrcidIcon = () => (
   </svg>
 )
 
+const HuggingFaceIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 4c.83 0 1.5.67 1.5 1.5S11.33 9 10.5 9 9 8.33 9 7.5 9.67 6 10.5 6zm3 0c.83 0 1.5.67 1.5 1.5S14.33 9 13.5 9 12 8.33 12 7.5 12.67 6 13.5 6zm-4.2 7.2c-.66.66-.66 1.74 0 2.4.66.66 1.74.66 2.4 0 .66-.66.66-1.74 0-2.4-.66-.66-1.74-.66-2.4 0zm4.4 0c-.66.66-.66 1.74 0 2.4.66.66 1.74.66 2.4 0 .66-.66.66-1.74 0-2.4-.66-.66-1.74-.66-2.4 0zm2.3 2.8c-1.5 1.5-3.9 1.5-5.4 0-.29-.29-.76-.29-1.05 0-.29.29-.29.76 0 1.05 2.05 2.05 5.35 2.05 7.4 0 .29-.29.29-.76 0-1.05-.29-.29-.76-.29-1.05 0z"/>
+  </svg>
+)
+
 const SKILLS = [
   { title: 'LLM & Post-Training', text: 'SFT, RLHF, Model Alignment, Prompt Engineering, RAG, Agentic AI, Hallucination Reduction, Evaluation Pipeline.' },
-  { title: 'Frameworks & Tools', text: 'PyTorch, LangChain, HuggingFace Transformers, Azure OpenAI, WandB, Docker, Cursor.' },
-  { title: 'Languages', text: 'Python, SQL, JavaScript, C++, React, Tailwind.' },
+  { title: 'Frameworks & Tools', text: 'PyTorch, LangChain, HuggingFace Transformers, Azure OpenAI, WandB, Docker, Cursor, React, Tailwind.' },
+  { title: 'Languages', text: 'Python, SQL, JavaScript, C++.' },
 ]
 
 const MEDIA_ITEMS = [
@@ -359,7 +365,7 @@ function MobileIntro() {
     { href: '#media', label: 'Media' },
   ]
   return (
-    <div className="md:hidden px-6 py-8 border-b border-gray-200 bg-surface">
+    <div className="md:hidden print:hidden px-6 py-8 border-b border-gray-200 bg-surface">
       <h1 className="font-sans text-2xl font-bold tracking-tight text-black mb-2">Jasper Kyle Catapang</h1>
       <p className="text-base text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
       <p className="text-sm text-gray-600 italic mb-4">PhD Candidate, Tokyo University of Foreign Studies</p>
@@ -370,6 +376,7 @@ function MobileIntro() {
           <IconLink href="https://www.facebook.com/jcatapang07/" label="Facebook"><FacebookIcon /></IconLink>
           <IconLink href="https://scholar.google.com/citations?user=yNIX3HQAAAAJ" label="Google Scholar"><GoogleScholarIcon /></IconLink>
           <IconLink href="https://orcid.org/0000-0002-4510-0975" label="ORCID"><OrcidIcon /></IconLink>
+          <IconLink href="https://huggingface.co/jaspercatapang" label="Hugging Face"><HuggingFaceIcon /></IconLink>
         </div>
         <p className="text-sm text-gray-600 m-0">Suginami, Tokyo, Japan</p>
       </div>
@@ -386,7 +393,7 @@ function MobileIntro() {
 
 function Sidebar() {
   return (
-    <aside className="hidden md:block w-72 shrink-0 border-r border-gray-200 bg-surface min-h-screen sticky top-0 py-8 px-6">
+    <aside className="hidden md:block print:hidden w-72 shrink-0 border-r border-gray-200 bg-surface min-h-screen sticky top-0 py-8 px-6">
       <div className="space-y-10">
         <div>
           <h2 className="font-sans text-sm font-semibold uppercase tracking-widest text-gray-600 mb-4 pb-2 border-b border-gray-200">
@@ -406,6 +413,9 @@ function Sidebar() {
               </IconLink>
               <IconLink href="https://orcid.org/0000-0002-4510-0975" label="ORCID">
                 <OrcidIcon />
+              </IconLink>
+              <IconLink href="https://huggingface.co/jaspercatapang" label="Hugging Face">
+                <HuggingFaceIcon />
               </IconLink>
             </div>
             <p className="text-sm text-gray-600 m-0">Suginami, Tokyo, Japan</p>
@@ -436,11 +446,17 @@ export default function App() {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
+      <a
+        href="#main-content"
+        className="absolute left-4 top-4 -translate-y-[200%] z-[100] px-4 py-2 bg-accent text-white font-medium rounded focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-transform print:hidden"
+      >
+        Skip to main content
+      </a>
       <MobileIntro />
       <Sidebar />
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="hidden md:block sticky top-0 z-10 bg-white/92 backdrop-blur-md border-b border-gray-200">
+        <header className="hidden md:block print:hidden sticky top-0 z-10 bg-white/92 backdrop-blur-md border-b border-gray-200">
           <nav className="px-8 py-6 flex flex-wrap gap-4">
             {['About', 'Experience', 'Research', 'Grants', 'Publications', 'Media'].map((label) => (
               <a
@@ -454,7 +470,7 @@ export default function App() {
           </nav>
         </header>
 
-        <main className="flex-1 px-6 md:px-8 pb-10 max-w-4xl">
+        <main id="main-content" className="flex-1 px-6 md:px-8 pb-10 max-w-4xl" tabIndex={-1}>
           <section id="hero" className="hidden md:block py-12 border-b border-gray-200">
             <h1 className="font-sans text-3xl md:text-4xl font-bold tracking-tight text-black mb-1.5">
               Jasper Kyle Catapang
@@ -672,7 +688,7 @@ export default function App() {
           </Section>
         </main>
 
-        <footer className="px-8 py-6 border-t border-gray-200 text-sm text-gray-600">
+        <footer className="print:hidden px-8 py-6 border-t border-gray-200 text-sm text-gray-600">
           © {new Date().getFullYear()} Jasper Kyle Catapang
         </footer>
       </div>
