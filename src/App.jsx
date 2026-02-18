@@ -67,8 +67,11 @@ const GoogleScholarIcon = () => (
 )
 
 const OrcidIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-    <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.34 17.313H4.667V9.432H7.34v7.881zm-1.337-9.276c-.857 0-1.55-.694-1.55-1.55s.693-1.55 1.55-1.55 1.55.693 1.55 1.55-.693 1.55-1.55 1.55zm10.022 9.276H15.05v-4.209c0-1.056-.022-2.409-1.463-2.409-1.465 0-1.689 1.146-1.689 2.327v4.291h-2.357V9.432h2.26v1.107h.031c.351-.684 1.205-1.35 2.48-1.35 2.652 0 3.146 1.754 3.146 4.031v4.639z"/>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+    <path d="M256,128c0,70.7-57.3,128-128,128C57.3,256,0,198.7,0,128C0,57.3,57.3,0,128,0C198.7,0,256,57.3,256,128z"/>
+    <path d="M86.3,186.2H70.9V79.1h15.4v48.4V186.2z" fill="white"/>
+    <path d="M108.9,79.1h41.6c39.6,0,57,28.3,57,53.6c0,27.5-21.5,53.6-56.8,53.6h-41.8V79.1z M124.3,172.4h24.5c34.9,0,42.9-26.5,42.9-39.7c0-21.5-13.7-39.7-43.7-39.7h-23.7V172.4z" fill="white"/>
+    <path d="M88.7,56.8c0,5.5-4.5,10.1-10.1,10.1c-5.6,0-10.1-4.6-10.1-10.1c0-5.6,4.5-10.1,10.1-10.1C84.2,46.7,88.7,51.3,88.7,56.8z" fill="white"/>
   </svg>
 )
 
@@ -318,14 +321,14 @@ export default function App() {
               company="Tokyo University of Foreign Studies"
               date="Oct 2024 – Present"
               location="Tokyo, Japan"
-              desc="Language and Culture Program. Dissertation: Lexical innovations in Southeast Asian Englishes: A mixed methods analysis of social media."
+              desc={<>Language and Culture Program.<br />Dissertation: Lexical innovations in Southeast Asian Englishes: A mixed methods analysis of social media.</>}
             />
             <Entry
               role="Master of Arts, Applied Linguistics"
               company="University of Birmingham"
               date="Dec 2020 – Jul 2023"
               location="Birmingham, United Kingdom"
-              desc="Student Representative 2021/2022. Dissertation: A cross-cultural corpus analysis of honorifics in spoken and written text corpora of American, British, Philippine, and Singapore Englishes."
+              desc={<>Student Representative 2021/2022.<br />Dissertation: A cross-cultural corpus analysis of honorifics in spoken and written text corpora of American, British, Philippine, and Singapore Englishes.</>}
             />
             <Entry
               role="Bachelor of Science, Computer Science"
