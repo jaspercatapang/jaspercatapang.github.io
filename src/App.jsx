@@ -244,6 +244,19 @@ const MEDIA_ITEMS = [
   },
 ]
 
+const LECTURES = [
+  { title: 'Transformers for Natural Language Processing', date: 'February 9-11, 2026', venue: 'Tokyo University of Foreign Studies, Japan', slides: null },
+  { title: 'Do the Models Hear Us? Artificial Intelligence and the (In)visibility of Migrant Voices and Languages', date: 'December 5, 2025', venue: '2nd International Conference on Migration Linguistics. University of Santo Tomas, Philippines', slides: '/lectures/do-the-models-hear-us-2025.pdf' },
+  { title: 'LLM Theory to Practice Series', date: 'August 20, 2025', venue: 'Tokyo University of Foreign Studies, Japan', slides: ['/lectures/llm-theory-practice-1-rag-2025.pdf', '/lectures/llm-theory-practice-2-bert-2025.pdf'] },
+  { title: 'Interpretability on how large language models process information', date: 'July 14, 2025', venue: 'De La Salle University, Philippines', slides: '/lectures/interpretability-llm-processing-2025.pdf' },
+  { title: 'How does a machine know the matters of the heart? A lecture on emotion-based AI morality', date: 'June 6, 2024', venue: 'De La Salle University, Philippines', slides: '/lectures/matters-of-the-heart-2024.pdf' },
+  { title: 'From generic to genius: Finetuning LLMs to enhance AI performance and reliability', date: 'May 30, 2024', venue: 'De La Salle University, Philippines', slides: '/lectures/generic-to-genius-2024.pdf' },
+  { title: 'Text is superficial: Commonsense as dark matter of language', date: 'May 4, 2023', venue: 'University of the Philippines Manila', slides: '/lectures/text-is-superficial-2023.pdf' },
+  { title: 'Language in the Time of Pandemic', date: 'November 22, 2021', venue: 'Tokyo University of Foreign Studies, Singapore Association for Applied Linguistics, and Oxford Languages', slides: null },
+  { title: 'Natural Language Processing 101: From Characters to Meaning', date: 'August 19, 2021', venue: 'NLPinas, University of the Philippines Diliman, and Philippine-California Advanced Research Institutes', slides: '/lectures/nlp-101-characters-to-meaning-2021.pdf' },
+  { title: 'Artificial intelligence for natural language processing', date: 'March 6, 2020', venue: 'University of the Philippines Manila', slides: null },
+]
+
 const PUBLICATION_CARDS = [
   { category: 'pending', title: 'Concept Realization Manifolds for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Concept Realization Manifolds for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models</em>.', pdfUrl: '' },
   { category: 'pending', title: 'Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes</em>.', pdfUrl: '' },
@@ -669,16 +682,25 @@ export default function App() {
             </ul>
             <SubsectionTitle>Lectures</SubsectionTitle>
             <ul className="pl-5 space-y-1.5 text-sm">
-              <li>Transformers for Natural Language Processing. (February 9-11, 2026). Tokyo University of Foreign Studies, Japan.</li>
-              <li>Do the Models Hear Us? Artificial Intelligence and the (In)visibility of Migrant Voices and Languages. (December 5, 2025). 2nd International Conference on Migration Linguistics. University of Santo Tomas, Philippines.</li>
-              <li>LLM Theory to Practice Series. (August 20, 2025). Tokyo University of Foreign Studies, Japan.</li>
-              <li>Interpretability on how large language models process information. (July 14, 2025). De La Salle University, Philippines.</li>
-              <li>The good, the bad, and the ugly: A lecture on emotion-based AI morality. (June 6, 2024). De La Salle University, Philippines.</li>
-              <li>From generic to genius: Finetuning LLMs to enhance AI performance and reliability. (May 30, 2024). De La Salle University, Philippines.</li>
-              <li>Text is superficial: Commonsense as dark matter of language. (May 4, 2023). University of the Philippines Manila.</li>
-              <li>Language in the Time of Pandemic. (November 22, 2021). Tokyo University of Foreign Studies, Singapore Association for Applied Linguistics, and Oxford Languages.</li>
-              <li>Natural Language Processing 101: From Characters to Meaning. (August 19, 2021). NLPinas, University of the Philippines Diliman, and Philippine-California Advanced Research Institutes.</li>
-              <li>Artificial intelligence for natural language processing. (March 6, 2020). University of the Philippines Manila.</li>
+              {LECTURES.map((lecture, i) => (
+                <li key={i}>
+                  {lecture.title}. ({lecture.date}). {lecture.venue}.
+                  {lecture.slides && (
+                    <>
+                      {' '}
+                      {Array.isArray(lecture.slides) ? (
+                        <>
+                          <a href={lecture.slides[0]} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">[Slides 1]</a>
+                          {' '}
+                          <a href={lecture.slides[1]} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">[Slides 2]</a>
+                        </>
+                      ) : (
+                        <a href={lecture.slides} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">[Slides]</a>
+                      )}
+                    </>
+                  )}
+                </li>
+              ))}
             </ul>
             <SubsectionTitle>Speaking Engagements</SubsectionTitle>
             <ul className="pl-5 space-y-1.5 text-sm">
