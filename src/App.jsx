@@ -66,6 +66,12 @@ const GoogleScholarIcon = () => (
   </svg>
 )
 
+const OrcidIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+    <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.34 17.313H4.667V9.432H7.34v7.881zm-1.337-9.276c-.857 0-1.55-.694-1.55-1.55s.693-1.55 1.55-1.55 1.55.693 1.55 1.55-.693 1.55-1.55 1.55zm10.022 9.276H15.05v-4.209c0-1.056-.022-2.409-1.463-2.409-1.465 0-1.689 1.146-1.689 2.327v4.291h-2.357V9.432h2.26v1.107h.031c.351-.684 1.205-1.35 2.48-1.35 2.652 0 3.146 1.754 3.146 4.031v4.639z"/>
+  </svg>
+)
+
 const SKILLS = [
   { title: 'LLM & Post-Training', text: 'SFT, RLHF, Model Alignment, Prompt Engineering, RAG, Agentic AI, Hallucination Reduction, Evaluation Pipeline.' },
   { title: 'Frameworks & Tools', text: 'PyTorch, LangChain, HuggingFace Transformers, Azure OpenAI, WandB, Docker, Cursor.' },
@@ -82,7 +88,7 @@ const EXPERIENCE_ENTRIES = [
     bullets: [
       'Expanded scope from lead AI decision quality to end-to-end ownership of internal products’ AI agent development and delivery across multiple initiatives.',
       'Work closely with product managers, engineering leads, platform teams, and senior stakeholders to define agent roadmaps, prioritize features, and coordinate releases.',
-      '<strong>MyPage Agent:</strong> Lead cross-functional execution of high-impact AI agent initiatives.',
+      '<strong>AI Agent Client:</strong> Lead cross-functional execution of high-impact AI agent initiatives.',
       '<strong>Accounting Agent:</strong> Development and delivery.',
     ],
     meta: 'Python, Azure, A2A, MCP, PyTorch, Cursor, GPT-5 · Japanese, English',
@@ -178,6 +184,29 @@ function Sidebar() {
       <div className="space-y-10">
         <div>
           <h2 className="font-sans text-sm font-semibold uppercase tracking-widest text-gray-600 mb-4 pb-2 border-b border-gray-200">
+            Contact
+          </h2>
+          <div className="space-y-3">
+            <a href="mailto:jasperkylecatapang@gmail.com" className="block font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
+            <div className="flex flex-wrap gap-1 pt-1">
+              <IconLink href="https://www.linkedin.com/in/jcatapang/" label="LinkedIn">
+                <LinkedInIcon />
+              </IconLink>
+              <IconLink href="https://www.facebook.com/jcatapang07/" label="Facebook">
+                <FacebookIcon />
+              </IconLink>
+              <IconLink href="https://scholar.google.com/citations?user=yNIX3HQAAAAJ" label="Google Scholar">
+                <GoogleScholarIcon />
+              </IconLink>
+              <IconLink href="https://orcid.org/0000-0002-4510-0975" label="ORCID">
+                <OrcidIcon />
+              </IconLink>
+            </div>
+            <p className="text-sm text-gray-600 m-0">Suginami, Tokyo, Japan</p>
+          </div>
+        </div>
+        <div>
+          <h2 className="font-sans text-sm font-semibold uppercase tracking-widest text-gray-600 mb-4 pb-2 border-b border-gray-200">
             Technical Skills
           </h2>
           <div className="space-y-4">
@@ -187,26 +216,6 @@ function Sidebar() {
                 <p className="text-[0.875rem] m-0 text-gray-700">{text}</p>
               </div>
             ))}
-          </div>
-        </div>
-        <div>
-          <h2 className="font-sans text-sm font-semibold uppercase tracking-widest text-gray-600 mb-4 pb-2 border-b border-gray-200">
-            Contact
-          </h2>
-          <div className="space-y-3">
-            <a href="mailto:jasperkylecatapang@gmail.com" className="block font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
-            <div className="flex flex-wrap gap-1 pt-1">
-              <IconLink href="https://www.linkedin.com/in/jcatapang/" label="LinkedIn">
-                <LinkedInIcon />
-              </IconLink>
-              <IconLink href="https://www.facebook.com/jazbrave/" label="Facebook">
-                <FacebookIcon />
-              </IconLink>
-              <IconLink href="https://scholar.google.com/citations?user=yNIX3HQAAAAJ" label="Google Scholar">
-                <GoogleScholarIcon />
-              </IconLink>
-            </div>
-            <p className="text-sm text-gray-600 m-0">Suginami-ku, Tokyo-to, Japan</p>
           </div>
         </div>
       </div>
