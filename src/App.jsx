@@ -41,6 +41,31 @@ const MediaCard = ({ title, url, outlet, domain, date, credit }) => (
   </a>
 )
 
+const boldAuthor = (authorsStr, name = 'Catapang, J.K.') => {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return authorsStr.replace(new RegExp(escaped, 'g'), `<strong>${name}</strong>`)
+}
+
+const PublicationCard = ({ title, authors, monthYear, venue, citation, pdfUrl }) => (
+  <article className="p-4 rounded border border-gray-200 bg-white flex flex-col">
+    <div className="mb-4">
+      <h4 className="font-sans text-[1rem] font-semibold text-black mb-1">{title}</h4>
+      <p className="text-sm text-gray-600 mb-0.5 [&_strong]:font-semibold [&_strong]:text-black" dangerouslySetInnerHTML={{ __html: boldAuthor(authors) }} />
+      <p className="text-sm text-gray-500 mb-0.5">{monthYear}</p>
+      {venue && venue !== '—' && <p className="text-sm text-gray-500 italic">{venue}</p>}
+    </div>
+    <div className="mt-auto border-t border-gray-100 pt-3 space-y-2">
+      <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="inline-block text-sm font-medium text-accent hover:underline">View PDF</a>
+      <details className="group">
+        <summary className="text-sm font-medium text-accent hover:underline cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+          Cite
+        </summary>
+        <div className="text-[0.875rem] text-gray-700 mt-2 [&_a]:text-accent [&_a:hover]:underline" dangerouslySetInnerHTML={{ __html: citation }} />
+      </details>
+    </div>
+  </article>
+)
+
 const Entry = ({ role, company, date, location, desc, bullets, meta }) => (
   <article className="pb-10 mb-10 border-b border-gray-200 last:border-b-0 last:pb-0 last:mb-0">
     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-1">
@@ -124,6 +149,26 @@ const MEDIA_ITEMS = [
     date: 'September 6, 2023',
     credit: 'Reported by Jessica Bonifacio',
   },
+]
+
+const PUBLICATION_CARDS = [
+  { title: 'ChatGPT as a Tool in Describing Variation and Change in English Worldwide', authors: 'Catapang, J.K.', monthYear: 'Forthcoming', venue: '—', citation: 'Catapang, J.K. (forthcoming). <em>ChatGPT as a Tool in Describing Variation and Change in English Worldwide</em>.', pdfUrl: '#' },
+  { title: 'Conyo English', authors: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S.', monthYear: 'Forthcoming', venue: 'Journal of English and Applied Linguistics, De La Salle University', citation: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S. (forthcoming). <em>Conyo English</em>. Journal of English and Applied Linguistics. De La Salle University.', pdfUrl: '#' },
+  { title: 'Building the Ethical AI Framework of the Future: From Philosophy to Practice', authors: 'Catapang, J.K.', monthYear: '2026', venue: 'AI and Ethics', citation: 'Catapang, J.K. (2026). <em>Building the Ethical AI Framework of the Future: From Philosophy to Practice</em>. AI and Ethics, 6, 150. <a href="https://doi.org/10.1007/s43681-026-01003-8" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1007/s43681-026-01003-8</a>', pdfUrl: '#' },
+  { title: 'Language, Migration, and ChatGPT', authors: 'Catapang, J.K., Borlongan, A.M., & Go, M.A.C.', monthYear: '2025', venue: 'Journal of Modern Languages', citation: 'Catapang, J.K., Borlongan, A.M., & Go, M.A.C. (2025). <em>Language, Migration, and ChatGPT</em>. Journal of Modern Languages, 35(2), 167–189. <a href="https://doi.org/10.22452/jml.vol35no2.9" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">https://doi.org/10.22452/jml.vol35no2.9</a>', pdfUrl: '#' },
+  { title: 'Explaining Bias in Internal Representations of Large Language Models via Concept Activation Vectors', authors: 'Catapang, J.K.', monthYear: '2025', venue: 'NLDB 2025, LNCS, Springer', citation: 'Catapang, J.K. (2025). <em>Explaining Bias in Internal Representations of Large Language Models via Concept Activation Vectors</em>. In: Ichise, R. (eds) Natural Language Processing and Information Systems. NLDB 2025. LNCS, vol 15836. Springer, Cham. <a href="https://doi.org/10.1007/978-3-031-97141-9_8" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1007/978-3-031-97141-9_8</a>', pdfUrl: '#' },
+  { title: 'Interdisciplinary Approach to Identify and Characterize COVID-19 Misinformation on Twitter: Mixed Methods Study', authors: 'Isip-Tan, I.T., Cleofas, J.V., Solano, G.A., Pillejera, J.G.A., Catapang, J.K.', monthYear: '2023', venue: 'JMIR Formative Research', citation: 'Isip-Tan, I.T., Cleofas, J.V., Solano, G.A., Pillejera, J.G.A., Catapang, J.K. (2023). <em>Interdisciplinary Approach to Identify and Characterize COVID-19 Misinformation on Twitter: Mixed Methods Study</em>. JMIR Formative Research, 7, e41134. <a href="https://formative.jmir.org/2023/1/e41134" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.2196/41134</a>', pdfUrl: '#' },
+  { title: 'Can we repurpose multiple-choice question-answering models to rerank retrieved documents?', authors: 'Catapang, J.K.', monthYear: 'December 2024', venue: '38th Pacific Asia Conference on Language, Information and Computation (PACLIC 38)', citation: 'Catapang, J.K. (December 2024). <em>Can we repurpose multiple-choice question-answering models to rerank retrieved documents?</em> 38th Pacific Asia Conference on Language, Information and Computation. Tokyo, Japan. ACL. <a href="https://aclanthology.org/2024.paclic-1.85" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">aclanthology.org/2024.paclic-1.85</a>', pdfUrl: '#' },
+  { title: 'Emotion-based Morality in Tagalog and English Scenarios (EMoTES-3K): A Parallel Corpus for Explaining (Im)morality of Actions', authors: 'Catapang, J.K., & Visperas, M.', monthYear: 'December 2023', venue: 'NLP4DH + ComputEL 8, Tokyo', citation: 'Catapang, J.K., & Visperas, M. (December 2023). <em>Emotion-based Morality in Tagalog and English Scenarios (EMoTES-3K): A Parallel Corpus for Explaining (Im)morality of Actions</em>. Joint 3rd International Conference on Natural Language Processing for Digital Humanities and 8th International Workshop on Computational Linguistics for Uralic Languages. Tokyo, Japan. pp. 1-6. ACL. <a href="https://aclanthology.org/2023.nlp4dh-1.1" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">aclanthology.org/2023.nlp4dh-1.1</a>', pdfUrl: '#' },
+  { title: 'Improving detection of diabetic retinopathy in low-resolution images via latent diffusion', authors: 'Catapang, J.K., Santiago, D.E., & Isip-Tan, I.T.', monthYear: 'September 2023', venue: 'IEEE MIPR 2023, Singapore', citation: 'Catapang, J.K., Santiago, D.E., & Isip-Tan, I.T. (September 2023). <em>Improving detection of diabetic retinopathy in low-resolution images via latent diffusion</em>. 2023 IEEE 6th International Conference on Multimedia Information Processing and Retrieval. Singapore, pp. 53-58. <a href="https://ieeexplore.ieee.org/document/10254404" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/MIPR59079.2023.00024</a>. Acceptance rate: 19.5%.', pdfUrl: '#' },
+  { title: 'On Modern Text-to-SQL Semantic Parsing Methodologies for Natural Language Interface to Databases: A Comparative Study', authors: 'Visperas, M., Adoptante, A.J., Borjal, C.J., Abia, M.T., Catapang, J.K., Peramo, E.', monthYear: 'February 2023', venue: 'ICAIIC 2023, Bali', citation: 'Visperas, M., Adoptante, A.J., Borjal, C.J., Abia, M.T., Catapang, J.K., Peramo, E. (February 2023). <em>On Modern Text-to-SQL Semantic Parsing Methodologies for Natural Language Interface to Databases: A Comparative Study</em>. 2023 International Conference on Artificial Intelligence in Information and Communication. Bali, Indonesia. pp. 390-396. <a href="https://ieeexplore.ieee.org/document/10067134" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC57133.2023.10067134</a>', pdfUrl: '#' },
+  { title: 'Parallel Corpus Curation for Filipino Text-to-SQL Semantic Parsing', authors: 'Borjal, C.J., Visperas, M., Adoptante, A.J., Abia, M.T., Catapang, J.K., Peramo, E.', monthYear: 'February 2023', venue: 'ICAIIC 2023, Bali', citation: 'Borjal, C.J., Visperas, M., Adoptante, A.J., Abia, M.T., Catapang, J.K., Peramo, E. (February 2023). <em>Parallel Corpus Curation for Filipino Text-to-SQL Semantic Parsing</em>. 2023 International Conference on Artificial Intelligence in Information and Communication. Bali, Indonesia. pp. 163-169. IEEE. <a href="https://ieeexplore.ieee.org/document/10066976" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC57133.2023.10066976</a>', pdfUrl: '#' },
+  { title: 'Hadamard Estimated Attention Transformer (HEAT): Fast Approximation of Dot Product Self-attention for Transformers Using Low-Rank Projection of Hadamard Product', authors: 'Catapang, J.K.', monthYear: 'November 2022', venue: 'IEEE ISCMI 2022, Toronto', citation: 'Catapang, J.K. (November 2022). <em>Hadamard Estimated Attention Transformer (HEAT): Fast Approximation of Dot Product Self-attention for Transformers Using Low-Rank Projection of Hadamard Product</em>. 2022 International Conference on Soft Computing & Machine Intelligence. Toronto, Canada. pp. 203-206. IEEE. <a href="https://ieeexplore.ieee.org/document/10068484" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ISCMI56532.2022.10068484</a>', pdfUrl: '#' },
+  { title: 'Optimizing Speed and Accuracy Trade-off in Machine Learning Models via Stochastic Gradient Descent Approximation', authors: 'Catapang, J.K.', monthYear: 'November 2022', venue: 'IEEE ISCMI 2022, Toronto', citation: 'Catapang, J.K. (November 2022). <em>Optimizing Speed and Accuracy Trade-off in Machine Learning Models via Stochastic Gradient Descent Approximation</em>. 2022 International Conference on Soft Computing & Machine Intelligence. Toronto, Canada. pp. 124-128. IEEE. <a href="https://ieeexplore.ieee.org/document/10068476" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ISCMI56532.2022.10068476</a>', pdfUrl: '#' },
+  { title: 'Identification and Analysis of COVID-19-related Misinformation Tweets via Kullback-Leibler Divergence for Informativeness and Phraseness and Biterm Topic Modeling', authors: 'Clamor, T.D.S., Solano, G.A., Oco, N., Catapang, J.K., Cleofas, J.V., & Isip-Tan, I.T.', monthYear: 'February 2022', venue: 'ICAIIC 2022, Jeju', citation: 'Clamor, T.D.S., Solano, G.A., Oco, N., Catapang, J.K., Cleofas, J.V., & Isip-Tan, I.T. (February 2022). <em>Identification and Analysis of COVID-19-related Misinformation Tweets via Kullback-Leibler Divergence for Informativeness and Phraseness and Biterm Topic Modeling</em>. 2022 International Conference on Artificial Intelligence in Information and Communication. Jeju, South Korea. pp. 451-456. IEEE. <a href="https://ieeexplore.ieee.org/document/9722623" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC54071.2022.9722623</a>', pdfUrl: '#' },
+  { title: 'Topic Modeling, Clade-assisted Sentiment Analysis, and Vaccine Brand Reputation Analysis of COVID-19 Vaccine-related Facebook Comments in the Philippines', authors: 'Catapang, J.K., & Cleofas, J.V.', monthYear: 'January 2022', venue: 'IEEE ICSC 2022, Laguna Hills', citation: 'Catapang, J.K., & Cleofas, J.V. (January 2022). <em>Topic Modeling, Clade-assisted Sentiment Analysis, and Vaccine Brand Reputation Analysis of COVID-19 Vaccine-related Facebook Comments in the Philippines</em>. 2022 IEEE International Conference on Semantic Computing. Laguna Hills, California, USA. pp. 123-130. IEEE. <a href="https://ieeexplore.ieee.org/document/9736280" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICSC52841.2022.00026</a>. Acceptance rate: 20%.', pdfUrl: '#' },
+  { title: 'A Floyd-Warshall-based Reoptimization of Q Matrix on the Single DVRPPD with On-demand Cancellations', authors: 'Catapang, J.K., & Solano, G.A.', monthYear: 'October 2021', venue: 'ICTC 2021, Jeju', citation: 'Catapang, J.K., & Solano, G.A. (October 2021). <em>A Floyd-Warshall-based Reoptimization of Q Matrix on the Single DVRPPD with On-demand Cancellations</em>. 2021 International Conference on Information and Communication Technology Convergence. Jeju, South Korea. pp. 172-177. IEEE. <a href="https://ieeexplore.ieee.org/document/9621108" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICTC52510.2021.9621108</a>', pdfUrl: '#' },
+  { title: 'A Bilingual Chatbot Using Support Vector Classifier on an Automatic Corpus Engine Dataset', authors: 'Catapang, J.K., Solano, G.A., & Oco, N.', monthYear: 'February 2020', venue: 'ICAIIC 2020, Fukuoka', citation: 'Catapang, J.K., Solano, G.A., & Oco, N. (February 2020). <em>A Bilingual Chatbot Using Support Vector Classifier on an Automatic Corpus Engine Dataset</em>. 2020 International Conference on Artificial Intelligence in Information and Communication. Fukuoka, Japan. pp. 187-192. IEEE. <a href="https://ieeexplore.ieee.org/document/9065208" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC48513.2020.9065208</a>', pdfUrl: '#' },
 ]
 
 const EXPERIENCE_ENTRIES = [
@@ -340,6 +385,17 @@ export default function App() {
             <p className="text-[0.95rem] text-gray-600 italic">PhD Candidate, Tokyo University of Foreign Studies</p>
           </section>
 
+          <Section id="about" title="About">
+            <div className="max-w-[38rem] space-y-4">
+              <p>
+                With over six years of experience in NLP and AI, I specialize in <strong>explainable AI (XAI)</strong>, <strong>LLM post-training</strong>, and <strong>agentic evaluation</strong>—most notably leading the fine-tuning of the top-ranked GodziLLa-2 model. Grounded in computer science and applied linguistics, my work prioritizes ethical alignment and model transparency—critical assets for developing safe, trustworthy, and culturally aware multimodal agents.
+              </p>
+              <p>
+                Currently pursuing a PhD at the Tokyo University of Foreign Studies, I balance advanced research with cross-functional technical leadership, bridging the gap between responsible AI principles and robust, real-world product deployment.
+              </p>
+            </div>
+          </Section>
+
           <section id="skills" className="md:hidden py-8 border-b border-gray-200">
             <h2 className="font-sans text-xl font-semibold uppercase tracking-widest text-gray-600 mb-4 pb-2 border-b border-gray-200">Technical Skills</h2>
             <div className="space-y-4">
@@ -351,17 +407,6 @@ export default function App() {
               ))}
             </div>
           </section>
-
-          <Section id="about" title="About">
-            <div className="max-w-[38rem] space-y-4">
-              <p>
-                With over six years of experience in NLP and AI, I specialize in <strong>explainable AI (XAI)</strong>, <strong>LLM post-training</strong>, and <strong>agentic evaluation</strong>—most notably leading the fine-tuning of the top-ranked GodziLLa-2 model. Grounded in computer science and applied linguistics, my work prioritizes ethical alignment and model transparency—critical assets for developing safe, trustworthy, and culturally aware multimodal agents.
-              </p>
-              <p>
-                Currently pursuing a PhD at the Tokyo University of Foreign Studies, I balance advanced research with cross-functional technical leadership, bridging the gap between responsible AI principles and robust, real-world product deployment.
-              </p>
-            </div>
-          </Section>
 
           <Section id="experience" title="Experience">
             <Entry
@@ -457,32 +502,19 @@ export default function App() {
           </Section>
 
           <Section id="publications" title="Publications" className="pb-10">
-            <SubsectionTitle>Pending Work</SubsectionTitle>
-            <ul className="pl-5 space-y-2 text-[0.95rem]">
-              <li>Catapang, J.K. (forthcoming). <em>ChatGPT as a Tool in Describing Variation and Change in English Worldwide</em>.</li>
-              <li>Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S. (forthcoming). <em>Conyo English</em>. Journal of English and Applied Linguistics. De La Salle University.</li>
-            </ul>
-            <SubsectionTitle>Journal Articles</SubsectionTitle>
-            <ul className="pl-5 space-y-2 text-[0.95rem]">
-              <li>Catapang, J.K. (2026). <em>Building the Ethical AI Framework of the Future: From Philosophy to Practice</em>. AI and Ethics, 6, 150. <a href="https://doi.org/10.1007/s43681-026-01003-8" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">DOI: 10.1007/s43681-026-01003-8</a></li>
-              <li>Catapang, J.K., Borlongan, A.M., & Go, M.A.C. (2025). <em>Language, Migration, and ChatGPT</em>. Journal of Modern Languages, 35(2), 167–189. <a href="https://doi.org/10.22452/jml.vol35no2.9" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://doi.org/10.22452/jml.vol35no2.9</a></li>
-              <li>Catapang, J.K. (2025). <em>Explaining Bias in Internal Representations of Large Language Models via Concept Activation Vectors</em>. In: Ichise, R. (eds) Natural Language Processing and Information Systems. NLDB 2025. LNCS, vol 15836. Springer, Cham. <a href="https://doi.org/10.1007/978-3-031-97141-9_8" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">DOI: 10.1007/978-3-031-97141-9_8</a></li>
-              <li>Isip-Tan, I.T., Cleofas, J.V., Solano, G.A., Pillejera, J.G.A., Catapang, J.K. (2023). <em>Interdisciplinary Approach to Identify and Characterize COVID-19 Misinformation on Twitter: Mixed Methods Study</em>. JMIR Formative Research, 7, e41134. <a href="https://formative.jmir.org/2023/1/e41134" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">DOI: 10.2196/41134</a></li>
-            </ul>
-            <SubsectionTitle>Conference Proceedings</SubsectionTitle>
-            <ul className="pl-5 space-y-2 text-[0.95rem]">
-              <li>Catapang, J.K. (December 2024). <em>Can we repurpose multiple-choice question-answering models to rerank retrieved documents?</em> 38th Pacific Asia Conference on Language, Information and Computation. Tokyo, Japan. ACL. <a href="https://aclanthology.org/2024.paclic-1.85" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">aclanthology.org/2024.paclic-1.85</a></li>
-              <li>Catapang, J.K., & Visperas, M. (December 2023). <em>Emotion-based Morality in Tagalog and English Scenarios (EMoTES-3K): A Parallel Corpus for Explaining (Im)morality of Actions</em>. Joint 3rd International Conference on Natural Language Processing for Digital Humanities and 8th International Workshop on Computational Linguistics for Uralic Languages. Tokyo, Japan. pp. 1-6. ACL. <a href="https://aclanthology.org/2023.nlp4dh-1.1" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">aclanthology.org/2023.nlp4dh-1.1</a></li>
-              <li>Catapang, J.K., Santiago, D.E., & Isip-Tan, I.T. (September 2023). <em>Improving detection of diabetic retinopathy in low-resolution images via latent diffusion</em>. 2023 IEEE 6th International Conference on Multimedia Information Processing and Retrieval. Singapore, pp. 53-58. <a href="https://ieeexplore.ieee.org/document/10254404" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">DOI: 10.1109/MIPR59079.2023.00024</a>. Acceptance rate: 19.5%.</li>
-              <li>Visperas, M., Adoptante, A.J., Borjal, C.J., Abia, M.T., Catapang, J.K., Peramo, E. (February 2023). <em>On Modern Text-to-SQL Semantic Parsing Methodologies for Natural Language Interface to Databases: A Comparative Study</em>. 2023 International Conference on Artificial Intelligence in Information and Communication. Bali, Indonesia. pp. 390-396. <a href="https://ieeexplore.ieee.org/document/10067134" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">DOI: 10.1109/ICAIIC57133.2023.10067134</a></li>
-              <li>Borjal, C.J., Visperas, M., Adoptante, A.J., Abia, M.T., Catapang, J.K., Peramo, E. (February 2023). <em>Parallel Corpus Curation for Filipino Text-to-SQL Semantic Parsing</em>. 2023 International Conference on Artificial Intelligence in Information and Communication. Bali, Indonesia. pp. 163-169. IEEE. <a href="https://ieeexplore.ieee.org/document/10066976" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">DOI: 10.1109/ICAIIC57133.2023.10066976</a></li>
-              <li>Catapang, J.K. (November 2022). <em>Hadamard Estimated Attention Transformer (HEAT): Fast Approximation of Dot Product Self-attention for Transformers Using Low-Rank Projection of Hadamard Product</em>. 2022 International Conference on Soft Computing & Machine Intelligence. Toronto, Canada. pp. 203-206. IEEE. <a href="https://ieeexplore.ieee.org/document/10068484" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">DOI: 10.1109/ISCMI56532.2022.10068484</a></li>
-              <li>Catapang, J.K. (November 2022). <em>Optimizing Speed and Accuracy Trade-off in Machine Learning Models via Stochastic Gradient Descent Approximation</em>. 2022 International Conference on Soft Computing & Machine Intelligence. Toronto, Canada. pp. 124-128. IEEE. <a href="https://ieeexplore.ieee.org/document/10068476" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">DOI: 10.1109/ISCMI56532.2022.10068476</a></li>
-              <li>Clamor, T.D.S., Solano, G.A., Oco, N., Catapang, J.K., Cleofas, J.V., & Isip-Tan, I.T. (February 2022). <em>Identification and Analysis of COVID-19-related Misinformation Tweets via Kullback-Leibler Divergence for Informativeness and Phraseness and Biterm Topic Modeling</em>. 2022 International Conference on Artificial Intelligence in Information and Communication. Jeju, South Korea. pp. 451-456. IEEE. <a href="https://ieeexplore.ieee.org/document/9722623" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">DOI: 10.1109/ICAIIC54071.2022.9722623</a></li>
-              <li>Catapang, J.K., & Cleofas, J.V. (January 2022). <em>Topic Modeling, Clade-assisted Sentiment Analysis, and Vaccine Brand Reputation Analysis of COVID-19 Vaccine-related Facebook Comments in the Philippines</em>. 2022 IEEE International Conference on Semantic Computing. Laguna Hills, California, USA. pp. 123-130. IEEE. <a href="https://ieeexplore.ieee.org/document/9736280" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">DOI: 10.1109/ICSC52841.2022.00026</a>. Acceptance rate: 20%.</li>
-              <li>Catapang, J.K., & Solano, G.A. (October 2021). <em>A Floyd-Warshall-based Reoptimization of Q Matrix on the Single DVRPPD with On-demand Cancellations</em>. 2021 International Conference on Information and Communication Technology Convergence. Jeju, South Korea. pp. 172-177. IEEE. <a href="https://ieeexplore.ieee.org/document/9621108" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">DOI: 10.1109/ICTC52510.2021.9621108</a></li>
-              <li>Catapang, J.K., Solano, G.A., & Oco, N. (February 2020). <em>A Bilingual Chatbot Using Support Vector Classifier on an Automatic Corpus Engine Dataset</em>. 2020 International Conference on Artificial Intelligence in Information and Communication. Fukuoka, Japan. pp. 187-192. IEEE. <a href="https://ieeexplore.ieee.org/document/9065208" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">DOI: 10.1109/ICAIIC48513.2020.9065208</a></li>
-            </ul>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2 mb-10">
+              {PUBLICATION_CARDS.map((pub, i) => (
+                <PublicationCard
+                  key={i}
+                  title={pub.title}
+                  authors={pub.authors}
+                  monthYear={pub.monthYear}
+                  venue={pub.venue}
+                  citation={pub.citation}
+                  pdfUrl={pub.pdfUrl}
+                />
+              ))}
+            </div>
             <SubsectionTitle>Conference Presentations</SubsectionTitle>
             <ul className="pl-5 space-y-1.5 text-sm">
               <li>Catapang, J.K. (January 2026). <em>Stance and Register Variation in Philippine English Journalism: Quantitative Evidence from Media Coverage of a National Controversy</em>. The 56th Japanese Association of Asian Englishes (JAFAE) National Conference. Hiroshima, Japan.</li>
