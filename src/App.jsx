@@ -76,13 +76,11 @@ const CopyIcon = ({ className = 'w-4 h-4' }) => (
 )
 
 const CitationModal = ({ citationHtml, onClose }) => {
+  const [copied, setCopied] = useState(false)
   const handleCopy = () => {
     navigator.clipboard.writeText(citationToPlainText(citationHtml)).then(() => {
-      const btn = document.getElementById('citation-copy-btn')
-      if (btn) {
-        btn.setAttribute('aria-label', 'Copied')
-        setTimeout(() => btn.setAttribute('aria-label', 'Copy citation'), 1500)
-      }
+      setCopied(true)
+      setTimeout(() => setCopied(false), 300)
     })
   }
   useEffect(() => {
@@ -104,8 +102,8 @@ const CitationModal = ({ citationHtml, onClose }) => {
               id="citation-copy-btn"
               type="button"
               onClick={handleCopy}
-              className="absolute top-3 right-3 p-2 rounded text-gray-500 hover:text-accent hover:bg-white border border-gray-200 hover:border-accent transition-colors"
-              aria-label="Copy citation"
+              className={`absolute top-3 right-3 p-2 rounded border transition-colors ${copied ? 'bg-accent text-white border-accent' : 'text-gray-500 hover:text-accent hover:bg-white border-gray-200 hover:border-accent'}`}
+              aria-label={copied ? 'Copied' : 'Copy citation'}
               title="Copy citation"
             >
               <CopyIcon className="w-4 h-4" />
@@ -371,10 +369,13 @@ function MobileIntro() {
   ]
   return (
     <div className="md:hidden print:hidden px-6 py-8 border-b border-gray-200 bg-surface">
-      <h1 className="font-sans text-2xl font-bold tracking-tight text-black mb-2">Jasper Kyle Catapang</h1>
-      <p className="text-base text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
-      <p className="text-sm text-gray-600 italic mb-4">PhD Candidate, Tokyo University of Foreign Studies</p>
-      <div className="space-y-2 mb-6">
+      <div className="flex gap-4 items-start mb-6">
+        <img src="/professional_headshot.jpeg" alt="" width={88} height={88} className="w-[88px] h-[88px] shrink-0 rounded-full object-cover" />
+        <div className="min-w-0 flex-1">
+          <h1 className="font-sans text-2xl font-bold tracking-tight text-black mb-2">Jasper Kyle Catapang</h1>
+          <p className="text-base text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
+          <p className="text-sm text-gray-600 italic mb-4">PhD Candidate, Tokyo University of Foreign Studies</p>
+          <div className="space-y-2">
         <a href="mailto:jasperkylecatapang@gmail.com" className="block font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
         <div className="flex flex-wrap gap-1">
           <IconLink href="https://www.linkedin.com/in/jcatapang/" label="LinkedIn"><LinkedInIcon /></IconLink>
@@ -384,6 +385,8 @@ function MobileIntro() {
           <IconLink href="https://huggingface.co/jaspercatapang" label="Hugging Face"><HuggingFaceIcon /></IconLink>
         </div>
         <p className="text-sm text-gray-600 m-0">Suginami, Tokyo, Japan</p>
+          </div>
+        </div>
       </div>
       <nav className="flex flex-wrap gap-3">
         {navItems.map(({ href, label }) => (
@@ -477,11 +480,16 @@ export default function App() {
 
         <main id="main-content" className="flex-1 px-6 md:px-8 pb-10 max-w-4xl" tabIndex={-1}>
           <section id="hero" className="hidden md:block py-12 border-b border-gray-200">
-            <h1 className="font-sans text-3xl md:text-4xl font-bold tracking-tight text-black mb-1.5">
-              Jasper Kyle Catapang
-            </h1>
-            <p className="text-lg text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
-            <p className="text-[0.95rem] text-gray-600 italic">PhD Candidate, Tokyo University of Foreign Studies</p>
+            <div className="flex gap-6 items-center">
+              <img src="/professional_headshot.jpeg" alt="" width={128} height={128} className="w-32 h-32 shrink-0 rounded-full object-cover aspect-square" />
+              <div className="min-w-0">
+                <h1 className="font-sans text-3xl md:text-4xl font-bold tracking-tight text-black mb-1.5">
+                  Jasper Kyle Catapang
+                </h1>
+                <p className="text-lg text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
+                <p className="text-[0.95rem] text-gray-600 italic">PhD Candidate, Tokyo University of Foreign Studies</p>
+              </div>
+            </div>
           </section>
 
           <Section id="about" title="About">
