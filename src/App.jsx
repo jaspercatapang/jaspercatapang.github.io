@@ -204,8 +204,13 @@ const OrcidIcon = () => (
 )
 
 const HuggingFaceIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 4c.83 0 1.5.67 1.5 1.5S11.33 9 10.5 9 9 8.33 9 7.5 9.67 6 10.5 6zm3 0c.83 0 1.5.67 1.5 1.5S14.33 9 13.5 9 12 8.33 12 7.5 12.67 6 13.5 6zm-4.2 7.2c-.66.66-.66 1.74 0 2.4.66.66 1.74.66 2.4 0 .66-.66.66-1.74 0-2.4-.66-.66-1.74-.66-2.4 0zm4.4 0c-.66.66-.66 1.74 0 2.4.66.66 1.74.66 2.4 0 .66-.66.66-1.74 0-2.4-.66-.66-1.74-.66-2.4 0zm2.3 2.8c-1.5 1.5-3.9 1.5-5.4 0-.29-.29-.76-.29-1.05 0-.29.29-.29.76 0 1.05 2.05 2.05 5.35 2.05 7.4 0 .29-.29.29-.76 0-1.05-.29-.29-.76-.29-1.05 0z"/>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <circle cx="12" cy="12" r="9" fill="none" />
+    <path d="M9 10.3 Q 10 9.2 11 10.3" fill="none" />
+    <path d="M13 10.3 Q 14 9.2 15 10.3" fill="none" />
+    <path d="M8.5 14 Q 12 17 15.5 14" fill="none" />
+    <ellipse cx="3.5" cy="12" rx="1.3" ry="3.8" transform="rotate(-28 3.5 12)" />
+    <ellipse cx="20.5" cy="12" rx="1.3" ry="3.8" transform="rotate(28 20.5 12)" />
   </svg>
 )
 
