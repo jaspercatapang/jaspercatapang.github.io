@@ -53,11 +53,18 @@ const citationToPlainText = (html) => {
   return (div.textContent || div.innerText || '').replace(/\s+/g, ' ').trim()
 }
 
-const PdfIcon = ({ className = 'w-4 h-4' }) => (
+const EyeIcon = ({ className = 'w-4 h-4' }) => (
   <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-    <polyline points="14 2 14 8 20 8" />
-    <path d="M9 15h6M9 19h6M9 11h2" />
+    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+)
+
+const DownloadIcon = ({ className = 'w-4 h-4' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="7 10 12 15 17 10" />
+    <line x1="12" x2="12" y1="15" y2="3" />
   </svg>
 )
 
@@ -140,14 +147,23 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
             </a>
           ) : null}
           {pdfUrl ? (
-            <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">
-              <PdfIcon />
-              <span>PDF</span>
+            <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline" title="View PDF">
+              <EyeIcon />
+              <span>View PDF</span>
             </a>
           ) : (
             <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 cursor-not-allowed" aria-disabled="true">
-              <PdfIcon />
-              <span>PDF</span>
+              <EyeIcon />
+              <span>View PDF</span>
+            </span>
+          )}
+          {pdfUrl ? (
+            <a href={pdfUrl} download={pdfUrl.split('/').pop()} rel="noopener noreferrer" className="inline-flex items-center justify-center p-1 text-accent hover:text-black transition-colors rounded" title="Download PDF" aria-label="Download PDF">
+              <DownloadIcon className="w-4 h-4" />
+            </a>
+          ) : (
+            <span className="inline-flex items-center justify-center p-1 text-gray-400 cursor-not-allowed rounded" aria-disabled="true" aria-label="Download PDF unavailable" title="Download unavailable">
+              <DownloadIcon className="w-4 h-4" />
             </span>
           )}
           <button type="button" onClick={() => setCiteOpen(true)} className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">
