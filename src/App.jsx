@@ -286,6 +286,21 @@ const LECTURES = [
   { title: 'Artificial intelligence for natural language processing', date: 'March 6, 2020', venue: 'University of the Philippines Manila', slides: null },
 ]
 
+const CONFERENCE_PRESENTATIONS = [
+  {
+    prefix: 'Catapang, J.K. (January 2026). ',
+    title: 'Stance and Register Variation in Philippine English Journalism: Quantitative Evidence from Media Coverage of a National Controversy',
+    suffix: '. The 56th Japanese Association of Asian Englishes (JAFAE) National Conference. Hiroshima, Japan.',
+    slides: '/presentations/stance-reg-var-phe-journ-2026.pdf',
+  },
+  {
+    prefix: 'Catapang, J.K. (June 2025). ',
+    title: 'Explaining Lexical Innovations of Southeast Asian Englishes in Social Media: A Framework-Driven Survey',
+    suffix: '. The 55th Japanese Association of Asian Englishes (JAFAE) National Conference. Chiba, Japan.',
+    slides: '/presentations/lexical-innovations-sea-english-social-media-2025.pdf',
+  },
+]
+
 const PUBLICATION_TAGS = ['NLP', 'LLMs', 'AI safety', 'World Englishes', 'migration linguistics', 'machine learning']
 
 const PUBLICATION_CARDS = [
@@ -741,8 +756,19 @@ export default function App() {
             </div>
             <SubsectionTitle>Conference Presentations</SubsectionTitle>
             <ul className="pl-5 space-y-1.5 text-sm">
-              <li>Catapang, J.K. (January 2026). <em>Stance and Register Variation in Philippine English Journalism: Quantitative Evidence from Media Coverage of a National Controversy</em>. The 56th Japanese Association of Asian Englishes (JAFAE) National Conference. Hiroshima, Japan.</li>
-              <li>Catapang, J.K. (June 2025). <em>Explaining Lexical Innovations of Southeast Asian Englishes in Social Media: A Framework-Driven Survey</em>. The 55th Japanese Association of Asian Englishes (JAFAE) National Conference. Chiba, Japan.</li>
+              {CONFERENCE_PRESENTATIONS.map((item, i) => (
+                <li key={i}>
+                  {item.prefix}
+                  <em>{item.title}</em>
+                  {item.suffix}
+                  {item.slides && (
+                    <>
+                      {' '}
+                      <a href={item.slides} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">[Slides]</a>
+                    </>
+                  )}
+                </li>
+              ))}
             </ul>
             <SubsectionTitle>Lectures</SubsectionTitle>
             <ul className="pl-5 space-y-1.5 text-sm">
