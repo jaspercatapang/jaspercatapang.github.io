@@ -290,7 +290,7 @@ const PUBLICATION_TAGS = ['NLP', 'LLMs', 'AI safety', 'World Englishes', 'migrat
 
 const PUBLICATION_CARDS = [
   { category: 'pending', title: 'Toward a Metric Algebra for Language Model Evaluation', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Toward a Metric Algebra for Language Model Evaluation</em>.', pdfUrl: '', tags: ['LLMs', 'machine learning', 'AI safety'] },
-  { category: 'pending', title: 'Concept Realization Manifolds for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Concept Realization Manifolds for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models</em>.', pdfUrl: '', tags: ['LLMs', 'machine learning', 'AI safety'] },
+  { category: 'pending', title: 'Concept Activation Regions for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Concept Activation Regions for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models</em>.', pdfUrl: '', tags: ['LLMs', 'machine learning', 'AI safety'] },
   { category: 'pending', title: 'Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes</em>.', pdfUrl: '', tags: ['World Englishes', 'AI safety'] },
   { category: 'pending', title: 'ChatGPT as a Tool in Describing Variation and Change in English Worldwide', authors: 'Catapang, J.K.', monthYear: 'Forthcoming', venue: '—', citation: 'Catapang, J.K. (forthcoming). <em>ChatGPT as a Tool in Describing Variation and Change in English Worldwide</em>.', pdfUrl: '', tags: ['NLP', 'World Englishes'] },
   { category: 'pending', title: 'Conyo English', authors: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S.', monthYear: 'Forthcoming', venue: 'Journal of English and Applied Linguistics, De La Salle University', citation: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S. (forthcoming). <em>Conyo English</em>. Journal of English and Applied Linguistics. De La Salle University.', pdfUrl: '', tags: ['World Englishes', 'NLP'] },
@@ -623,7 +623,7 @@ export default function App() {
               company="Tokyo University of Foreign Studies"
               date="Oct 2024 – Present"
               location="Tokyo, Japan"
-              desc={<>Language and Culture Program.<br />Dissertation: Lexical innovations in Southeast Asian Englishes: A mixed methods analysis of social media.</>}
+              desc={<>Language and Culture Program.<br />Dissertation: Lexical Innovations of World Englishes: A Corpus-Based Computational Analysis of News Discourse.</>}
             />
             <Entry
               role="Master of Arts, Applied Linguistics"
