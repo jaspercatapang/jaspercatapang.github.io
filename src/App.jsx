@@ -281,7 +281,7 @@ const LECTURES = [
   { title: 'How does a machine know the matters of the heart? A lecture on emotion-based AI morality', date: 'June 6, 2024', venue: 'De La Salle University, Philippines', slides: '/lectures/matters-of-the-heart-2024.pdf' },
   { title: 'From generic to genius: Finetuning LLMs to enhance AI performance and reliability', date: 'May 30, 2024', venue: 'De La Salle University, Philippines', slides: '/lectures/generic-to-genius-2024.pdf' },
   { title: 'Text is superficial: Commonsense as dark matter of language', date: 'May 4, 2023', venue: 'University of the Philippines Manila', slides: '/lectures/text-is-superficial-2023.pdf' },
-  { title: 'Language in the Time of Pandemic', date: 'November 22, 2021', venue: 'Tokyo University of Foreign Studies, Singapore Association for Applied Linguistics, and Oxford Languages', slides: null },
+  { title: 'Language in the Time of Pandemic', date: 'November 22, 2021', venue: 'Tokyo University of Foreign Studies, Singapore Association for Applied Linguistics, and Oxford Languages', slides: '/lectures/covid-19-guidelines-2021.pdf' },
   { title: 'Natural Language Processing 101: From Characters to Meaning', date: 'August 19, 2021', venue: 'NLPinas, University of the Philippines Diliman, and Philippine-California Advanced Research Institutes', slides: '/lectures/nlp-101-characters-to-meaning-2021.pdf' },
   { title: 'Artificial intelligence for natural language processing', date: 'March 6, 2020', venue: 'University of the Philippines Manila', slides: null },
 ]
