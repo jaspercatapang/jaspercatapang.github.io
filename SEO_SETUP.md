@@ -12,9 +12,8 @@ Already in the repo:
 
 2. **Google Search Console** — [search.google.com/search-console](https://search.google.com/search-console)  
    - Add property → **URL prefix** → `https://jaspercatapang.github.io/`  
-   - **Verify** using one of:
-     - **HTML tag**: copy the `content="…"` value Google gives you → in `index.html` uncomment the `google-site-verification` line and paste the token → rebuild (`npm run build`) → push.  
-     - **HTML file**: download the file Google provides → save it in `public/` → build → push.
+   - **Verify**: `google-site-verification` meta is already in `index.html` (after deploy, use the **HTML tag** method and click verify).  
+   - Alternative: HTML file from Google → save in `public/` → `npm run build` → push.
 
 3. **Submit sitemap** — in Search Console: **Sitemaps** → add  
    `https://jaspercatapang.github.io/sitemap.xml`
