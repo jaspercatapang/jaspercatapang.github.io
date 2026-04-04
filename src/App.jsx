@@ -250,7 +250,7 @@ const HuggingFaceIcon = () => (
 
 const SKILLS = [
   { title: 'LLM & Post-Training', text: 'SFT, RLHF, Model Alignment, Prompt Engineering, RAG, Agentic AI, Evaluation Pipeline.' },
-  { title: 'Frameworks & Tools', text: 'PyTorch, LangChain, HuggingFace Transformers, Azure, Amazon Web Services, WandB, Docker, Cursor, React, Tailwind.' },
+  { title: 'Frameworks & Tools', text: 'PyTorch, LangChain, HuggingFace Transformers, Azure, Amazon Web Services, WandB, Datadog, Rollbar, Docker, Cursor, React, Tailwind.' },
   { title: 'Languages', text: 'Python, SQL, JavaScript, C++.' },
 ]
 
