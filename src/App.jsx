@@ -332,7 +332,7 @@ const EXPERIENCE_ENTRIES = [
       'Expanded scope from lead AI decision quality to end-to-end ownership of internal products’ AI agent development and delivery across multiple initiatives.',
       'Work closely with product managers, engineering leads, platform teams, and senior stakeholders to define agent roadmaps, prioritize features, and coordinate releases.',
       '<strong>Multi-Agent Orchestration Platform:</strong> Lead cross-functional execution of high-impact AI agent initiatives; DAG-based planning, multi-agent interfacing, and orchestration.',
-      '<strong>Accounting Agent:</strong> End-to-end development and delivery; expanded automation coverage, improved throughput, and quality metrics (e.g., task completion rate, error reduction).',
+      '<strong>Accounting Agent:</strong> Architected and shipped a production-grade accounting automation agent—owned the full lifecycle from design through enterprise deployment; scaled automation coverage and throughput while driving step-change gains in reliability and quality (task completion rate, error reduction).',
     ],
     meta: 'Python, Azure, A2A, MCP, PyTorch, Cursor, GPT-5 · Japanese, English',
   },
@@ -370,7 +370,7 @@ const EXPERIENCE_ENTRIES = [
     desc: 'Researched and developed ethical NLP technologies for the Maya fintech app; supervised the Chatbot (NLP) team in the Data Science department.',
     bullets: [
       '<strong>GodziLLa-2:</strong> Achieved rank #2 on the Hugging Face Open LLM leaderboard with local media coverage; surpassed GPT-3.5 and GPT-4 on a truthfulness benchmark.',
-      '<strong>Mayari:</strong> Developed and deployed an LLM-powered customer service agent with RAG; reduced customer query resolution time by 50% and stakeholder promoter score 1.8x.',
+      '<strong>Mayari:</strong> Developed and deployed an LLM-powered RAG agent handling ~40k daily active sessions. Achieved a 95% resolution rate (up from 61% manual), resulting in a 58% gain in support efficiency, a 56% reduction in ticket costs, and a 1.8x increase in stakeholder promoter score.',
       'Supervised a cross-functional NLP team of 4 engineers.',
     ],
     meta: 'Python, PyTorch, Hugging Face, LangChain, spaCy, LanceDB, AWS · Filipino, English',
@@ -382,7 +382,7 @@ const EXPERIENCE_ENTRIES = [
     location: 'Bonifacio Global City, Philippines',
     desc: 'Researched and developed ethical ML, NLP, and biology-inspired technologies for the SEA region; led NLP projects and prompt engineering for LLMs (e.g. GPT-3).',
     bullets: [
-      '<strong>Actionome:</strong> User behavior analysis through genome-like processing of in-app actions; shortened delivery of user behavior reports from 1 week to less than an hour.',
+      '<strong>Actionome:</strong> Analysis of over 300,000 users\' behavior through genome-like processing of in-app actions; shortened delivery of user behavior reports from 1 week to less than an hour.',
     ],
     meta: 'Python, GPT-3, PyTorch, Hugging Face, AWS, Amazon Redshift, Whisper · English, Indonesian, Malaysian, Vietnamese, Thai',
   },
