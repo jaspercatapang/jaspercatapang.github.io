@@ -269,6 +269,7 @@ const MEDIA_ITEMS = [
 ]
 
 const LECTURES = [
+  { title: 'Ethics fatigue of the modern Sisyphus in the age of AI', date: 'April 12, 2026', venue: 'Association of Filipino Students in Japan', slides: '/lectures/ethics-fatigue-dunong-afsj-2026.pdf' },
   { title: 'Transformers for Natural Language Processing', date: 'February 9-11, 2026', venue: 'Tokyo University of Foreign Studies, Japan', slides: null },
   { title: 'Do the Models Hear Us? Artificial Intelligence and the (In)visibility of Migrant Voices and Languages', date: 'December 5, 2025', venue: '2nd International Conference on Migration Linguistics. University of Santo Tomas, Philippines', slides: '/lectures/do-the-models-hear-us-2025.pdf' },
   { title: 'LLM Theory to Practice Series', date: 'August 20, 2025', venue: 'Tokyo University of Foreign Studies, Japan', slides: ['/lectures/llm-theory-practice-1-rag-2025.pdf', '/lectures/llm-theory-practice-2-bert-2025.pdf'] },
