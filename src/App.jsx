@@ -137,9 +137,9 @@ const CitationModal = ({ citationHtml, onClose }) => {
   )
 }
 
-function PublicationActions ({ codeUrl, pdfUrl, onCite }) {
+function PublicationActions ({ codeUrl, pdfUrl, onCite, className = '' }) {
   return (
-    <div className="flex shrink-0 flex-wrap items-center justify-end gap-2 sm:gap-3">
+    <div className={`flex shrink-0 flex-wrap items-center justify-end gap-2 sm:gap-3 ${className}`}>
       {codeUrl ? (
         <a href={codeUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline" title="Code / data">
           <CodeIcon />
@@ -194,9 +194,9 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
           </div>
         )}
         <div className={`w-full min-w-0 ${showRead ? 'max-md:pr-[5.25rem]' : ''}`}>
-          <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
-            <h4 className="font-sans text-[1rem] font-semibold text-black m-0 min-w-0 flex-1 pr-1">{title}</h4>
-            <PublicationActions codeUrl={codeUrl} pdfUrl={pdfUrl} onCite={() => setCiteOpen(true)} />
+          <div className="flex flex-col gap-2 md:flex-row md:flex-wrap md:items-start md:justify-between md:gap-x-3 md:gap-y-2">
+            <h4 className="font-sans text-[1rem] font-semibold text-black m-0 min-w-0 w-full pr-1 md:w-auto md:flex-1">{title}</h4>
+            <PublicationActions className="w-full md:w-auto" codeUrl={codeUrl} pdfUrl={pdfUrl} onCite={() => setCiteOpen(true)} />
           </div>
           <p className="text-sm text-gray-600 mt-0.5 mb-0 [&_strong]:font-semibold [&_strong]:text-black" dangerouslySetInnerHTML={{ __html: boldAuthor(authors) }} />
           <div className="mt-0.5 flex w-full min-w-0 flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
