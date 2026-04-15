@@ -139,7 +139,7 @@ const CitationModal = ({ citationHtml, onClose }) => {
 
 function PublicationActions ({ codeUrl, pdfUrl, onCite, className = '' }) {
   return (
-    <div className={`flex shrink-0 flex-wrap items-center justify-end gap-2 sm:gap-3 ${className}`}>
+    <div className={`flex shrink-0 flex-wrap items-center gap-2 sm:gap-3 max-md:justify-start md:justify-end ${className}`}>
       {codeUrl ? (
         <a href={codeUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline" title="Code / data">
           <CodeIcon />
@@ -182,10 +182,10 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
     : undefined
   return (
     <>
-      <article className="relative flex flex-col gap-2 p-4 rounded border border-gray-200 bg-white min-w-0">
+      <article className="relative flex flex-col gap-2 rounded border border-gray-200 bg-white min-w-0 px-4 pb-4 pt-3 max-md:gap-1.5 max-md:px-3.5 max-md:pb-3 max-md:pt-2 md:p-4">
         {showRead && (
           <div
-            className="md:hidden absolute top-0 right-0 z-10 flex items-center gap-0.5 rounded-bl-md bg-accent pl-1.5 pr-2 py-1 text-[0.7rem] font-semibold text-white shadow-sm"
+            className="md:hidden absolute top-0 right-0 z-10 flex items-center gap-0.5 rounded-bl-md bg-accent pl-1.5 pr-2 py-1 text-[0.7rem] font-semibold text-white shadow-sm ring-1 ring-black/5"
             title={readTimeTooltip}
             aria-label={readTimeTooltip}
           >
@@ -193,8 +193,8 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
             <span>{readMinutes} min</span>
           </div>
         )}
-        <div className={`w-full min-w-0 ${showRead ? 'max-md:pr-[5.25rem]' : ''}`}>
-          <div className="flex flex-col gap-2 md:flex-row md:flex-wrap md:items-start md:justify-between md:gap-x-3 md:gap-y-2">
+        <div className={`w-full min-w-0 ${showRead ? 'max-md:pr-[4.85rem]' : ''}`}>
+          <div className="flex flex-col gap-2 max-md:gap-1.5 md:flex-row md:flex-wrap md:items-start md:justify-between md:gap-x-3 md:gap-y-2">
             <h4 className="font-sans text-[1rem] font-semibold text-black m-0 min-w-0 w-full pr-1 md:w-auto md:flex-1">{title}</h4>
             <PublicationActions className="w-full md:w-auto" codeUrl={codeUrl} pdfUrl={pdfUrl} onCite={() => setCiteOpen(true)} />
           </div>
