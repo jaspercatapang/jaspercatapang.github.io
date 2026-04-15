@@ -137,65 +137,89 @@ const CitationModal = ({ citationHtml, onClose }) => {
   )
 }
 
+function PublicationActions ({ codeUrl, pdfUrl, onCite }) {
+  return (
+    <div className="flex shrink-0 flex-wrap items-center justify-end gap-2 sm:gap-3">
+      {codeUrl ? (
+        <a href={codeUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline" title="Code / data">
+          <CodeIcon />
+          <span>Code</span>
+        </a>
+      ) : null}
+      {pdfUrl ? (
+        <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline" title="View PDF">
+          <EyeIcon />
+          <span>View PDF</span>
+        </a>
+      ) : (
+        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 cursor-not-allowed" aria-disabled="true">
+          <EyeIcon />
+          <span>View PDF</span>
+        </span>
+      )}
+      {pdfUrl ? (
+        <a href={pdfUrl} download={pdfUrl.split('/').pop()} rel="noopener noreferrer" className="inline-flex items-center justify-center p-1 text-accent hover:text-black transition-colors rounded" title="Download PDF" aria-label="Download PDF">
+          <DownloadIcon className="w-4 h-4" />
+        </a>
+      ) : (
+        <span className="inline-flex items-center justify-center p-1 text-gray-400 cursor-not-allowed rounded" aria-disabled="true" aria-label="Download PDF unavailable" title="Download unavailable">
+          <DownloadIcon className="w-4 h-4" />
+        </span>
+      )}
+      <button type="button" onClick={onCite} className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">
+        <CiteIcon />
+        <span>Cite</span>
+      </button>
+    </div>
+  )
+}
+
 function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, codeUrl, readMinutes }) {
   const [citeOpen, setCiteOpen] = useState(false)
   const showRead = typeof readMinutes === 'number' && readMinutes > 0
+  const readTimeTooltip = showRead
+    ? `It takes ${readMinutes} ${readMinutes === 1 ? 'minute' : 'minutes'} to read this paper.`
+    : undefined
   return (
     <>
-      <article className="relative flex flex-wrap items-stretch gap-4 p-4 rounded border border-gray-200 bg-white min-w-0">
+      <article className="relative flex flex-col gap-2 p-4 rounded border border-gray-200 bg-white min-w-0">
         {showRead && (
           <div
             className="md:hidden absolute top-0 right-0 z-10 flex items-center gap-0.5 rounded-bl-md bg-accent pl-1.5 pr-2 py-1 text-[0.7rem] font-semibold text-white shadow-sm"
-            aria-label={`About ${readMinutes} min read`}
+            title={readTimeTooltip}
+            aria-label={readTimeTooltip}
           >
             <TimerIcon className="h-3.5 w-3.5 shrink-0 text-white" />
             <span>{readMinutes} min</span>
           </div>
         )}
-        <div className={`min-w-0 flex flex-1 basis-64 flex-col ${showRead ? 'max-md:pr-[5.25rem]' : ''}`}>
-          <div className="min-w-0">
-            <h4 className="font-sans text-[1rem] font-semibold text-black mb-0.5">{title}</h4>
-            <p className="text-sm text-gray-600 mb-0.5 [&_strong]:font-semibold [&_strong]:text-black" dangerouslySetInnerHTML={{ __html: boldAuthor(authors) }} />
-            <p className="text-sm text-gray-500">{monthYear}{venue && venue !== '—' ? ` · ${venue}` : ''}</p>
+        <div className={`w-full min-w-0 ${showRead ? 'max-md:pr-[5.25rem]' : ''}`}>
+          <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
+            <h4 className="font-sans text-[1rem] font-semibold text-black m-0 min-w-0 flex-1 pr-1">{title}</h4>
+            <PublicationActions codeUrl={codeUrl} pdfUrl={pdfUrl} onCite={() => setCiteOpen(true)} />
           </div>
-          {showRead && (
-            <div className="mt-auto hidden md:flex justify-end items-center gap-1 pt-2 text-sm text-gray-600">
-              <TimerIcon className="h-4 w-4 shrink-0 text-accent" />
-              <span>{readMinutes} min</span>
-            </div>
-          )}
-        </div>
-        <div className="flex shrink-0 items-center gap-3 self-center">
-          {codeUrl ? (
-            <a href={codeUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline" title="Code / data">
-              <CodeIcon />
-              <span>Code</span>
-            </a>
-          ) : null}
-          {pdfUrl ? (
-            <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline" title="View PDF">
-              <EyeIcon />
-              <span>View PDF</span>
-            </a>
-          ) : (
-            <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 cursor-not-allowed" aria-disabled="true">
-              <EyeIcon />
-              <span>View PDF</span>
-            </span>
-          )}
-          {pdfUrl ? (
-            <a href={pdfUrl} download={pdfUrl.split('/').pop()} rel="noopener noreferrer" className="inline-flex items-center justify-center p-1 text-accent hover:text-black transition-colors rounded" title="Download PDF" aria-label="Download PDF">
-              <DownloadIcon className="w-4 h-4" />
-            </a>
-          ) : (
-            <span className="inline-flex items-center justify-center p-1 text-gray-400 cursor-not-allowed rounded" aria-disabled="true" aria-label="Download PDF unavailable" title="Download unavailable">
-              <DownloadIcon className="w-4 h-4" />
-            </span>
-          )}
-          <button type="button" onClick={() => setCiteOpen(true)} className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">
-            <CiteIcon />
-            <span>Cite</span>
-          </button>
+          <p className="text-sm text-gray-600 mt-0.5 mb-0 [&_strong]:font-semibold [&_strong]:text-black" dangerouslySetInnerHTML={{ __html: boldAuthor(authors) }} />
+          <div className="mt-0.5 flex w-full min-w-0 flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+            <p className="text-sm text-gray-500 m-0 min-w-0 flex-1">{monthYear}{venue && venue !== '—' ? ` · ${venue}` : ''}</p>
+            {showRead && (
+              <div
+                className="group relative hidden shrink-0 cursor-default rounded outline-none md:inline-flex focus-visible:ring-2 focus-visible:ring-accent/35"
+                tabIndex={0}
+                aria-label={readTimeTooltip}
+              >
+                <span className="inline-flex items-center gap-1 text-sm text-gray-600">
+                  <TimerIcon className="h-4 w-4 shrink-0 text-accent" aria-hidden />
+                  <span>{readMinutes} min</span>
+                </span>
+                <span
+                  role="tooltip"
+                  className="pointer-events-none invisible absolute bottom-full right-0 z-20 mb-1.5 w-max max-w-[min(18rem,calc(100vw-2rem))] rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-left text-xs font-normal leading-snug text-gray-700 opacity-0 shadow-lg transition-none group-hover:visible group-hover:opacity-100 group-focus-visible:visible group-focus-visible:opacity-100"
+                >
+                  {readTimeTooltip}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
       </article>
       {citeOpen && <CitationModal citationHtml={citation} onClose={() => setCiteOpen(false)} />}
