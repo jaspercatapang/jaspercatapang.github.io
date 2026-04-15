@@ -1,6 +1,6 @@
 /**
  * Reads PDFs in public/publications, counts words before References/Bibliography,
- * writes src/publicationReadingMinutes.json (path -> minutes at 200 wpm).
+ * writes src/publicationReadingMinutes.json (path -> minutes at 175 wpm).
  */
 import fs from 'fs'
 import path from 'path'
@@ -12,7 +12,7 @@ const root = path.join(__dirname, '..')
 const pubDir = path.join(root, 'public', 'publications')
 const outFile = path.join(root, 'src', 'publicationReadingMinutes.json')
 
-const WPM = 200
+const WPM = 175
 
 const REF_PATTERNS = [
   /\n\s*(?:\d+\.?\s*)?References\s*\n/i,
