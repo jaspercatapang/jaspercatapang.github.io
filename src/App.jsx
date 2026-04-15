@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import publicationReadingMinutes from './publicationReadingMinutes.json'
 
 const Section = ({ id, title, children, className = '' }) => (
   <section id={id} className={`py-10 border-b border-gray-200 last:border-b-0 ${className}`}>
@@ -75,6 +76,13 @@ const CiteIcon = ({ className = 'w-4 h-4' }) => (
   </svg>
 )
 
+const TimerIcon = ({ className = 'w-4 h-4' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
+  </svg>
+)
+
 const CodeIcon = ({ className = 'w-4 h-4' }) => (
   <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
     <polyline points="16 18 22 12 16 6" />
@@ -129,17 +137,35 @@ const CitationModal = ({ citationHtml, onClose }) => {
   )
 }
 
-function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, codeUrl }) {
+function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, codeUrl, readMinutes }) {
   const [citeOpen, setCiteOpen] = useState(false)
+  const showRead = typeof readMinutes === 'number' && readMinutes > 0
   return (
     <>
-      <article className="flex flex-wrap items-start gap-4 p-4 rounded border border-gray-200 bg-white min-w-0">
-        <div className="min-w-0 flex-1 basis-64">
-          <h4 className="font-sans text-[1rem] font-semibold text-black mb-0.5">{title}</h4>
-          <p className="text-sm text-gray-600 mb-0.5 [&_strong]:font-semibold [&_strong]:text-black" dangerouslySetInnerHTML={{ __html: boldAuthor(authors) }} />
-          <p className="text-sm text-gray-500">{monthYear}{venue && venue !== '—' ? ` · ${venue}` : ''}</p>
+      <article className="relative flex flex-wrap items-stretch gap-4 p-4 rounded border border-gray-200 bg-white min-w-0">
+        {showRead && (
+          <div
+            className="md:hidden absolute top-0 right-0 z-10 flex items-center gap-0.5 rounded-bl-md bg-accent pl-1.5 pr-2 py-1 text-[0.7rem] font-semibold text-white shadow-sm"
+            aria-label={`About ${readMinutes} min read`}
+          >
+            <TimerIcon className="h-3.5 w-3.5 shrink-0 text-white" />
+            <span>{readMinutes} min</span>
+          </div>
+        )}
+        <div className={`min-w-0 flex flex-1 basis-64 flex-col ${showRead ? 'max-md:pr-[5.25rem]' : ''}`}>
+          <div className="min-w-0">
+            <h4 className="font-sans text-[1rem] font-semibold text-black mb-0.5">{title}</h4>
+            <p className="text-sm text-gray-600 mb-0.5 [&_strong]:font-semibold [&_strong]:text-black" dangerouslySetInnerHTML={{ __html: boldAuthor(authors) }} />
+            <p className="text-sm text-gray-500">{monthYear}{venue && venue !== '—' ? ` · ${venue}` : ''}</p>
+          </div>
+          {showRead && (
+            <div className="mt-auto hidden md:flex justify-end items-center gap-1 pt-2 text-sm text-gray-600">
+              <TimerIcon className="h-4 w-4 shrink-0 text-accent" />
+              <span>{readMinutes} min</span>
+            </div>
+          )}
         </div>
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex shrink-0 items-center gap-3 self-center">
           {codeUrl ? (
             <a href={codeUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline" title="Code / data">
               <CodeIcon />
@@ -737,6 +763,7 @@ export default function App() {
                   citation={pub.citation}
                   pdfUrl={pub.pdfUrl}
                   codeUrl={pub.codeUrl}
+                  readMinutes={pub.pdfUrl ? publicationReadingMinutes[pub.pdfUrl] : undefined}
                 />
               ))}
             </div>
@@ -752,6 +779,7 @@ export default function App() {
                   citation={pub.citation}
                   pdfUrl={pub.pdfUrl}
                   codeUrl={pub.codeUrl}
+                  readMinutes={pub.pdfUrl ? publicationReadingMinutes[pub.pdfUrl] : undefined}
                 />
               ))}
             </div>
