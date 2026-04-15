@@ -690,6 +690,7 @@ export default function App() {
               date="Oct 2024 – Present"
               location="Tokyo, Japan"
               desc={<>Language and Culture Program.<br />Dissertation: Lexical Innovations of World Englishes: A Corpus-Based Computational Analysis of News Discourse.</>}
+              meta="Supervisor: Dr. Ariane Macalinga Borlongan"
             />
             <Entry
               role="Master of Arts, Applied Linguistics"
@@ -697,6 +698,7 @@ export default function App() {
               date="Dec 2020 – Jul 2023"
               location="Birmingham, United Kingdom"
               desc={<>Student Representative 2021/2022.<br />Dissertation: A cross-cultural corpus analysis of honorifics in spoken and written text corpora of American, British, Philippine, and Singapore Englishes.</>}
+              meta="Supervisor: Prof. Lorraine Adriano"
             />
             <Entry
               role="Bachelor of Science, Computer Science"
@@ -704,6 +706,7 @@ export default function App() {
               date="Aug 2015 – Jan 2020"
               location="Manila, Philippines"
               desc="Thesis: SmartRetail: A bilingual retail chatbot using support vector machine."
+              meta="Supervisor: Dr. Geoffrey A. Solano"
             />
             <p className="text-sm text-gray-600 mt-4">ALPS 2021: Advanced Language Processing School, Université Grenoble Alpes, L’Escandille, France (Jan 2021).</p>
           </Section>
