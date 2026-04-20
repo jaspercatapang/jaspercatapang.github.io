@@ -383,7 +383,7 @@ const EXPERIENCE_ENTRIES = [
     bullets: [
       'Expanded scope from lead AI decision quality to end-to-end ownership of internal products’ AI agent development and delivery across multiple initiatives.',
       'Work closely with product managers, engineering leads, platform teams, and senior stakeholders to define agent roadmaps, prioritize features, and coordinate releases.',
-      '<strong>AI Cowork:</strong> Lead cross-functional execution of high-impact AI agent initiatives; DAG-based planning, multi-agent interfacing, and orchestration. <a href="https://corp.moneyforward.com/news/release/service/20260407-mf-press-1/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">[press]</a>',
+      '<strong>AI Cowork:</strong> Lead cross-functional execution of high-impact AI agent initiatives; DAG-based planning, multi-agent interfacing, and orchestration. <a href="https://corp.moneyforward.com/en/news/release/service/20260407-mf-press-1/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">[press]</a>',
       '<strong>Accounting Agent:</strong> Architected and shipped a production-grade accounting automation agent—owned the full lifecycle from design through enterprise deployment; scaled automation coverage and throughput while driving step-change gains in reliability and quality (task completion rate, error reduction).',
     ],
     meta: 'Python, Azure, A2A, MCP, PyTorch, Cursor, GPT-5 · Japanese, English',
