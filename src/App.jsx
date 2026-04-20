@@ -383,7 +383,7 @@ const EXPERIENCE_ENTRIES = [
     bullets: [
       'Expanded scope from lead AI decision quality to end-to-end ownership of internal products’ AI agent development and delivery across multiple initiatives.',
       'Work closely with product managers, engineering leads, platform teams, and senior stakeholders to define agent roadmaps, prioritize features, and coordinate releases.',
-      '<strong>Multi-Agent Orchestration Platform:</strong> Lead cross-functional execution of high-impact AI agent initiatives; DAG-based planning, multi-agent interfacing, and orchestration.',
+      '<strong>AI Cowork:</strong> Lead cross-functional execution of high-impact AI agent initiatives; DAG-based planning, multi-agent interfacing, and orchestration. <a href="https://corp.moneyforward.com/news/release/service/20260407-mf-press-1/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">[press]</a>',
       '<strong>Accounting Agent:</strong> Architected and shipped a production-grade accounting automation agent—owned the full lifecycle from design through enterprise deployment; scaled automation coverage and throughput while driving step-change gains in reliability and quality (task completion rate, error reduction).',
     ],
     meta: 'Python, Azure, A2A, MCP, PyTorch, Cursor, GPT-5 · Japanese, English',
@@ -396,7 +396,7 @@ const EXPERIENCE_ENTRIES = [
     desc: 'Led AI quality enforcement and research for the Expense AI Agent, ensuring robust schema design, reliable rule retrieval, and agent performance benchmarking.',
     bullets: [
       '<strong>Valid8R (LLM Evaluation Suite):</strong> Architected a scalable pipeline to benchmark agent performance; automated regression testing reduced iteration time for model alignment experiments by 75%; reduced manual QA by ~40%.',
-      '<strong>Rulebook-based AI:</strong> Spearheaded schema development and quality evaluation pipelines; achieved 45% improvement in rule retrieval precision.',
+      '<strong>Expense Agent:</strong> Spearheaded schema development and quality evaluation pipelines in the expense agent; achieved 45% improvement in rule retrieval precision.',
       'Screened ~10 candidates for Principal AI QA Engineer roles.',
     ],
     meta: 'Python, Azure, A2A, MCP, PyTorch, Cursor, GPT-5 · Japanese, English',
