@@ -491,7 +491,10 @@ function MobileIntro() {
         <h1 className="font-sans text-2xl font-bold tracking-tight text-black mb-2">Jasper Kyle Catapang</h1>
         <p className="text-base text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
         <p className="text-sm text-gray-600 italic mb-2">PhD Candidate, Tokyo University of Foreign Studies</p>
-        <a href="/Catapang_CV.pdf" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-accent hover:underline mb-4">[CV]</a>
+        <p className="text-sm text-gray-600 mb-4">
+          <a href="/Catapang_CV.pdf" target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
+          {' '}(as of 2026/4/20)
+        </p>
         <div className="space-y-2 flex flex-col items-center">
           <a href="mailto:jasperkylecatapang@gmail.com" className="font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
           <div className="flex flex-wrap gap-1 justify-center">
@@ -606,7 +609,10 @@ export default function App() {
                 </h1>
                 <p className="text-lg text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
                 <p className="text-[0.95rem] text-gray-600 italic mb-1">PhD Candidate, Tokyo University of Foreign Studies</p>
-                <a href="/Catapang_CV.pdf" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-accent hover:underline">[CV]</a>
+                <p className="text-sm text-gray-600">
+                  <a href="/Catapang_CV.pdf" target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
+                  {' '}(as of 2026/4/20)
+                </p>
               </div>
             </div>
           </section>
