@@ -83,6 +83,16 @@ const TimerIcon = ({ className = 'w-4 h-4' }) => (
   </svg>
 )
 
+const FeaturedStarIcon = ({ className = 'h-5 w-5' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+    />
+  </svg>
+)
+
 const CodeIcon = ({ className = 'w-4 h-4' }) => (
   <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
     <polyline points="16 18 22 12 16 6" />
@@ -174,7 +184,7 @@ function PublicationActions ({ codeUrl, pdfUrl, onCite, className = '' }) {
   )
 }
 
-function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, codeUrl, readMinutes }) {
+function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, codeUrl, readMinutes, featured }) {
   const [citeOpen, setCiteOpen] = useState(false)
   const showRead = typeof readMinutes === 'number' && readMinutes > 0
   const readTimeTooltip = showRead
@@ -182,7 +192,12 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
     : undefined
   return (
     <>
-      <article className="relative flex flex-col gap-2 rounded border border-gray-200 bg-white min-w-0 px-4 pb-4 pt-3 max-md:gap-1.5 max-md:px-3.5 max-md:pb-3 max-md:pt-2 md:p-4">
+      <article
+        className={`relative flex flex-col gap-2 rounded min-w-0 px-4 pb-4 pt-3 max-md:gap-1.5 max-md:px-3.5 max-md:pb-3 max-md:pt-2 md:p-4 bg-white ${
+          featured ? 'border-[3px] border-red-900' : 'border border-gray-200'
+        }`}
+        aria-label={featured ? 'Highlighted publication' : undefined}
+      >
         {showRead && (
           <div
             className="md:hidden absolute top-0 right-0 z-10 flex items-center gap-0.5 rounded-bl-md bg-accent pl-1.5 pr-2 py-1 text-[0.7rem] font-semibold text-white shadow-sm ring-1 ring-black/5"
@@ -195,7 +210,14 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
         )}
         <div className={`w-full min-w-0 ${showRead ? 'max-md:pr-[4.85rem]' : ''}`}>
           <div className="flex flex-col gap-2 max-md:gap-1.5 md:flex-row md:flex-wrap md:items-start md:justify-between md:gap-x-3 md:gap-y-2">
-            <h4 className="font-sans text-[1rem] font-semibold text-black m-0 min-w-0 w-full pr-1 md:w-auto md:flex-1">{title}</h4>
+            <div className={`flex min-w-0 w-full items-start md:flex-1 ${featured ? 'gap-2' : ''}`}>
+              {featured && (
+                <span className="mt-0.5 shrink-0 text-red-900" title="Highlighted">
+                  <FeaturedStarIcon />
+                </span>
+              )}
+              <h4 className="font-sans text-[1rem] font-semibold text-black m-0 min-w-0 flex-1 pr-1">{title}</h4>
+            </div>
             <PublicationActions className="w-full md:w-auto" codeUrl={codeUrl} pdfUrl={pdfUrl} onCite={() => setCiteOpen(true)} />
           </div>
           <p className="text-sm text-gray-600 mt-0.5 mb-0 [&_strong]:font-semibold [&_strong]:text-black" dangerouslySetInnerHTML={{ __html: boldAuthor(authors) }} />
@@ -356,6 +378,7 @@ const PUBLICATION_CARDS = [
   { category: 'pending', title: 'Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes</em>.', pdfUrl: '', tags: ['World Englishes', 'AI safety'] },
   { category: 'pending', title: 'ChatGPT as a Tool in Describing Variation and Change in English Worldwide', authors: 'Catapang, J.K.', monthYear: 'Forthcoming', venue: '—', citation: 'Catapang, J.K. (forthcoming). <em>ChatGPT as a Tool in Describing Variation and Change in English Worldwide</em>.', pdfUrl: '', tags: ['NLP', 'World Englishes'] },
   { category: 'pending', title: 'Conyo English', authors: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S.', monthYear: 'Forthcoming', venue: 'Journal of English and Applied Linguistics', citation: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S. (forthcoming). <em>Conyo English</em>. Journal of English and Applied Linguistics. De La Salle University.', pdfUrl: '', tags: ['World Englishes', 'NLP'] },
+  { category: 'pending', featured: true, title: 'Thesis Proposal: An Explainable Multimodal Framework for Detecting Harmful Content in Code-Switched Children\'s Media', authors: 'Guillermo, J.I.A., Catapang, J.K., & Oco, N.', monthYear: 'July 2026', venue: 'ACL 2026 · San Diego, CA, USA', citation: 'Guillermo, J.I.A., Catapang, J.K., & Oco, N. (forthcoming). <em>Thesis Proposal: An Explainable Multimodal Framework for Detecting Harmful Content in Code-Switched Children\'s Media</em>. The 64th Annual Meeting of the Association for Computational Linguistics (ACL). San Diego, California, USA.', pdfUrl: '', tags: ['NLP', 'AI safety', 'vision-language', 'machine learning'] },
   { category: 'journal', title: 'Building the Ethical AI Framework of the Future: From Philosophy to Practice', authors: 'Catapang, J.K.', monthYear: '2026', venue: 'AI and Ethics', citation: 'Catapang, J.K. (2026). <em>Building the Ethical AI Framework of the Future: From Philosophy to Practice</em>. AI and Ethics, 6, 150. <a href="https://doi.org/10.1007/s43681-026-01003-8" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1007/s43681-026-01003-8</a>', pdfUrl: '/publications/ethical-ai-framework-2026.pdf', tags: ['AI safety', 'LLMs'] },
   { category: 'journal', title: 'Language, Migration, and ChatGPT', authors: 'Catapang, J.K., Borlongan, A.M., & Go, M.A.C.', monthYear: '2025', venue: 'Journal of Modern Languages', citation: 'Catapang, J.K., Borlongan, A.M., & Go, M.A.C. (2025). <em>Language, Migration, and ChatGPT</em>. Journal of Modern Languages, 35(2), 167–189. <a href="https://doi.org/10.22452/jml.vol35no2.9" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">https://doi.org/10.22452/jml.vol35no2.9</a>', pdfUrl: '/publications/language-migration-chatgpt-2025.pdf', tags: ['migration linguistics', 'NLP', 'LLMs'] },
   { category: 'journal', title: 'Interdisciplinary Approach to Identify and Characterize COVID-19 Misinformation on Twitter: Mixed Methods Study', authors: 'Isip-Tan, I.T., Cleofas, J.V., Solano, G.A., Pillejera, J.G.A., Catapang, J.K.', monthYear: '2023', venue: 'JMIR Formative Research', citation: 'Isip-Tan, I.T., Cleofas, J.V., Solano, G.A., Pillejera, J.G.A., Catapang, J.K. (2023). <em>Interdisciplinary Approach to Identify and Characterize COVID-19 Misinformation on Twitter: Mixed Methods Study</em>. JMIR Formative Research, 7, e41134. <a href="https://formative.jmir.org/2023/1/e41134" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.2196/41134</a>', pdfUrl: '/publications/covid-misinformation-twitter-jmir-2023.pdf', tags: ['NLP', 'machine learning'] },
@@ -781,6 +804,7 @@ export default function App() {
                   citation={pub.citation}
                   pdfUrl={pub.pdfUrl}
                   codeUrl={pub.codeUrl}
+                  featured={pub.featured}
                 />
               ))}
             </div>
@@ -797,6 +821,7 @@ export default function App() {
                   pdfUrl={pub.pdfUrl}
                   codeUrl={pub.codeUrl}
                   readMinutes={pub.pdfUrl ? publicationReadingMinutes[pub.pdfUrl] : undefined}
+                  featured={pub.featured}
                 />
               ))}
             </div>
@@ -813,6 +838,7 @@ export default function App() {
                   pdfUrl={pub.pdfUrl}
                   codeUrl={pub.codeUrl}
                   readMinutes={pub.pdfUrl ? publicationReadingMinutes[pub.pdfUrl] : undefined}
+                  featured={pub.featured}
                 />
               ))}
             </div>
