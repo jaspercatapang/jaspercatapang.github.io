@@ -3,6 +3,16 @@ import publicationReadingMinutes from './publicationReadingMinutes.json'
 import publicationAbstracts from './publicationAbstracts.json'
 import publicationLaySummaries from './publicationLaySummaries.json'
 
+/** Strip cache-busting query so keys match publicationAbstracts.json and related files. */
+const publicationPdfKey = (pdfUrl) => (pdfUrl ? pdfUrl.split('?')[0] : '')
+
+/** Bump when you replace any PDF under `public/publications/`. Format: `date +%Y%m%d%H%M%S` */
+const PDF_CACHE_VERSION = '20260512032404'
+
+/** Append global cache version for View/Download links (JSON keys use path-only). */
+const publicationPdfHref = (pdfUrl) =>
+  pdfUrl ? `${publicationPdfKey(pdfUrl)}?v=${PDF_CACHE_VERSION}` : pdfUrl
+
 const Section = ({ id, title, children, className = '' }) => (
   <section id={id} className={`py-10 border-b border-gray-200 last:border-b-0 ${className}`}>
     <h2 className="font-sans text-xl font-semibold uppercase tracking-widest text-gray-600 mb-6 pb-2 border-b border-gray-200">
@@ -262,7 +272,7 @@ function PublicationActions ({ codeUrl, pdfUrl, onCite, onInfo, showInfo, classN
         </a>
       ) : null}
       {pdfUrl ? (
-        <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline" title="View PDF">
+        <a href={publicationPdfHref(pdfUrl)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline" title="View PDF">
           <EyeIcon />
           <span>View PDF</span>
         </a>
@@ -273,7 +283,7 @@ function PublicationActions ({ codeUrl, pdfUrl, onCite, onInfo, showInfo, classN
         </span>
       )}
       {pdfUrl ? (
-        <a href={pdfUrl} download={pdfUrl.split('/').pop()} rel="noopener noreferrer" className="inline-flex items-center justify-center p-1 rounded text-accent hover:text-black hover:bg-accent/10 transition-colors" title="Download PDF" aria-label="Download PDF">
+        <a href={publicationPdfHref(pdfUrl)} download={publicationPdfKey(pdfUrl).split('/').pop()} rel="noopener noreferrer" className="inline-flex items-center justify-center p-1 rounded text-accent hover:text-black hover:bg-accent/10 transition-colors" title="Download PDF" aria-label="Download PDF">
           <DownloadIcon className="w-4 h-4" />
         </a>
       ) : (
@@ -303,8 +313,9 @@ function PublicationActions ({ codeUrl, pdfUrl, onCite, onInfo, showInfo, classN
 function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, codeUrl, readMinutes, featured, sdgs }) {
   const [citeOpen, setCiteOpen] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
-  const abstractFromPdf = pdfUrl ? publicationAbstracts[pdfUrl] : undefined
-  const layFromCurator = pdfUrl ? publicationLaySummaries[pdfUrl] : undefined
+  const pdfKey = publicationPdfKey(pdfUrl)
+  const abstractFromPdf = pdfKey ? publicationAbstracts[pdfKey] : undefined
+  const layFromCurator = pdfKey ? publicationLaySummaries[pdfKey] : undefined
   const hasAbstract = Boolean(pdfUrl && typeof abstractFromPdf === 'string' && abstractFromPdf.trim().length > 0)
   const hasLay = Boolean(pdfUrl && typeof layFromCurator === 'string' && layFromCurator.trim().length > 0)
   const hasSdgs = Array.isArray(sdgs) && sdgs.length > 0
@@ -955,7 +966,7 @@ export default function App() {
                   citation={pub.citation}
                   pdfUrl={pub.pdfUrl}
                   codeUrl={pub.codeUrl}
-                  readMinutes={pub.pdfUrl ? publicationReadingMinutes[pub.pdfUrl] : undefined}
+                  readMinutes={pub.pdfUrl ? publicationReadingMinutes[publicationPdfKey(pub.pdfUrl)] : undefined}
                   featured={pub.featured}
                   sdgs={pub.sdgs}
                 />
@@ -973,7 +984,7 @@ export default function App() {
                   citation={pub.citation}
                   pdfUrl={pub.pdfUrl}
                   codeUrl={pub.codeUrl}
-                  readMinutes={pub.pdfUrl ? publicationReadingMinutes[pub.pdfUrl] : undefined}
+                  readMinutes={pub.pdfUrl ? publicationReadingMinutes[publicationPdfKey(pub.pdfUrl)] : undefined}
                   featured={pub.featured}
                   sdgs={pub.sdgs}
                 />
@@ -991,7 +1002,7 @@ export default function App() {
                   citation={pub.citation}
                   pdfUrl={pub.pdfUrl}
                   codeUrl={pub.codeUrl}
-                  readMinutes={pub.pdfUrl ? publicationReadingMinutes[pub.pdfUrl] : undefined}
+                  readMinutes={pub.pdfUrl ? publicationReadingMinutes[publicationPdfKey(pub.pdfUrl)] : undefined}
                   featured={pub.featured}
                   sdgs={pub.sdgs}
                 />
@@ -1011,7 +1022,7 @@ export default function App() {
                       citation={pub.citation}
                       pdfUrl={pub.pdfUrl}
                       codeUrl={pub.codeUrl}
-                      readMinutes={pub.pdfUrl ? publicationReadingMinutes[pub.pdfUrl] : undefined}
+                      readMinutes={pub.pdfUrl ? publicationReadingMinutes[publicationPdfKey(pub.pdfUrl)] : undefined}
                       featured={pub.featured}
                       sdgs={pub.sdgs}
                     />
