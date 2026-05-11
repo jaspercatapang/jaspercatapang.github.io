@@ -273,7 +273,7 @@ function PublicationActions ({ codeUrl, pdfUrl, onCite, onInfo, showInfo, classN
         </span>
       )}
       {pdfUrl ? (
-        <a href={pdfUrl} download={pdfUrl.split('/').pop()} rel="noopener noreferrer" className="inline-flex items-center justify-center p-1 text-accent hover:text-black transition-colors rounded" title="Download PDF" aria-label="Download PDF">
+        <a href={pdfUrl} download={pdfUrl.split('/').pop()} rel="noopener noreferrer" className="inline-flex items-center justify-center p-1 rounded text-accent hover:text-black hover:bg-accent/10 transition-colors" title="Download PDF" aria-label="Download PDF">
           <DownloadIcon className="w-4 h-4" />
         </a>
       ) : (
@@ -667,7 +667,7 @@ function MobileIntro() {
         <p className="text-sm text-gray-600 italic mb-2">PhD Candidate, Tokyo University of Foreign Studies</p>
         <p className="text-sm text-gray-600 mb-4">
           <a href="/Catapang_CV.pdf" target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
-          {' '}(as of 2026/5/6)
+          {' '}(as of 2026/5/10)
         </p>
         <div className="space-y-2 flex flex-col items-center">
           <a href="mailto:jasperkylecatapang@gmail.com" className="font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
@@ -785,7 +785,7 @@ export default function App() {
                 <p className="text-[0.95rem] text-gray-600 italic mb-1">PhD Candidate, Tokyo University of Foreign Studies</p>
                 <p className="text-sm text-gray-600">
                   <a href="/Catapang_CV.pdf" target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
-                  {' '}(as of 2026/5/6)
+                  {' '}(as of 2026/5/10)
                 </p>
               </div>
             </div>
