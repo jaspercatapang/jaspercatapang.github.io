@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useId } from 'react'
 import publicationReadingMinutes from './publicationReadingMinutes.json'
+import publicationAbstracts from './publicationAbstracts.json'
+import publicationLaySummaries from './publicationLaySummaries.json'
 
 const Section = ({ id, title, children, className = '' }) => (
   <section id={id} className={`py-10 border-b border-gray-200 last:border-b-0 ${className}`}>
@@ -107,6 +109,109 @@ const CopyIcon = ({ className = 'w-4 h-4' }) => (
   </svg>
 )
 
+/** Open SDG hosts UN-style goal artwork for national SDG reporting sites (PNG). */
+const openSdgGoalIconSrc = (goal) =>
+  `https://open-sdg.org/translations-un-sdg/assets/img/goals/en/${goal}.png`
+
+const SDG_GOAL_LABELS = [
+  'No poverty',
+  'Zero hunger',
+  'Good health and well-being',
+  'Quality education',
+  'Gender equality',
+  'Clean water and sanitation',
+  'Affordable and clean energy',
+  'Decent work and economic growth',
+  'Industry, innovation and infrastructure',
+  'Reduced inequalities',
+  'Sustainable cities and communities',
+  'Responsible consumption and production',
+  'Climate action',
+  'Life below water',
+  'Life on land',
+  'Peace, justice and strong institutions',
+  'Partnerships for the goals',
+]
+
+const InfoIcon = ({ className = 'w-4 h-4' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 16v-4" />
+    <path d="M12 8h.01" />
+  </svg>
+)
+
+const PublicationInfoModal = ({ title, laySummary, abstractText, sdgs, onClose }) => {
+  const headingId = useId()
+  useEffect(() => {
+    const onKeyDown = (e) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [onClose])
+  const showSdgs = Array.isArray(sdgs) && sdgs.length > 0
+  const showLay = typeof laySummary === 'string' && laySummary.trim().length > 0
+  const showPdf = typeof abstractText === 'string' && abstractText.trim().length > 0
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby={headingId}>
+      <div className="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
+        <div className="px-4 pt-4 pb-2 border-b border-gray-200 flex items-start justify-between gap-3">
+          <h3 id={headingId} className="font-sans text-sm font-semibold uppercase tracking-wide text-gray-600 m-0">Summary</h3>
+          <button type="button" onClick={onClose} className="shrink-0 p-1 rounded text-gray-400 hover:text-black hover:bg-gray-100" aria-label="Close">✕</button>
+        </div>
+        <div className="p-4 overflow-auto flex-1 space-y-5">
+          <p className="font-sans text-base font-semibold text-black m-0 leading-snug">{title}</p>
+          {showLay && (
+            <div>
+              <h4 className="font-sans text-xs font-semibold uppercase tracking-wide text-gray-500 m-0 mb-1.5">TL;DR</h4>
+              <p className="text-[0.95rem] text-gray-700 m-0 leading-relaxed">{laySummary.trim()}</p>
+            </div>
+          )}
+          {showPdf && (
+            <div>
+              <h4 className="font-sans text-xs font-semibold uppercase tracking-wide text-gray-500 m-0 mb-1.5">Abstract</h4>
+              <p className="text-[0.95rem] text-gray-700 m-0 leading-relaxed">{abstractText.trim()}</p>
+            </div>
+          )}
+          {showSdgs && (
+            <div>
+              <h4 className="font-sans text-xs font-semibold uppercase tracking-wide text-gray-500 m-0 mb-2">SDG</h4>
+              <p className="text-xs text-gray-500 m-0 mb-2">
+                Goal icons are for illustration. Learn more at{' '}
+                <a href="https://www.un.org/sustainabledevelopment" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">un.org/sustainabledevelopment</a>
+                {' '}and see the{' '}
+                <a href="https://www.un.org/sustainabledevelopment/news/communications-material/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">communications materials</a>.
+              </p>
+              <ul className="flex flex-wrap gap-2 list-none m-0 p-0">
+                {sdgs.map((g) => {
+                  const n = Number(g)
+                  if (!Number.isInteger(n) || n < 1 || n > 17) return null
+                  const label = SDG_GOAL_LABELS[n - 1]
+                  return (
+                    <li key={n} className="m-0">
+                      <img
+                        src={openSdgGoalIconSrc(n)}
+                        alt={`SDG ${n}: ${label}`}
+                        title={`SDG ${n}: ${label}`}
+                        width={56}
+                        height={56}
+                        className="h-14 w-14 rounded object-contain ring-1 ring-black/5 bg-white"
+                        loading="lazy"
+                      />
+                    </li>
+                  )
+                })}
+              </ul>
+              <p className="text-[0.65rem] leading-snug text-gray-500 mt-3 m-0 border-t border-gray-100 pt-2">
+                The content of this publication has not been approved by the United Nations and does not reflect the views of the United Nations or its officials or Member States.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const CitationModal = ({ citationHtml, onClose }) => {
   const [copied, setCopied] = useState(false)
   const handleCopy = () => {
@@ -147,7 +252,7 @@ const CitationModal = ({ citationHtml, onClose }) => {
   )
 }
 
-function PublicationActions ({ codeUrl, pdfUrl, onCite, className = '' }) {
+function PublicationActions ({ codeUrl, pdfUrl, onCite, onInfo, showInfo, className = '' }) {
   return (
     <div className={`flex shrink-0 flex-wrap items-center gap-2 sm:gap-3 max-md:justify-start md:justify-end ${className}`}>
       {codeUrl ? (
@@ -176,6 +281,17 @@ function PublicationActions ({ codeUrl, pdfUrl, onCite, className = '' }) {
           <DownloadIcon className="w-4 h-4" />
         </span>
       )}
+      {showInfo ? (
+        <button
+          type="button"
+          onClick={onInfo}
+          className="inline-flex items-center justify-center p-1 rounded text-accent hover:text-black hover:bg-accent/10 transition-colors"
+          aria-label="Open TL;DR, abstract from PDF, and SDGs"
+          title="TL;DR, abstract, SDGs"
+        >
+          <InfoIcon className="w-4 h-4" />
+        </button>
+      ) : null}
       <button type="button" onClick={onCite} className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">
         <CiteIcon />
         <span>Cite</span>
@@ -184,8 +300,15 @@ function PublicationActions ({ codeUrl, pdfUrl, onCite, className = '' }) {
   )
 }
 
-function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, codeUrl, readMinutes, featured }) {
+function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, codeUrl, readMinutes, featured, sdgs }) {
   const [citeOpen, setCiteOpen] = useState(false)
+  const [infoOpen, setInfoOpen] = useState(false)
+  const abstractFromPdf = pdfUrl ? publicationAbstracts[pdfUrl] : undefined
+  const layFromCurator = pdfUrl ? publicationLaySummaries[pdfUrl] : undefined
+  const hasAbstract = Boolean(pdfUrl && typeof abstractFromPdf === 'string' && abstractFromPdf.trim().length > 0)
+  const hasLay = Boolean(pdfUrl && typeof layFromCurator === 'string' && layFromCurator.trim().length > 0)
+  const hasSdgs = Array.isArray(sdgs) && sdgs.length > 0
+  const showInfo = hasSdgs || hasAbstract || hasLay
   const showRead = typeof readMinutes === 'number' && readMinutes > 0
   const readTimeTooltip = showRead
     ? `It takes ${readMinutes} ${readMinutes === 1 ? 'minute' : 'minutes'} to read this paper.`
@@ -218,7 +341,14 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
               )}
               <h4 className="font-sans text-[1rem] font-semibold text-black m-0 min-w-0 flex-1 pr-1">{title}</h4>
             </div>
-            <PublicationActions className="w-full md:w-auto" codeUrl={codeUrl} pdfUrl={pdfUrl} onCite={() => setCiteOpen(true)} />
+            <PublicationActions
+              className="w-full md:w-auto"
+              codeUrl={codeUrl}
+              pdfUrl={pdfUrl}
+              onCite={() => setCiteOpen(true)}
+              onInfo={() => setInfoOpen(true)}
+              showInfo={showInfo}
+            />
           </div>
           <p className="text-sm text-gray-600 mt-0.5 mb-0 [&_strong]:font-semibold [&_strong]:text-black" dangerouslySetInnerHTML={{ __html: boldAuthor(authors) }} />
           <div className="mt-0.5 flex w-full min-w-0 flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
@@ -245,6 +375,15 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
         </div>
       </article>
       {citeOpen && <CitationModal citationHtml={citation} onClose={() => setCiteOpen(false)} />}
+      {infoOpen && (
+        <PublicationInfoModal
+          title={title}
+          laySummary={hasLay ? layFromCurator : ''}
+          abstractText={hasAbstract ? abstractFromPdf : ''}
+          sdgs={hasSdgs ? sdgs : []}
+          onClose={() => setInfoOpen(false)}
+        />
+      )}
     </>
   )
 }
@@ -372,28 +511,28 @@ const CONFERENCE_PRESENTATIONS = [
 const PUBLICATION_TAGS = ['NLP', 'LLMs', 'AI safety', 'World Englishes', 'migration linguistics', 'machine learning', 'vision-language']
 
 const PUBLICATION_CARDS = [
-  { category: 'pending', featured: true, title: 'Thesis Proposal: An Explainable Multimodal Framework for Detecting Harmful Content in Code-Switched Children\'s Media', authors: 'Guillermo, J.I.A., Catapang, J.K., & Oco, N.', monthYear: 'July 2026', venue: 'ACL 2026 · San Diego, CA, USA', citation: 'Guillermo, J.I.A., Catapang, J.K., & Oco, N. (forthcoming). <em>Thesis Proposal: An Explainable Multimodal Framework for Detecting Harmful Content in Code-Switched Children\'s Media</em>. The 64th Annual Meeting of the Association for Computational Linguistics (ACL). San Diego, California, USA.', pdfUrl: '/publications/thesis-proposal-multimodal-harmful-children-acl-2026.pdf', tags: ['NLP', 'AI safety', 'vision-language', 'machine learning'] },
-  { category: 'pending', title: 'A Metric Typology for Language Model Evaluation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'GEM @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (forthcoming). <em>A Metric Typology for Language Model Evaluation</em>. The 5th Workshop on Generation, Evaluation and Metrics (GEM). ACL 2026. San Diego, California, USA.', pdfUrl: '/publications/metric-typology-gem-acl-2026.pdf', tags: ['LLMs', 'machine learning', 'AI safety', 'NLP'] },
-  { category: 'pending', title: 'When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'MAGMaR @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (forthcoming). <em>When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation</em>. The 2nd Workshop on Multimodal Augmented Generation via MultimodAl Retrieval (MAGMaR). ACL 2026. San Diego, California, USA.', pdfUrl: '/publications/when-image-text-disagree-magmar-acl-2026.pdf', codeUrl: 'https://github.com/jaspercatapang/cmc-bench', tags: ['LLMs', 'NLP', 'machine learning', 'vision-language'] },
-  { category: 'pending', title: 'Conyo English', authors: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S.', monthYear: 'In press', venue: 'Journal of English and Applied Linguistics', citation: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S. (in press). <em>Conyo English</em>. Journal of English and Applied Linguistics. De La Salle University.', pdfUrl: '', tags: ['World Englishes', 'NLP'] },
-  { category: 'pending', title: 'Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes</em>.', pdfUrl: '', tags: ['World Englishes', 'AI safety'] },
-  { category: 'pending', title: 'ChatGPT as a Tool in Describing Variation and Change in English Worldwide', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>ChatGPT as a Tool in Describing Variation and Change in English Worldwide</em>.', pdfUrl: '', tags: ['NLP', 'World Englishes'] },
-  { category: 'pending', title: 'Concept Activation Regions for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Concept Activation Regions for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models</em>.', pdfUrl: '', tags: ['LLMs', 'machine learning', 'AI safety'] },
-  { category: 'journal', title: 'Building the Ethical AI Framework of the Future: From Philosophy to Practice', authors: 'Catapang, J.K.', monthYear: '2026', venue: 'AI and Ethics', citation: 'Catapang, J.K. (2026). <em>Building the Ethical AI Framework of the Future: From Philosophy to Practice</em>. AI and Ethics, 6, 150. <a href="https://doi.org/10.1007/s43681-026-01003-8" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1007/s43681-026-01003-8</a>', pdfUrl: '/publications/ethical-ai-framework-2026.pdf', tags: ['AI safety', 'LLMs'] },
-  { category: 'journal', title: 'Language, Migration, and ChatGPT', authors: 'Catapang, J.K., Borlongan, A.M., & Go, M.A.C.', monthYear: '2025', venue: 'Journal of Modern Languages', citation: 'Catapang, J.K., Borlongan, A.M., & Go, M.A.C. (2025). <em>Language, Migration, and ChatGPT</em>. Journal of Modern Languages, 35(2), 167–189. <a href="https://doi.org/10.22452/jml.vol35no2.9" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">https://doi.org/10.22452/jml.vol35no2.9</a>', pdfUrl: '/publications/language-migration-chatgpt-2025.pdf', tags: ['migration linguistics', 'NLP', 'LLMs'] },
-  { category: 'journal', title: 'Interdisciplinary Approach to Identify and Characterize COVID-19 Misinformation on Twitter: Mixed Methods Study', authors: 'Isip-Tan, I.T., Cleofas, J.V., Solano, G.A., Pillejera, J.G.A., Catapang, J.K.', monthYear: '2023', venue: 'JMIR Formative Research', citation: 'Isip-Tan, I.T., Cleofas, J.V., Solano, G.A., Pillejera, J.G.A., Catapang, J.K. (2023). <em>Interdisciplinary Approach to Identify and Characterize COVID-19 Misinformation on Twitter: Mixed Methods Study</em>. JMIR Formative Research, 7, e41134. <a href="https://formative.jmir.org/2023/1/e41134" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.2196/41134</a>', pdfUrl: '/publications/covid-misinformation-twitter-jmir-2023.pdf', tags: ['NLP', 'machine learning'] },
-  { category: 'conference', title: 'Explaining Bias in Internal Representations of Large Language Models via Concept Activation Vectors', authors: 'Catapang, J.K.', monthYear: 'July 2025', venue: 'NLDB 2025 · Kanazawa, Japan', citation: 'Catapang, J.K. (July 2025). <em>Explaining Bias in Internal Representations of Large Language Models via Concept Activation Vectors</em>. In: Ichise, R. (eds) Natural Language Processing and Information Systems. NLDB 2025. LNCS, vol 15836. Springer, Cham. <a href="https://doi.org/10.1007/978-3-031-97141-9_8" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1007/978-3-031-97141-9_8</a>', pdfUrl: '/publications/explaining-bias-cav-nldb-2025.pdf', codeUrl: 'https://github.com/jcatapang/bias-cavs', tags: ['LLMs', 'machine learning', 'AI safety'] },
-  { category: 'conference', title: 'Can we repurpose multiple-choice question-answering models to rerank retrieved documents?', authors: 'Catapang, J.K.', monthYear: 'December 2024', venue: 'PACLIC 38 · Tokyo, Japan', citation: 'Catapang, J.K. (December 2024). <em>Can we repurpose multiple-choice question-answering models to rerank retrieved documents?</em> 38th Pacific Asia Conference on Language, Information and Computation. Tokyo, Japan. ACL. <a href="https://aclanthology.org/2024.paclic-1.85" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">aclanthology.org/2024.paclic-1.85</a>', pdfUrl: '/publications/paclic-38-rerank-2024.pdf', codeUrl: 'https://huggingface.co/jaspercatapang/R-star', tags: ['NLP', 'LLMs'] },
-  { category: 'conference', title: 'Emotion-based Morality in Tagalog and English Scenarios (EMoTES-3K): A Parallel Corpus for Explaining (Im)morality of Actions', authors: 'Catapang, J.K., & Visperas, M.', monthYear: 'December 2023', venue: 'NLP4DH / IWCLUL 2023 · Tokyo, Japan', citation: 'Catapang, J.K., & Visperas, M. (December 2023). <em>Emotion-based Morality in Tagalog and English Scenarios (EMoTES-3K): A Parallel Corpus for Explaining (Im)morality of Actions</em>. Joint 3rd International Conference on Natural Language Processing for Digital Humanities and 8th International Workshop on Computational Linguistics for Uralic Languages. Tokyo, Japan. pp. 1-6. ACL. <a href="https://aclanthology.org/2023.nlp4dh-1.1" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">aclanthology.org/2023.nlp4dh-1.1</a>', pdfUrl: '/publications/emotes-3k-nlp4dh-2023.pdf', codeUrl: 'https://huggingface.co/collections/NLPinas/emotes-3k', tags: ['NLP'] },
-  { category: 'conference', title: 'Improving detection of diabetic retinopathy in low-resolution images via latent diffusion', authors: 'Catapang, J.K., Santiago, D.E., & Isip-Tan, I.T.', monthYear: 'September 2023', venue: 'IEEE MIPR 2023 · Singapore', citation: 'Catapang, J.K., Santiago, D.E., & Isip-Tan, I.T. (September 2023). <em>Improving detection of diabetic retinopathy in low-resolution images via latent diffusion</em>. 2023 IEEE 6th International Conference on Multimedia Information Processing and Retrieval. Singapore, pp. 53-58. <a href="https://ieeexplore.ieee.org/document/10254404" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/MIPR59079.2023.00024</a>', pdfUrl: '/publications/diabetic-retinopathy-mipr-2023.pdf', codeUrl: 'https://github.com/jcatapang/AffiDAVIT', tags: ['machine learning', 'vision-language'] },
-  { category: 'conference', title: 'On Modern Text-to-SQL Semantic Parsing Methodologies for Natural Language Interface to Databases: A Comparative Study', authors: 'Visperas, M., Adoptante, A.J., Borjal, C.J., Abia, M.T., Catapang, J.K., Peramo, E.', monthYear: 'February 2023', venue: 'ICAIIC 2023 · Bali, Indonesia', citation: 'Visperas, M., Adoptante, A.J., Borjal, C.J., Abia, M.T., Catapang, J.K., Peramo, E. (February 2023). <em>On Modern Text-to-SQL Semantic Parsing Methodologies for Natural Language Interface to Databases: A Comparative Study</em>. 2023 International Conference on Artificial Intelligence in Information and Communication. Bali, Indonesia. pp. 390-396. <a href="https://ieeexplore.ieee.org/document/10067134" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC57133.2023.10067134</a>', pdfUrl: '/publications/text-to-sql-comparative-study-icaiic-2023.pdf', tags: ['NLP', 'machine learning'] },
-  { category: 'conference', title: 'Parallel Corpus Curation for Filipino Text-to-SQL Semantic Parsing', authors: 'Borjal, C.J., Visperas, M., Adoptante, A.J., Abia, M.T., Catapang, J.K., Peramo, E.', monthYear: 'February 2023', venue: 'ICAIIC 2023 · Bali, Indonesia', citation: 'Borjal, C.J., Visperas, M., Adoptante, A.J., Abia, M.T., Catapang, J.K., Peramo, E. (February 2023). <em>Parallel Corpus Curation for Filipino Text-to-SQL Semantic Parsing</em>. 2023 International Conference on Artificial Intelligence in Information and Communication. Bali, Indonesia. pp. 163-169. IEEE. <a href="https://ieeexplore.ieee.org/document/10066976" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC57133.2023.10066976</a>', pdfUrl: '/publications/parallel-corpus-filipino-text-to-sql-2023.pdf', tags: ['NLP'] },
-  { category: 'conference', title: 'Hadamard Estimated Attention Transformer (HEAT): Fast Approximation of Dot Product Self-attention for Transformers Using Low-Rank Projection of Hadamard Product', authors: 'Catapang, J.K.', monthYear: 'November 2022', venue: 'IEEE ISCMI 2022 · Toronto, Canada', citation: 'Catapang, J.K. (November 2022). <em>Hadamard Estimated Attention Transformer (HEAT): Fast Approximation of Dot Product Self-attention for Transformers Using Low-Rank Projection of Hadamard Product</em>. 2022 International Conference on Soft Computing & Machine Intelligence. Toronto, Canada. pp. 203-206. IEEE. <a href="https://ieeexplore.ieee.org/document/10068484" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ISCMI56532.2022.10068484</a>', pdfUrl: '/publications/heat-iscmi-2022.pdf', tags: ['LLMs', 'machine learning'] },
-  { category: 'conference', title: 'Optimizing Speed and Accuracy Trade-off in Machine Learning Models via Stochastic Gradient Descent Approximation', authors: 'Catapang, J.K.', monthYear: 'November 2022', venue: 'IEEE ISCMI 2022 · Toronto, Canada', citation: 'Catapang, J.K. (November 2022). <em>Optimizing Speed and Accuracy Trade-off in Machine Learning Models via Stochastic Gradient Descent Approximation</em>. 2022 International Conference on Soft Computing & Machine Intelligence. Toronto, Canada. pp. 124-128. IEEE. <a href="https://ieeexplore.ieee.org/document/10068476" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ISCMI56532.2022.10068476</a>', pdfUrl: '/publications/speed-accuracy-sgd-iscmi-2022.pdf', tags: ['machine learning'] },
-  { category: 'conference', title: 'Identification and Analysis of COVID-19-related Misinformation Tweets via Kullback-Leibler Divergence for Informativeness and Phraseness and Biterm Topic Modeling', authors: 'Clamor, T.D.S., Solano, G.A., Oco, N., Catapang, J.K., Cleofas, J.V., & Isip-Tan, I.T.', monthYear: 'February 2022', venue: 'ICAIIC 2022 · Jeju, South Korea', citation: 'Clamor, T.D.S., Solano, G.A., Oco, N., Catapang, J.K., Cleofas, J.V., & Isip-Tan, I.T. (February 2022). <em>Identification and Analysis of COVID-19-related Misinformation Tweets via Kullback-Leibler Divergence for Informativeness and Phraseness and Biterm Topic Modeling</em>. 2022 International Conference on Artificial Intelligence in Information and Communication. Jeju, South Korea. pp. 451-456. IEEE. <a href="https://ieeexplore.ieee.org/document/9722623" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC54071.2022.9722623</a>', pdfUrl: '/publications/covid-misinformation-tweets-icaiic-2022.pdf', tags: ['NLP', 'machine learning'] },
-  { category: 'conference', title: 'Topic Modeling, Clade-assisted Sentiment Analysis, and Vaccine Brand Reputation Analysis of COVID-19 Vaccine-related Facebook Comments in the Philippines', authors: 'Catapang, J.K., & Cleofas, J.V.', monthYear: 'January 2022', venue: 'IEEE ICSC 2022 · Laguna Hills, CA, USA', citation: 'Catapang, J.K., & Cleofas, J.V. (January 2022). <em>Topic Modeling, Clade-assisted Sentiment Analysis, and Vaccine Brand Reputation Analysis of COVID-19 Vaccine-related Facebook Comments in the Philippines</em>. 2022 IEEE International Conference on Semantic Computing. Laguna Hills, California, USA. pp. 123-130. IEEE. <a href="https://ieeexplore.ieee.org/document/9736280" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICSC52841.2022.00026</a>', pdfUrl: '/publications/topic-modeling-vaccine-facebook-icsc-2022.pdf', codeUrl: 'https://github.com/jcatapang/COVID-19-VERTEBRATE', tags: ['NLP', 'machine learning'] },
-  { category: 'conference', title: 'A Floyd-Warshall-based Reoptimization of Q Matrix on the Single DVRPPD with On-demand Cancellations', authors: 'Catapang, J.K., & Solano, G.A.', monthYear: 'October 2021', venue: 'ICTC 2021 · Jeju, South Korea', citation: 'Catapang, J.K., & Solano, G.A. (October 2021). <em>A Floyd-Warshall-based Reoptimization of Q Matrix on the Single DVRPPD with On-demand Cancellations</em>. 2021 International Conference on Information and Communication Technology Convergence. Jeju, South Korea. pp. 172-177. IEEE. <a href="https://ieeexplore.ieee.org/document/9621108" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICTC52510.2021.9621108</a>', pdfUrl: '/publications/floyd-warshall-dvrppd-ictc-2021.pdf', codeUrl: 'https://colab.research.google.com/drive/1t9QDIdOj56NdllEwR2vHX45aQB4cWR8t', tags: ['machine learning'] },
-  { category: 'conference', title: 'A Bilingual Chatbot Using Support Vector Classifier on an Automatic Corpus Engine Dataset', authors: 'Catapang, J.K., Solano, G.A., & Oco, N.', monthYear: 'February 2020', venue: 'ICAIIC 2020 · Fukuoka, Japan', citation: 'Catapang, J.K., Solano, G.A., & Oco, N. (February 2020). <em>A Bilingual Chatbot Using Support Vector Classifier on an Automatic Corpus Engine Dataset</em>. 2020 International Conference on Artificial Intelligence in Information and Communication. Fukuoka, Japan. pp. 187-192. IEEE. <a href="https://ieeexplore.ieee.org/document/9065208" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC48513.2020.9065208</a>', pdfUrl: '/publications/bilingual-chatbot-icaiic-2020.pdf', tags: ['NLP', 'machine learning'] },
+  { category: 'pending', featured: true, title: 'Thesis Proposal: An Explainable Multimodal Framework for Detecting Harmful Content in Code-Switched Children\'s Media', authors: 'Guillermo, J.I.A., Catapang, J.K., & Oco, N.', monthYear: 'July 2026', venue: 'ACL 2026 · San Diego, CA, USA', citation: 'Guillermo, J.I.A., Catapang, J.K., & Oco, N. (forthcoming). <em>Thesis Proposal: An Explainable Multimodal Framework for Detecting Harmful Content in Code-Switched Children\'s Media</em>. The 64th Annual Meeting of the Association for Computational Linguistics (ACL). San Diego, California, USA.', pdfUrl: '/publications/thesis-proposal-multimodal-harmful-children-acl-2026.pdf', tags: ['NLP', 'AI safety', 'vision-language', 'machine learning'], sdgs: [3, 10, 16] },
+  { category: 'pending', title: 'A Metric Typology for Language Model Evaluation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'GEM @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (forthcoming). <em>A Metric Typology for Language Model Evaluation</em>. The 5th Workshop on Generation, Evaluation and Metrics (GEM). ACL 2026. San Diego, California, USA.', pdfUrl: '/publications/metric-typology-gem-acl-2026.pdf', tags: ['LLMs', 'machine learning', 'AI safety', 'NLP'], sdgs: [9, 17] },
+  { category: 'pending', title: 'When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'MAGMaR @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (forthcoming). <em>When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation</em>. The 2nd Workshop on Multimodal Augmented Generation via MultimodAl Retrieval (MAGMaR). ACL 2026. San Diego, California, USA.', pdfUrl: '/publications/when-image-text-disagree-magmar-acl-2026.pdf', codeUrl: 'https://github.com/jaspercatapang/cmc-bench', tags: ['LLMs', 'NLP', 'machine learning', 'vision-language'], sdgs: [9, 10, 16] },
+  { category: 'pending', title: 'Conyo English', authors: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S.', monthYear: 'In press', venue: 'Journal of English and Applied Linguistics', citation: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S. (in press). <em>Conyo English</em>. Journal of English and Applied Linguistics. De La Salle University.', pdfUrl: '', tags: ['World Englishes', 'NLP'], sdgs: [4, 10] },
+  { category: 'pending', title: 'Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes</em>.', pdfUrl: '', tags: ['World Englishes', 'AI safety'], sdgs: [10, 16] },
+  { category: 'pending', title: 'ChatGPT as a Tool in Describing Variation and Change in English Worldwide', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>ChatGPT as a Tool in Describing Variation and Change in English Worldwide</em>.', pdfUrl: '', tags: ['NLP', 'World Englishes'], sdgs: [4, 9, 10] },
+  { category: 'pending', title: 'Concept Activation Regions for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Concept Activation Regions for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models</em>.', pdfUrl: '', tags: ['LLMs', 'machine learning', 'AI safety'], sdgs: [9, 10, 16] },
+  { category: 'journal', title: 'Building the Ethical AI Framework of the Future: From Philosophy to Practice', authors: 'Catapang, J.K.', monthYear: '2026', venue: 'AI and Ethics', citation: 'Catapang, J.K. (2026). <em>Building the Ethical AI Framework of the Future: From Philosophy to Practice</em>. AI and Ethics, 6, 150. <a href="https://doi.org/10.1007/s43681-026-01003-8" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1007/s43681-026-01003-8</a>', pdfUrl: '/publications/ethical-ai-framework-2026.pdf', tags: ['AI safety', 'LLMs'], sdgs: [12, 13, 16, 17] },
+  { category: 'journal', title: 'Language, Migration, and ChatGPT', authors: 'Catapang, J.K., Borlongan, A.M., & Go, M.A.C.', monthYear: '2025', venue: 'Journal of Modern Languages', citation: 'Catapang, J.K., Borlongan, A.M., & Go, M.A.C. (2025). <em>Language, Migration, and ChatGPT</em>. Journal of Modern Languages, 35(2), 167–189. <a href="https://doi.org/10.22452/jml.vol35no2.9" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">https://doi.org/10.22452/jml.vol35no2.9</a>', pdfUrl: '/publications/language-migration-chatgpt-2025.pdf', tags: ['migration linguistics', 'NLP', 'LLMs'], sdgs: [4, 8, 10] },
+  { category: 'journal', title: 'Interdisciplinary Approach to Identify and Characterize COVID-19 Misinformation on Twitter: Mixed Methods Study', authors: 'Isip-Tan, I.T., Cleofas, J.V., Solano, G.A., Pillejera, J.G.A., Catapang, J.K.', monthYear: '2023', venue: 'JMIR Formative Research', citation: 'Isip-Tan, I.T., Cleofas, J.V., Solano, G.A., Pillejera, J.G.A., Catapang, J.K. (2023). <em>Interdisciplinary Approach to Identify and Characterize COVID-19 Misinformation on Twitter: Mixed Methods Study</em>. JMIR Formative Research, 7, e41134. <a href="https://formative.jmir.org/2023/1/e41134" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.2196/41134</a>', pdfUrl: '/publications/covid-misinformation-twitter-jmir-2023.pdf', tags: ['NLP', 'machine learning'], sdgs: [3, 9, 16] },
+  { category: 'conference', title: 'Explaining Bias in Internal Representations of Large Language Models via Concept Activation Vectors', authors: 'Catapang, J.K.', monthYear: 'July 2025', venue: 'NLDB 2025 · Kanazawa, Japan', citation: 'Catapang, J.K. (July 2025). <em>Explaining Bias in Internal Representations of Large Language Models via Concept Activation Vectors</em>. In: Ichise, R. (eds) Natural Language Processing and Information Systems. NLDB 2025. LNCS, vol 15836. Springer, Cham. <a href="https://doi.org/10.1007/978-3-031-97141-9_8" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1007/978-3-031-97141-9_8</a>', pdfUrl: '/publications/explaining-bias-cav-nldb-2025.pdf', codeUrl: 'https://github.com/jcatapang/bias-cavs', tags: ['LLMs', 'machine learning', 'AI safety'], sdgs: [5, 10, 16] },
+  { category: 'conference', title: 'Can we repurpose multiple-choice question-answering models to rerank retrieved documents?', authors: 'Catapang, J.K.', monthYear: 'December 2024', venue: 'PACLIC 38 · Tokyo, Japan', citation: 'Catapang, J.K. (December 2024). <em>Can we repurpose multiple-choice question-answering models to rerank retrieved documents?</em> 38th Pacific Asia Conference on Language, Information and Computation. Tokyo, Japan. ACL. <a href="https://aclanthology.org/2024.paclic-1.85" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">aclanthology.org/2024.paclic-1.85</a>', pdfUrl: '/publications/paclic-38-rerank-2024.pdf', codeUrl: 'https://huggingface.co/jaspercatapang/R-star', tags: ['NLP', 'LLMs'], sdgs: [9] },
+  { category: 'conference', title: 'Emotion-based Morality in Tagalog and English Scenarios (EMoTES-3K): A Parallel Corpus for Explaining (Im)morality of Actions', authors: 'Catapang, J.K., & Visperas, M.', monthYear: 'December 2023', venue: 'NLP4DH / IWCLUL 2023 · Tokyo, Japan', citation: 'Catapang, J.K., & Visperas, M. (December 2023). <em>Emotion-based Morality in Tagalog and English Scenarios (EMoTES-3K): A Parallel Corpus for Explaining (Im)morality of Actions</em>. Joint 3rd International Conference on Natural Language Processing for Digital Humanities and 8th International Workshop on Computational Linguistics for Uralic Languages. Tokyo, Japan. pp. 1-6. ACL. <a href="https://aclanthology.org/2023.nlp4dh-1.1" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">aclanthology.org/2023.nlp4dh-1.1</a>', pdfUrl: '/publications/emotes-3k-nlp4dh-2023.pdf', codeUrl: 'https://huggingface.co/collections/NLPinas/emotes-3k', tags: ['NLP'], sdgs: [4, 10, 16] },
+  { category: 'conference', title: 'Improving detection of diabetic retinopathy in low-resolution images via latent diffusion', authors: 'Catapang, J.K., Santiago, D.E., & Isip-Tan, I.T.', monthYear: 'September 2023', venue: 'IEEE MIPR 2023 · Singapore', citation: 'Catapang, J.K., Santiago, D.E., & Isip-Tan, I.T. (September 2023). <em>Improving detection of diabetic retinopathy in low-resolution images via latent diffusion</em>. 2023 IEEE 6th International Conference on Multimedia Information Processing and Retrieval. Singapore, pp. 53-58. <a href="https://ieeexplore.ieee.org/document/10254404" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/MIPR59079.2023.00024</a>', pdfUrl: '/publications/diabetic-retinopathy-mipr-2023.pdf', codeUrl: 'https://github.com/jcatapang/AffiDAVIT', tags: ['machine learning', 'vision-language'], sdgs: [3, 9, 10] },
+  { category: 'conference', title: 'On Modern Text-to-SQL Semantic Parsing Methodologies for Natural Language Interface to Databases: A Comparative Study', authors: 'Visperas, M., Adoptante, A.J., Borjal, C.J., Abia, M.T., Catapang, J.K., Peramo, E.', monthYear: 'February 2023', venue: 'ICAIIC 2023 · Bali, Indonesia', citation: 'Visperas, M., Adoptante, A.J., Borjal, C.J., Abia, M.T., Catapang, J.K., Peramo, E. (February 2023). <em>On Modern Text-to-SQL Semantic Parsing Methodologies for Natural Language Interface to Databases: A Comparative Study</em>. 2023 International Conference on Artificial Intelligence in Information and Communication. Bali, Indonesia. pp. 390-396. <a href="https://ieeexplore.ieee.org/document/10067134" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC57133.2023.10067134</a>', pdfUrl: '/publications/text-to-sql-comparative-study-icaiic-2023.pdf', tags: ['NLP', 'machine learning'], sdgs: [4, 9] },
+  { category: 'conference', title: 'Parallel Corpus Curation for Filipino Text-to-SQL Semantic Parsing', authors: 'Borjal, C.J., Visperas, M., Adoptante, A.J., Abia, M.T., Catapang, J.K., Peramo, E.', monthYear: 'February 2023', venue: 'ICAIIC 2023 · Bali, Indonesia', citation: 'Borjal, C.J., Visperas, M., Adoptante, A.J., Abia, M.T., Catapang, J.K., Peramo, E. (February 2023). <em>Parallel Corpus Curation for Filipino Text-to-SQL Semantic Parsing</em>. 2023 International Conference on Artificial Intelligence in Information and Communication. Bali, Indonesia. pp. 163-169. IEEE. <a href="https://ieeexplore.ieee.org/document/10066976" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC57133.2023.10066976</a>', pdfUrl: '/publications/parallel-corpus-filipino-text-to-sql-2023.pdf', tags: ['NLP'], sdgs: [4, 9, 10] },
+  { category: 'conference', title: 'Hadamard Estimated Attention Transformer (HEAT): Fast Approximation of Dot Product Self-attention for Transformers Using Low-Rank Projection of Hadamard Product', authors: 'Catapang, J.K.', monthYear: 'November 2022', venue: 'IEEE ISCMI 2022 · Toronto, Canada', citation: 'Catapang, J.K. (November 2022). <em>Hadamard Estimated Attention Transformer (HEAT): Fast Approximation of Dot Product Self-attention for Transformers Using Low-Rank Projection of Hadamard Product</em>. 2022 International Conference on Soft Computing & Machine Intelligence. Toronto, Canada. pp. 203-206. IEEE. <a href="https://ieeexplore.ieee.org/document/10068484" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ISCMI56532.2022.10068484</a>', pdfUrl: '/publications/heat-iscmi-2022.pdf', tags: ['LLMs', 'machine learning'], sdgs: [7, 9] },
+  { category: 'conference', title: 'Optimizing Speed and Accuracy Trade-off in Machine Learning Models via Stochastic Gradient Descent Approximation', authors: 'Catapang, J.K.', monthYear: 'November 2022', venue: 'IEEE ISCMI 2022 · Toronto, Canada', citation: 'Catapang, J.K. (November 2022). <em>Optimizing Speed and Accuracy Trade-off in Machine Learning Models via Stochastic Gradient Descent Approximation</em>. 2022 International Conference on Soft Computing & Machine Intelligence. Toronto, Canada. pp. 124-128. IEEE. <a href="https://ieeexplore.ieee.org/document/10068476" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ISCMI56532.2022.10068476</a>', pdfUrl: '/publications/speed-accuracy-sgd-iscmi-2022.pdf', tags: ['machine learning'], sdgs: [9] },
+  { category: 'conference', title: 'Identification and Analysis of COVID-19-related Misinformation Tweets via Kullback-Leibler Divergence for Informativeness and Phraseness and Biterm Topic Modeling', authors: 'Clamor, T.D.S., Solano, G.A., Oco, N., Catapang, J.K., Cleofas, J.V., & Isip-Tan, I.T.', monthYear: 'February 2022', venue: 'ICAIIC 2022 · Jeju, South Korea', citation: 'Clamor, T.D.S., Solano, G.A., Oco, N., Catapang, J.K., Cleofas, J.V., & Isip-Tan, I.T. (February 2022). <em>Identification and Analysis of COVID-19-related Misinformation Tweets via Kullback-Leibler Divergence for Informativeness and Phraseness and Biterm Topic Modeling</em>. 2022 International Conference on Artificial Intelligence in Information and Communication. Jeju, South Korea. pp. 451-456. IEEE. <a href="https://ieeexplore.ieee.org/document/9722623" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC54071.2022.9722623</a>', pdfUrl: '/publications/covid-misinformation-tweets-icaiic-2022.pdf', tags: ['NLP', 'machine learning'], sdgs: [3, 9, 16] },
+  { category: 'conference', title: 'Topic Modeling, Clade-assisted Sentiment Analysis, and Vaccine Brand Reputation Analysis of COVID-19 Vaccine-related Facebook Comments in the Philippines', authors: 'Catapang, J.K., & Cleofas, J.V.', monthYear: 'January 2022', venue: 'IEEE ICSC 2022 · Laguna Hills, CA, USA', citation: 'Catapang, J.K., & Cleofas, J.V. (January 2022). <em>Topic Modeling, Clade-assisted Sentiment Analysis, and Vaccine Brand Reputation Analysis of COVID-19 Vaccine-related Facebook Comments in the Philippines</em>. 2022 IEEE International Conference on Semantic Computing. Laguna Hills, California, USA. pp. 123-130. IEEE. <a href="https://ieeexplore.ieee.org/document/9736280" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICSC52841.2022.00026</a>', pdfUrl: '/publications/topic-modeling-vaccine-facebook-icsc-2022.pdf', codeUrl: 'https://github.com/jcatapang/COVID-19-VERTEBRATE', tags: ['NLP', 'machine learning'], sdgs: [3, 12, 16] },
+  { category: 'conference', title: 'A Floyd-Warshall-based Reoptimization of Q Matrix on the Single DVRPPD with On-demand Cancellations', authors: 'Catapang, J.K., & Solano, G.A.', monthYear: 'October 2021', venue: 'ICTC 2021 · Jeju, South Korea', citation: 'Catapang, J.K., & Solano, G.A. (October 2021). <em>A Floyd-Warshall-based Reoptimization of Q Matrix on the Single DVRPPD with On-demand Cancellations</em>. 2021 International Conference on Information and Communication Technology Convergence. Jeju, South Korea. pp. 172-177. IEEE. <a href="https://ieeexplore.ieee.org/document/9621108" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICTC52510.2021.9621108</a>', pdfUrl: '/publications/floyd-warshall-dvrppd-ictc-2021.pdf', codeUrl: 'https://colab.research.google.com/drive/1t9QDIdOj56NdllEwR2vHX45aQB4cWR8t', tags: ['machine learning'], sdgs: [9, 11] },
+  { category: 'conference', title: 'A Bilingual Chatbot Using Support Vector Classifier on an Automatic Corpus Engine Dataset', authors: 'Catapang, J.K., Solano, G.A., & Oco, N.', monthYear: 'February 2020', venue: 'ICAIIC 2020 · Fukuoka, Japan', citation: 'Catapang, J.K., Solano, G.A., & Oco, N. (February 2020). <em>A Bilingual Chatbot Using Support Vector Classifier on an Automatic Corpus Engine Dataset</em>. 2020 International Conference on Artificial Intelligence in Information and Communication. Fukuoka, Japan. pp. 187-192. IEEE. <a href="https://ieeexplore.ieee.org/document/9065208" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC48513.2020.9065208</a>', pdfUrl: '/publications/bilingual-chatbot-icaiic-2020.pdf', tags: ['NLP', 'machine learning'], sdgs: [8, 9, 10] },
 ]
 
 /** Pending: highlighted first, then dated forthcoming (e.g. July 2026), then in press, then submitted — title A→Z within each band. */
@@ -818,6 +957,7 @@ export default function App() {
                   codeUrl={pub.codeUrl}
                   readMinutes={pub.pdfUrl ? publicationReadingMinutes[pub.pdfUrl] : undefined}
                   featured={pub.featured}
+                  sdgs={pub.sdgs}
                 />
               ))}
             </div>
@@ -835,6 +975,7 @@ export default function App() {
                   codeUrl={pub.codeUrl}
                   readMinutes={pub.pdfUrl ? publicationReadingMinutes[pub.pdfUrl] : undefined}
                   featured={pub.featured}
+                  sdgs={pub.sdgs}
                 />
               ))}
             </div>
@@ -852,6 +993,7 @@ export default function App() {
                   codeUrl={pub.codeUrl}
                   readMinutes={pub.pdfUrl ? publicationReadingMinutes[pub.pdfUrl] : undefined}
                   featured={pub.featured}
+                  sdgs={pub.sdgs}
                 />
               ))}
             </div>
@@ -871,6 +1013,7 @@ export default function App() {
                       codeUrl={pub.codeUrl}
                       readMinutes={pub.pdfUrl ? publicationReadingMinutes[pub.pdfUrl] : undefined}
                       featured={pub.featured}
+                      sdgs={pub.sdgs}
                     />
                   ))}
                 </div>

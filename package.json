@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/compute-publication-reading-times.mjs",
+    "prebuild": "node scripts/compute-publication-reading-times.mjs && node scripts/extract-publication-abstracts.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },
