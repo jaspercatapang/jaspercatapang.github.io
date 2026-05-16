@@ -672,7 +672,7 @@ function MobileIntro() {
   return (
     <div className="md:hidden print:hidden px-6 py-8 border-b border-gray-200 bg-surface">
       <div className="flex flex-col items-center text-center mb-6">
-        <img src="/professional_headshot.jpeg?v=2" alt="" width={88} height={88} className="w-[88px] h-[88px] shrink-0 rounded-full object-cover mb-4" />
+        <img src="/professional_headshot.jpeg?v=2" alt="Jasper Kyle Catapang" width={88} height={88} className="w-[88px] h-[88px] shrink-0 rounded-full object-cover mb-4" />
         <h1 className="font-sans text-2xl font-bold tracking-tight text-black mb-2">Jasper Kyle Catapang</h1>
         <p className="text-base text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
         <p className="text-sm text-gray-600 italic mb-2">PhD Candidate, Tokyo University of Foreign Studies</p>
@@ -787,7 +787,7 @@ export default function App() {
         <main id="main-content" className="flex-1 px-6 md:px-8 pb-10 max-w-4xl" tabIndex={-1}>
           <section id="hero" className="hidden md:block py-12 border-b border-gray-200">
             <div className="flex gap-6 items-center">
-              <img src="/professional_headshot.jpeg?v=2" alt="" width={128} height={128} className="w-32 h-32 shrink-0 rounded-full object-cover aspect-square" />
+              <img src="/professional_headshot.jpeg?v=2" alt="Jasper Kyle Catapang" width={128} height={128} className="w-32 h-32 shrink-0 rounded-full object-cover aspect-square" />
               <div className="min-w-0">
                 <h1 className="font-sans text-3xl md:text-4xl font-bold tracking-tight text-black mb-1.5">
                   Jasper Kyle Catapang
@@ -903,6 +903,20 @@ export default function App() {
           </Section>
 
           <Section id="research" title="Research & Consulting">
+            <Entry
+              role="Expert assessor (AI)"
+              company="UKRI Metascience Novelty Indicators Challenge"
+              date="March 2026"
+              meta={
+                <>
+                  <a href="https://www.ukri.org/" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">UK Research and Innovation</a>
+                  {' · '}
+                  <a href="https://www.sussex.ac.uk/business-school/research/spru/" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">University of Sussex SPRU</a>
+                  {' · '}
+                  <a href="https://www.randeurope.org/" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">RAND Europe</a>
+                </>
+              }
+            />
             <Entry
               role="NLI Consultant"
               company="DOST-ASTI"
