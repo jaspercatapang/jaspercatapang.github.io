@@ -1,4 +1,5 @@
 import { useState, useEffect, useLayoutEffect, useMemo, useRef, useId } from 'react'
+import { createPortal } from 'react-dom'
 import { interpolate } from 'flubber'
 import publicationReadingMinutes from './publicationReadingMinutes.json'
 import publicationAbstracts from './publicationAbstracts.json'
@@ -269,8 +270,8 @@ const PublicationInfoModal = ({ title, laySummary, abstractText, sdgs, onClose }
   const showSdgs = Array.isArray(sdgs) && sdgs.length > 0
   const showLay = typeof laySummary === 'string' && laySummary.trim().length > 0
   const showPdf = typeof abstractText === 'string' && abstractText.trim().length > 0
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 dark:bg-black/60" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby={headingId}>
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex min-h-dvh w-full items-center justify-center p-4 bg-black/50 dark:bg-black/60" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby={headingId}>
       <div className="bg-white dark:bg-charcoal-950 rounded-lg shadow-xl max-w-lg w-full max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="px-4 pt-4 pb-2 border-b border-gray-200 dark:border-charcoal-700 flex items-start justify-between gap-3">
           <h3 id={headingId} className="font-sans text-sm font-semibold uppercase tracking-wide text-gray-600 dark:text-neutral-400 m-0">Summary</h3>
@@ -326,7 +327,8 @@ const PublicationInfoModal = ({ title, laySummary, abstractText, sdgs, onClose }
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 
@@ -343,8 +345,8 @@ const CitationModal = ({ citationHtml, onClose }) => {
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [onClose])
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 dark:bg-black/60" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="citation-modal-title">
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex min-h-dvh w-full items-center justify-center p-4 bg-black/50 dark:bg-black/60" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="citation-modal-title">
       <div className="bg-white dark:bg-charcoal-950 rounded-lg shadow-xl max-w-xl w-full max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="px-4 pt-4 pb-2 border-b border-gray-200 dark:border-charcoal-700 flex items-center justify-between">
           <h3 id="citation-modal-title" className="font-sans text-sm font-semibold uppercase tracking-wide text-gray-600 dark:text-neutral-400">APA Citation</h3>
@@ -366,7 +368,8 @@ const CitationModal = ({ citationHtml, onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 
