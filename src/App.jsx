@@ -1,7 +1,34 @@
-import { useState, useEffect, useId } from 'react'
+import { useState, useEffect, useLayoutEffect, useMemo, useRef, useId } from 'react'
+import { interpolate } from 'flubber'
 import publicationReadingMinutes from './publicationReadingMinutes.json'
 import publicationAbstracts from './publicationAbstracts.json'
 import publicationLaySummaries from './publicationLaySummaries.json'
+
+const THEME_KEY = 'portfolio-theme'
+
+function readStoredTheme() {
+  try {
+    const v = localStorage.getItem(THEME_KEY)
+    if (v === 'light' || v === 'dark') return v
+  } catch { /* ignore */ }
+  return null
+}
+
+function getPreferredTheme() {
+  if (typeof window === 'undefined') return 'light'
+  const stored = readStoredTheme()
+  if (stored) return stored
+  return 'light'
+}
+
+function syncDomTheme(theme) {
+  document.documentElement.classList.toggle('dark', theme === 'dark')
+  try {
+    localStorage.setItem(THEME_KEY, theme)
+  } catch { /* ignore */ }
+  const meta = document.getElementById('theme-color-meta')
+  if (meta) meta.setAttribute('content', theme === 'dark' ? '#161616' : '#ffffff')
+}
 
 /** Strip cache-busting query so keys match publicationAbstracts.json and related files. */
 const publicationPdfKey = (pdfUrl) => (pdfUrl ? pdfUrl.split('?')[0] : '')
@@ -14,8 +41,8 @@ const publicationPdfHref = (pdfUrl) =>
   pdfUrl ? `${publicationPdfKey(pdfUrl)}?v=${PDF_CACHE_VERSION}` : pdfUrl
 
 const Section = ({ id, title, children, className = '' }) => (
-  <section id={id} className={`py-10 border-b border-gray-200 last:border-b-0 ${className}`}>
-    <h2 className="font-sans text-xl font-semibold uppercase tracking-widest text-gray-600 mb-6 pb-2 border-b border-gray-200">
+  <section id={id} className={`py-10 border-b border-gray-200 dark:border-charcoal-700 last:border-b-0 ${className}`}>
+    <h2 className="font-sans text-xl font-semibold uppercase tracking-widest text-gray-600 dark:text-neutral-400 mb-6 pb-2 border-b border-gray-200 dark:border-charcoal-700">
       {title}
     </h2>
     {children}
@@ -23,7 +50,7 @@ const Section = ({ id, title, children, className = '' }) => (
 )
 
 const SubsectionTitle = ({ children }) => (
-  <h3 className="font-sans text-base font-semibold uppercase tracking-wide text-gray-600 mt-5 mb-2.5 first:mt-0">
+  <h3 className="font-sans text-base font-semibold uppercase tracking-wide text-gray-600 dark:text-neutral-400 mt-5 mb-2.5 first:mt-0">
     {children}
   </h3>
 )
@@ -33,7 +60,7 @@ const MediaCard = ({ title, url, outlet, domain, date, credit }) => (
     href={url}
     target="_blank"
     rel="noopener noreferrer"
-    className="block p-4 rounded border border-gray-200 bg-white hover:border-accent hover:bg-accent/5 transition-colors group"
+    className="block p-4 rounded border border-gray-200 dark:border-charcoal-700 bg-white dark:bg-charcoal-950 hover:border-accent hover:bg-accent/5 transition-colors group"
   >
     <div className="flex items-center gap-2 mb-2">
       <img
@@ -43,14 +70,14 @@ const MediaCard = ({ title, url, outlet, domain, date, credit }) => (
         height={20}
         className="w-5 h-5 shrink-0"
       />
-      <span className="text-sm font-medium text-gray-600">{outlet}</span>
-      <span className="text-sm text-gray-400">·</span>
-      <span className="text-sm text-gray-500">{date}</span>
+      <span className="text-sm font-medium text-gray-600 dark:text-neutral-400">{outlet}</span>
+      <span className="text-sm text-gray-400 dark:text-neutral-500">·</span>
+      <span className="text-sm text-gray-500 dark:text-neutral-500">{date}</span>
     </div>
-    <h4 className="font-sans text-[1rem] font-semibold text-black group-hover:text-accent transition-colors mb-1">
+    <h4 className="font-sans text-[1rem] font-semibold text-black dark:text-neutral-200 group-hover:text-accent transition-colors mb-1">
       {title}
     </h4>
-    {credit && <p className="text-sm text-gray-500 m-0">{credit}</p>}
+    {credit && <p className="text-sm text-gray-500 dark:text-neutral-500 m-0">{credit}</p>}
   </a>
 )
 
@@ -151,6 +178,87 @@ const InfoIcon = ({ className = 'w-4 h-4' }) => (
   </svg>
 )
 
+const THEME_ICON_MOON_PATH =
+  'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'
+
+function themeIconSunStarPath() {
+  const cx = 12
+  const cy = 12
+  const outer = 8.15
+  const inner = 5.35
+  const rays = 8
+  const step = Math.PI / rays
+  let d = ''
+  for (let i = 0; i < 2 * rays; i++) {
+    const r = i % 2 === 0 ? outer : inner
+    const a = i * step - Math.PI / 2
+    const x = cx + r * Math.cos(a)
+    const y = cy + r * Math.sin(a)
+    d += `${i === 0 ? 'M' : 'L'}${x.toFixed(4)},${y.toFixed(4)}`
+  }
+  return `${d}Z`
+}
+
+const THEME_ICON_SUN_PATH = themeIconSunStarPath()
+
+function ThemeToggleButton({ theme, setTheme, className = '' }) {
+  const dark = theme === 'dark'
+  const morph = useMemo(
+    () =>
+      interpolate(THEME_ICON_MOON_PATH, THEME_ICON_SUN_PATH, {
+        maxSegmentLength: 0.45,
+      }),
+    [],
+  )
+
+  const target = dark ? 0 : 1
+  const [t, setT] = useState(target)
+  const tRef = useRef(target)
+
+  useLayoutEffect(() => {
+    const start = tRef.current
+    if (Math.abs(start - target) < 1e-4) return
+
+    let cancelled = false
+    const duration = 340
+    const t0 = performance.now()
+    const easeInOutQuad = (x) =>
+      x < 0.5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2
+
+    const tick = (now) => {
+      if (cancelled) return
+      const p = Math.min(1, (now - t0) / duration)
+      const eased = easeInOutQuad(p)
+      const val = start + (target - start) * eased
+      tRef.current = val
+      setT(val)
+      if (p < 1) requestAnimationFrame(tick)
+      else {
+        tRef.current = target
+        setT(target)
+      }
+    }
+    requestAnimationFrame(tick)
+    return () => {
+      cancelled = true
+    }
+  }, [target])
+
+  return (
+    <button
+      type="button"
+      className={`inline-flex items-center justify-center rounded border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-900 p-2 text-gray-600 dark:text-neutral-400 hover:border-accent hover:text-accent transition-colors ${className}`}
+      aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-pressed={dark}
+      onClick={() => setTheme(dark ? 'light' : 'dark')}
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 shrink-0 overflow-visible" viewBox="0 0 24 24" aria-hidden>
+        <path d={morph(t)} fill="currentColor" />
+      </svg>
+    </button>
+  )
+}
+
 const PublicationInfoModal = ({ title, laySummary, abstractText, sdgs, onClose }) => {
   const headingId = useId()
   useEffect(() => {
@@ -162,30 +270,30 @@ const PublicationInfoModal = ({ title, laySummary, abstractText, sdgs, onClose }
   const showLay = typeof laySummary === 'string' && laySummary.trim().length > 0
   const showPdf = typeof abstractText === 'string' && abstractText.trim().length > 0
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby={headingId}>
-      <div className="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
-        <div className="px-4 pt-4 pb-2 border-b border-gray-200 flex items-start justify-between gap-3">
-          <h3 id={headingId} className="font-sans text-sm font-semibold uppercase tracking-wide text-gray-600 m-0">Summary</h3>
-          <button type="button" onClick={onClose} className="shrink-0 p-1 rounded text-gray-400 hover:text-black hover:bg-gray-100" aria-label="Close">✕</button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 dark:bg-black/60" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby={headingId}>
+      <div className="bg-white dark:bg-charcoal-950 rounded-lg shadow-xl max-w-lg w-full max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
+        <div className="px-4 pt-4 pb-2 border-b border-gray-200 dark:border-charcoal-700 flex items-start justify-between gap-3">
+          <h3 id={headingId} className="font-sans text-sm font-semibold uppercase tracking-wide text-gray-600 dark:text-neutral-400 m-0">Summary</h3>
+          <button type="button" onClick={onClose} className="shrink-0 p-1 rounded text-gray-400 dark:text-neutral-500 hover:text-black dark:hover:text-neutral-200 hover:bg-gray-100 dark:hover:bg-charcoal-800" aria-label="Close">✕</button>
         </div>
         <div className="p-4 overflow-auto flex-1 space-y-5">
-          <p className="font-sans text-base font-semibold text-black m-0 leading-snug">{title}</p>
+          <p className="font-sans text-base font-semibold text-black dark:text-neutral-200 m-0 leading-snug">{title}</p>
           {showLay && (
             <div>
-              <h4 className="font-sans text-xs font-semibold uppercase tracking-wide text-gray-500 m-0 mb-1.5">TL;DR</h4>
-              <p className="text-[0.95rem] text-gray-700 m-0 leading-relaxed">{laySummary.trim()}</p>
+              <h4 className="font-sans text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-neutral-500 m-0 mb-1.5">TL;DR</h4>
+              <p className="text-[0.95rem] text-gray-700 dark:text-neutral-300 m-0 leading-relaxed">{laySummary.trim()}</p>
             </div>
           )}
           {showPdf && (
             <div>
-              <h4 className="font-sans text-xs font-semibold uppercase tracking-wide text-gray-500 m-0 mb-1.5">Abstract</h4>
-              <p className="text-[0.95rem] text-gray-700 m-0 leading-relaxed">{abstractText.trim()}</p>
+              <h4 className="font-sans text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-neutral-500 m-0 mb-1.5">Abstract</h4>
+              <p className="text-[0.95rem] text-gray-700 dark:text-neutral-300 m-0 leading-relaxed">{abstractText.trim()}</p>
             </div>
           )}
           {showSdgs && (
             <div>
-              <h4 className="font-sans text-xs font-semibold uppercase tracking-wide text-gray-500 m-0 mb-2">SDG</h4>
-              <p className="text-xs text-gray-500 m-0 mb-2">
+              <h4 className="font-sans text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-neutral-500 m-0 mb-2">SDG</h4>
+              <p className="text-xs text-gray-500 dark:text-neutral-500 m-0 mb-2">
                 Goal icons are for illustration. Learn more at{' '}
                 <a href="https://www.un.org/sustainabledevelopment" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">un.org/sustainabledevelopment</a>
                 {' '}and see the{' '}
@@ -204,14 +312,14 @@ const PublicationInfoModal = ({ title, laySummary, abstractText, sdgs, onClose }
                         title={`SDG ${n}: ${label}`}
                         width={56}
                         height={56}
-                        className="h-14 w-14 rounded object-contain ring-1 ring-black/5 bg-white"
+                        className="h-14 w-14 rounded object-contain ring-1 ring-black/5 dark:ring-white/10 bg-white dark:bg-charcoal-950"
                         loading="lazy"
                       />
                     </li>
                   )
                 })}
               </ul>
-              <p className="text-[0.65rem] leading-snug text-gray-500 mt-3 m-0 border-t border-gray-100 pt-2">
+              <p className="text-[0.65rem] leading-snug text-gray-500 dark:text-neutral-500 mt-3 m-0 border-t border-gray-100 dark:border-charcoal-700 pt-2">
                 The content of this publication has not been approved by the United Nations and does not reflect the views of the United Nations or its officials or Member States.
               </p>
             </div>
@@ -236,20 +344,20 @@ const CitationModal = ({ citationHtml, onClose }) => {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [onClose])
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="citation-modal-title">
-      <div className="bg-white rounded-lg shadow-xl max-w-xl w-full max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
-        <div className="px-4 pt-4 pb-2 border-b border-gray-200 flex items-center justify-between">
-          <h3 id="citation-modal-title" className="font-sans text-sm font-semibold uppercase tracking-wide text-gray-600">APA Citation</h3>
-          <button type="button" onClick={onClose} className="p-1 rounded text-gray-400 hover:text-black hover:bg-gray-100" aria-label="Close">✕</button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 dark:bg-black/60" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="citation-modal-title">
+      <div className="bg-white dark:bg-charcoal-950 rounded-lg shadow-xl max-w-xl w-full max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
+        <div className="px-4 pt-4 pb-2 border-b border-gray-200 dark:border-charcoal-700 flex items-center justify-between">
+          <h3 id="citation-modal-title" className="font-sans text-sm font-semibold uppercase tracking-wide text-gray-600 dark:text-neutral-400">APA Citation</h3>
+          <button type="button" onClick={onClose} className="p-1 rounded text-gray-400 dark:text-neutral-500 hover:text-black dark:hover:text-neutral-200 hover:bg-gray-100 dark:hover:bg-charcoal-800" aria-label="Close">✕</button>
         </div>
         <div className="p-4 overflow-auto flex-1">
           <div className="relative">
-            <div className="p-4 pr-12 rounded border border-gray-200 bg-gray-50 text-[0.875rem] text-gray-700 [&_a]:text-accent [&_a:hover]:underline [&_em]:italic" dangerouslySetInnerHTML={{ __html: citationHtml }} />
+            <div className="p-4 pr-12 rounded border border-gray-200 dark:border-charcoal-700 bg-gray-50 dark:bg-charcoal-900 text-[0.875rem] text-gray-700 dark:text-neutral-300 [&_a]:text-accent [&_a:hover]:underline [&_em]:italic" dangerouslySetInnerHTML={{ __html: citationHtml }} />
             <button
               id="citation-copy-btn"
               type="button"
               onClick={handleCopy}
-              className={`absolute top-3 right-3 p-2 rounded border transition-colors ${copied ? 'bg-accent text-white border-accent' : 'text-gray-500 hover:text-accent hover:bg-white border-gray-200 hover:border-accent'}`}
+              className={`absolute top-3 right-3 p-2 rounded border transition-colors ${copied ? 'bg-accent text-white border-accent' : 'text-gray-500 dark:text-neutral-500 hover:text-accent hover:bg-white dark:hover:bg-charcoal-900 border-gray-200 dark:border-charcoal-700 hover:border-accent'}`}
               aria-label={copied ? 'Copied' : 'Copy citation'}
               title="Copy citation"
             >
@@ -277,17 +385,17 @@ function PublicationActions ({ codeUrl, pdfUrl, onCite, onInfo, showInfo, classN
           <span>View PDF</span>
         </a>
       ) : (
-        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 cursor-not-allowed" aria-disabled="true">
+        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 dark:text-neutral-500 cursor-not-allowed" aria-disabled="true">
           <EyeIcon />
           <span>View PDF</span>
         </span>
       )}
       {pdfUrl ? (
-        <a href={publicationPdfHref(pdfUrl)} download={publicationPdfKey(pdfUrl).split('/').pop()} rel="noopener noreferrer" className="inline-flex items-center justify-center p-1 rounded text-accent hover:text-black hover:bg-accent/10 transition-colors" title="Download PDF" aria-label="Download PDF">
+        <a href={publicationPdfHref(pdfUrl)} download={publicationPdfKey(pdfUrl).split('/').pop()} rel="noopener noreferrer" className="inline-flex items-center justify-center p-1 rounded text-accent hover:text-black dark:hover:text-neutral-200 hover:bg-accent/10 transition-colors" title="Download PDF" aria-label="Download PDF">
           <DownloadIcon className="w-4 h-4" />
         </a>
       ) : (
-        <span className="inline-flex items-center justify-center p-1 text-gray-400 cursor-not-allowed rounded" aria-disabled="true" aria-label="Download PDF unavailable" title="Download unavailable">
+        <span className="inline-flex items-center justify-center p-1 text-gray-400 dark:text-neutral-500 cursor-not-allowed rounded" aria-disabled="true" aria-label="Download PDF unavailable" title="Download unavailable">
           <DownloadIcon className="w-4 h-4" />
         </span>
       )}
@@ -295,7 +403,7 @@ function PublicationActions ({ codeUrl, pdfUrl, onCite, onInfo, showInfo, classN
         <button
           type="button"
           onClick={onInfo}
-          className="inline-flex items-center justify-center p-1 rounded text-accent hover:text-black hover:bg-accent/10 transition-colors"
+          className="inline-flex items-center justify-center p-1 rounded text-accent hover:text-black dark:hover:text-neutral-200 hover:bg-accent/10 transition-colors"
           aria-label="Open TL;DR, abstract from PDF, and SDGs"
           title="TL;DR, abstract, SDGs"
         >
@@ -327,14 +435,14 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
   return (
     <>
       <article
-        className={`relative flex flex-col gap-2 rounded min-w-0 px-4 pb-4 pt-3 max-md:gap-1.5 max-md:px-3.5 max-md:pb-3 max-md:pt-2 md:p-4 bg-white ${
-          featured ? 'border-[3px] border-red-900' : 'border border-gray-200'
+        className={`relative flex flex-col gap-2 rounded min-w-0 px-4 pb-4 pt-3 max-md:gap-1.5 max-md:px-3.5 max-md:pb-3 max-md:pt-2 md:p-4 bg-white dark:bg-charcoal-950 ${
+          featured ? 'border-[3px] border-red-900 dark:border-accent' : 'border border-gray-200 dark:border-charcoal-700'
         }`}
         aria-label={featured ? 'Highlighted publication' : undefined}
       >
         {showRead && (
           <div
-            className="md:hidden absolute top-0 right-0 z-10 flex items-center gap-0.5 rounded-bl-md bg-accent pl-1.5 pr-2 py-1 text-[0.7rem] font-semibold text-white shadow-sm ring-1 ring-black/5"
+            className="md:hidden absolute top-0 right-0 z-10 flex items-center gap-0.5 rounded-bl-md bg-accent pl-1.5 pr-2 py-1 text-[0.7rem] font-semibold text-white shadow-sm ring-1 ring-black/5 dark:ring-white/10"
             title={readTimeTooltip}
             aria-label={readTimeTooltip}
           >
@@ -346,12 +454,12 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
           <div className="flex flex-col gap-2 max-md:gap-1.5 md:flex-row md:flex-wrap md:items-start md:justify-between md:gap-x-3 md:gap-y-2">
             <div className={`flex min-w-0 w-full items-start md:flex-1 ${featured ? 'gap-2' : ''}`}>
               {featured && (
-                <span className="mt-0.5 shrink-0 text-red-900" title="Highlighted">
+                <span className="mt-0.5 shrink-0 text-red-900 dark:text-accent" title="Highlighted">
                   <FeaturedStarIcon />
                 </span>
               )}
               <span className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2 gap-y-0 pr-1">
-                <h4 className="font-sans text-[1rem] font-semibold text-black m-0 min-w-0">{title}</h4>
+                <h4 className="font-sans text-[1rem] font-semibold text-black dark:text-neutral-200 m-0 min-w-0">{title}</h4>
                 {posterUrl ? (
                   <a
                     href={publicationPdfHref(posterUrl)}
@@ -373,22 +481,22 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
               showInfo={showInfo}
             />
           </div>
-          <p className="text-sm text-gray-600 mt-0.5 mb-0 [&_strong]:font-semibold [&_strong]:text-black" dangerouslySetInnerHTML={{ __html: boldAuthor(authors) }} />
+          <p className="text-sm text-gray-600 dark:text-neutral-400 mt-0.5 mb-0 [&_strong]:font-semibold [&_strong]:text-black dark:[&_strong]:text-neutral-200" dangerouslySetInnerHTML={{ __html: boldAuthor(authors) }} />
           <div className="mt-0.5 flex w-full min-w-0 flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-            <p className="text-sm text-gray-500 m-0 min-w-0 flex-1">{monthYear}{venue && venue !== '—' ? ` · ${venue}` : ''}</p>
+            <p className="text-sm text-gray-500 dark:text-neutral-500 m-0 min-w-0 flex-1">{monthYear}{venue && venue !== '—' ? ` · ${venue}` : ''}</p>
             {showRead && (
               <div
                 className="group relative hidden shrink-0 cursor-default rounded outline-none md:inline-flex focus-visible:ring-2 focus-visible:ring-accent/35"
                 tabIndex={0}
                 aria-label={readTimeTooltip}
               >
-                <span className="inline-flex items-center gap-1 text-sm text-gray-600">
+                <span className="inline-flex items-center gap-1 text-sm text-gray-600 dark:text-neutral-400">
                   <TimerIcon className="h-4 w-4 shrink-0 text-accent" aria-hidden />
                   <span>{readMinutes} min</span>
                 </span>
                 <span
                   role="tooltip"
-                  className="pointer-events-none invisible absolute bottom-full right-0 z-20 mb-1.5 w-max max-w-[min(18rem,calc(100vw-2rem))] rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-left text-xs font-normal leading-snug text-gray-700 opacity-0 shadow-lg transition-none group-hover:visible group-hover:opacity-100 group-focus-visible:visible group-focus-visible:opacity-100"
+                  className="pointer-events-none invisible absolute bottom-full right-0 z-20 mb-1.5 w-max max-w-[min(18rem,calc(100vw-2rem))] rounded-md border border-gray-200 dark:border-charcoal-700 bg-white dark:bg-charcoal-950 px-2.5 py-1.5 text-left text-xs font-normal leading-snug text-gray-700 dark:text-neutral-300 opacity-0 shadow-lg transition-none group-hover:visible group-hover:opacity-100 group-focus-visible:visible group-focus-visible:opacity-100"
                 >
                   {readTimeTooltip}
                 </span>
@@ -412,13 +520,13 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
 }
 
 const Entry = ({ role, company, date, location, desc, bullets, meta }) => (
-  <article className="pb-10 mb-10 border-b border-gray-200 last:border-b-0 last:pb-0 last:mb-0">
+  <article className="pb-10 mb-10 border-b border-gray-200 dark:border-charcoal-700 last:border-b-0 last:pb-0 last:mb-0">
     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-1">
       <h3 className="font-sans text-[1.15rem] font-semibold m-0">{role}</h3>
-      <span className="font-medium text-black">{company}</span>
-      <span className="ml-auto text-sm text-gray-600 tabular-nums">{date}</span>
+      <span className="font-medium text-black dark:text-neutral-200">{company}</span>
+      <span className="ml-auto text-sm text-gray-600 dark:text-neutral-400 tabular-nums">{date}</span>
     </div>
-    {location && <p className="text-sm text-gray-600 mb-2">{location}</p>}
+    {location && <p className="text-sm text-gray-600 dark:text-neutral-400 mb-2">{location}</p>}
     {desc && <p className="mb-2.5">{desc}</p>}
     {bullets && (
       <ul className="my-2 pl-5 space-y-1.5">
@@ -427,7 +535,7 @@ const Entry = ({ role, company, date, location, desc, bullets, meta }) => (
         ))}
       </ul>
     )}
-    {meta && <p className="text-sm text-gray-600 mt-3">{meta}</p>}
+    {meta && <p className="text-sm text-gray-600 dark:text-neutral-400 mt-3">{meta}</p>}
   </article>
 )
 
@@ -438,7 +546,7 @@ const IconLink = ({ href, label, children }) => (
     rel="noopener noreferrer"
     aria-label={label}
     title={label}
-    className="inline-flex items-center justify-center w-10 h-10 rounded text-accent hover:text-black hover:bg-accent/10 transition-colors"
+    className="inline-flex items-center justify-center w-10 h-10 rounded text-accent hover:text-black dark:hover:text-neutral-200 hover:bg-accent/10 transition-colors"
   >
     {children}
   </a>
@@ -671,7 +779,7 @@ const EXPERIENCE_ENTRIES = [
   },
 ]
 
-function MobileIntro() {
+function MobileIntro({ theme, setTheme }) {
   const navItems = [
     { href: '#skills', label: 'Technical skills' },
     { href: '#about', label: 'About' },
@@ -682,31 +790,32 @@ function MobileIntro() {
     { href: '#media', label: 'Media' },
   ]
   return (
-    <div className="md:hidden print:hidden px-6 py-8 border-b border-gray-200 bg-surface">
+    <div className="md:hidden print:hidden px-6 py-8 border-b border-gray-200 dark:border-charcoal-700 bg-surface">
       <div className="flex flex-col items-center text-center mb-6">
         <img src="/professional_headshot.jpeg?v=2" alt="Jasper Kyle Catapang" width={88} height={88} className="w-[88px] h-[88px] shrink-0 rounded-full object-cover mb-4" />
-        <h1 className="font-sans text-2xl font-bold tracking-tight text-black mb-2">Jasper Kyle Catapang</h1>
-        <p className="text-base text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
-        <p className="text-sm text-gray-600 italic mb-2">PhD Candidate, Tokyo University of Foreign Studies</p>
-        <p className="text-sm text-gray-600 mb-4">
+        <h1 className="font-sans text-2xl font-bold tracking-tight text-black dark:text-neutral-200 mb-2">Jasper Kyle Catapang</h1>
+        <p className="text-base text-gray-600 dark:text-neutral-400 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
+        <p className="text-sm text-gray-600 dark:text-neutral-400 italic mb-2">PhD Candidate, Tokyo University of Foreign Studies</p>
+        <p className="text-sm text-gray-600 dark:text-neutral-400 mb-4">
           <a href="/Catapang_CV.pdf" target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
           {' '}(as of 2026/5/10)
         </p>
         <div className="space-y-2 flex flex-col items-center">
           <a href="mailto:jasperkylecatapang@gmail.com" className="font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
-          <div className="flex flex-wrap gap-1 justify-center">
+          <div className="flex flex-wrap gap-1 justify-center items-center">
+            <ThemeToggleButton theme={theme} setTheme={setTheme} />
             <IconLink href="https://www.linkedin.com/in/jcatapang/" label="LinkedIn"><LinkedInIcon /></IconLink>
             <IconLink href="https://www.facebook.com/jcatapang07/" label="Facebook"><FacebookIcon /></IconLink>
             <IconLink href="https://scholar.google.com/citations?user=yNIX3HQAAAAJ" label="Google Scholar"><GoogleScholarIcon /></IconLink>
             <IconLink href="https://orcid.org/0000-0002-4510-0975" label="ORCID"><OrcidIcon /></IconLink>
             <IconLink href="https://huggingface.co/jaspercatapang" label="Hugging Face"><HuggingFaceIcon /></IconLink>
           </div>
-          <p className="text-sm text-gray-600 m-0">Suginami, Tokyo, Japan</p>
+          <p className="text-sm text-gray-600 dark:text-neutral-400 m-0">Suginami, Tokyo, Japan</p>
         </div>
       </div>
       <nav className="flex flex-wrap gap-3 justify-center">
         {navItems.map(({ href, label }) => (
-          <a key={href} href={href} className="text-sm font-medium uppercase tracking-widest text-gray-600 hover:text-accent transition-colors">
+          <a key={href} href={href} className="text-sm font-medium uppercase tracking-widest text-gray-600 dark:text-neutral-400 hover:text-accent transition-colors">
             {label}
           </a>
         ))}
@@ -715,14 +824,17 @@ function MobileIntro() {
   )
 }
 
-function Sidebar() {
+function Sidebar({ theme, setTheme }) {
   return (
-    <aside className="hidden md:block print:hidden w-72 shrink-0 border-r border-gray-200 bg-surface min-h-screen sticky top-0 py-8 px-6">
+    <aside className="hidden md:block print:hidden w-72 shrink-0 border-r border-gray-200 dark:border-charcoal-700 bg-surface min-h-screen sticky top-0 py-8 px-6">
       <div className="space-y-10">
         <div>
-          <h2 className="font-sans text-sm font-semibold uppercase tracking-widest text-gray-600 mb-4 pb-2 border-b border-gray-200">
-            Contact
-          </h2>
+          <div className="flex items-center justify-between gap-3 mb-4 pb-2 border-b border-gray-200 dark:border-charcoal-700">
+            <h2 className="font-sans text-sm font-semibold uppercase tracking-widest text-gray-600 dark:text-neutral-400 m-0">
+              Contact
+            </h2>
+            <ThemeToggleButton theme={theme} setTheme={setTheme} className="shrink-0" />
+          </div>
           <div className="space-y-3">
             <a href="mailto:jasperkylecatapang@gmail.com" className="block font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
             <div className="flex flex-wrap gap-1 pt-1">
@@ -742,18 +854,18 @@ function Sidebar() {
                 <HuggingFaceIcon />
               </IconLink>
             </div>
-            <p className="text-sm text-gray-600 m-0">Suginami, Tokyo, Japan</p>
+            <p className="text-sm text-gray-600 dark:text-neutral-400 m-0">Suginami, Tokyo, Japan</p>
           </div>
         </div>
         <div>
-          <h2 className="font-sans text-sm font-semibold uppercase tracking-widest text-gray-600 mb-4 pb-2 border-b border-gray-200">
+          <h2 className="font-sans text-sm font-semibold uppercase tracking-widest text-gray-600 dark:text-neutral-400 mb-4 pb-2 border-b border-gray-200 dark:border-charcoal-700">
             Technical Skills
           </h2>
           <div className="space-y-4">
             {SKILLS.map(({ title, text }) => (
-              <div key={title} className="p-3 pl-4 bg-white rounded border-l-4 border-accent">
+              <div key={title} className="p-3 pl-4 bg-white dark:bg-charcoal-950 rounded border-l-4 border-accent">
                 <h4 className="font-sans text-xs font-semibold uppercase tracking-wide text-accent m-0 mb-1">{title}</h4>
-                <p className="text-[0.875rem] m-0 text-gray-700">{text}</p>
+                <p className="text-[0.875rem] m-0 text-gray-700 dark:text-neutral-300">{text}</p>
               </div>
             ))}
           </div>
@@ -764,8 +876,12 @@ function Sidebar() {
 }
 
 export default function App() {
+  const [theme, setTheme] = useState(getPreferredTheme)
   const [showAllExperience, setShowAllExperience] = useState(false)
   const [pubTagFilter, setPubTagFilter] = useState([])
+  useEffect(() => {
+    syncDomTheme(theme)
+  }, [theme])
   const firstExperience = EXPERIENCE_ENTRIES[0]
   const matchesTagFilter = (pub) => !pubTagFilter.length || (pub.tags && pubTagFilter.some((t) => pub.tags.includes(t)))
   const restExperience = EXPERIENCE_ENTRIES.slice(1)
@@ -774,21 +890,21 @@ export default function App() {
     <div className="flex flex-col md:flex-row min-h-screen">
       <a
         href="#main-content"
-        className="absolute left-4 top-4 -translate-y-[200%] z-[100] px-4 py-2 bg-accent text-white font-medium rounded focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-transform print:hidden"
+        className="absolute left-4 top-4 -translate-y-[200%] z-[100] px-4 py-2 bg-accent text-white font-medium rounded focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-charcoal-950 focus:ring-accent transition-transform print:hidden"
       >
         Skip to main content
       </a>
-      <MobileIntro />
-      <Sidebar />
+      <MobileIntro theme={theme} setTheme={setTheme} />
+      <Sidebar theme={theme} setTheme={setTheme} />
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="hidden md:block print:hidden sticky top-0 z-10 bg-white/92 backdrop-blur-md border-b border-gray-200">
+        <header className="hidden md:block print:hidden sticky top-0 z-10 bg-white/92 dark:bg-charcoal-950/92 backdrop-blur-md border-b border-gray-200 dark:border-charcoal-700">
           <nav className="px-8 py-6 flex flex-wrap gap-4">
             {['About', 'Experience', 'Research', 'Grants', 'Publications', 'Media'].map((label) => (
               <a
                 key={label}
                 href={`#${label.toLowerCase()}`}
-                className="text-sm font-medium uppercase tracking-widest text-gray-600 hover:text-accent transition-colors"
+                className="text-sm font-medium uppercase tracking-widest text-gray-600 dark:text-neutral-400 hover:text-accent transition-colors"
               >
                 {label}
               </a>
@@ -797,16 +913,16 @@ export default function App() {
         </header>
 
         <main id="main-content" className="flex-1 px-6 md:px-8 pb-10 max-w-4xl" tabIndex={-1}>
-          <section id="hero" className="hidden md:block py-12 border-b border-gray-200">
+          <section id="hero" className="hidden md:block py-12 border-b border-gray-200 dark:border-charcoal-700">
             <div className="flex gap-6 items-center">
               <img src="/professional_headshot.jpeg?v=2" alt="Jasper Kyle Catapang" width={128} height={128} className="w-32 h-32 shrink-0 rounded-full object-cover aspect-square" />
               <div className="min-w-0">
-                <h1 className="font-sans text-3xl md:text-4xl font-bold tracking-tight text-black mb-1.5">
+                <h1 className="font-sans text-3xl md:text-4xl font-bold tracking-tight text-black dark:text-neutral-200 mb-1.5">
                   Jasper Kyle Catapang
                 </h1>
-                <p className="text-lg text-gray-600 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
-                <p className="text-[0.95rem] text-gray-600 italic mb-1">PhD Candidate, Tokyo University of Foreign Studies</p>
-                <p className="text-sm text-gray-600">
+                <p className="text-lg text-gray-600 dark:text-neutral-400 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
+                <p className="text-[0.95rem] text-gray-600 dark:text-neutral-400 italic mb-1">PhD Candidate, Tokyo University of Foreign Studies</p>
+                <p className="text-sm text-gray-600 dark:text-neutral-400">
                   <a href="/Catapang_CV.pdf" target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
                   {' '}(as of 2026/5/10)
                 </p>
@@ -829,13 +945,13 @@ export default function App() {
             </div>
           </Section>
 
-          <section id="skills" className="md:hidden py-8 border-b border-gray-200">
-            <h2 className="font-sans text-xl font-semibold uppercase tracking-widest text-gray-600 mb-4 pb-2 border-b border-gray-200">Technical Skills</h2>
+          <section id="skills" className="md:hidden py-8 border-b border-gray-200 dark:border-charcoal-700">
+            <h2 className="font-sans text-xl font-semibold uppercase tracking-widest text-gray-600 dark:text-neutral-400 mb-4 pb-2 border-b border-gray-200 dark:border-charcoal-700">Technical Skills</h2>
             <div className="space-y-4">
               {SKILLS.map(({ title, text }) => (
                 <div key={title} className="p-3 pl-4 bg-surface rounded border-l-4 border-accent">
                   <h4 className="font-sans text-xs font-semibold uppercase tracking-wide text-accent m-0 mb-1">{title}</h4>
-                  <p className="text-[0.875rem] m-0 text-gray-700">{text}</p>
+                  <p className="text-[0.875rem] m-0 text-gray-700 dark:text-neutral-300">{text}</p>
                 </div>
               ))}
             </div>
@@ -911,7 +1027,7 @@ export default function App() {
               desc="Thesis: SmartRetail: A bilingual retail chatbot using support vector machine."
               meta="Supervisor: Dr. Geoffrey A. Solano"
             />
-            <p className="text-sm text-gray-600 mt-4">ALPS 2021: Advanced Language Processing School, Université Grenoble Alpes, L’Escandille, France (Jan 2021).</p>
+            <p className="text-sm text-gray-600 dark:text-neutral-400 mt-4">ALPS 2021: Advanced Language Processing School, Université Grenoble Alpes, L’Escandille, France (Jan 2021).</p>
           </Section>
 
           <Section id="research" title="Research & Consulting">
@@ -946,7 +1062,7 @@ export default function App() {
           </Section>
 
           <Section id="grants" title="Grants and Funding">
-            <div className="p-5 rounded border border-gray-200 bg-white">
+            <div className="p-5 rounded border border-gray-200 dark:border-charcoal-700 bg-white dark:bg-charcoal-950">
               <h4 className="font-sans text-base font-semibold m-0 mb-2">UP ISC Research Grant 2026–2028</h4>
               <p className="text-[0.95rem] m-0">
                 UP Intelligent Systems Center. Research Project: Design, Development, and Evaluation of a Filipino Conversational Agent for the Self-management of Type 2 Diabetes Mellitus. Co-investigator.
@@ -956,27 +1072,27 @@ export default function App() {
 
           <Section id="publications" title="Publications" className="pb-10">
             <div className="mb-4 flex flex-wrap items-center gap-2">
-              <span className="text-sm font-medium text-gray-600">Filter by:</span>
+              <span className="text-sm font-medium text-gray-600 dark:text-neutral-400">Filter by:</span>
               {PUBLICATION_TAGS.map((tag) => (
                 <button
                   key={tag}
                   type="button"
                   onClick={() => setPubTagFilter((prev) => (prev.includes(tag) ? prev : [...prev, tag]))}
-                  className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${pubTagFilter.includes(tag) ? 'bg-accent text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                  className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${pubTagFilter.includes(tag) ? 'bg-accent text-white' : 'bg-gray-100 dark:bg-charcoal-800 text-gray-700 dark:text-neutral-300 hover:bg-gray-200 dark:hover:bg-charcoal-700'}`}
                 >
                   {tag}
                 </button>
               ))}
               {pubTagFilter.length > 0 && (
                 <>
-                  <span className="text-gray-400">|</span>
+                  <span className="text-gray-400 dark:text-neutral-500">|</span>
                   {pubTagFilter.map((tag) => (
                     <span key={tag} className="inline-flex items-center gap-1 rounded-full bg-accent/15 px-3 py-1 text-sm text-accent">
                       {tag}
                       <button type="button" onClick={() => setPubTagFilter((prev) => prev.filter((t) => t !== tag))} className="hover:opacity-80" aria-label={`Remove ${tag}`}>×</button>
                     </span>
                   ))}
-                  <button type="button" onClick={() => setPubTagFilter([])} className="text-sm font-medium text-gray-600 hover:text-accent underline">Clear all</button>
+                  <button type="button" onClick={() => setPubTagFilter([])} className="text-sm font-medium text-gray-600 dark:text-neutral-400 hover:text-accent underline">Clear all</button>
                 </>
               )}
             </div>
@@ -1128,7 +1244,7 @@ export default function App() {
           </Section>
         </main>
 
-        <footer className="print:hidden px-8 py-6 border-t border-gray-200 text-sm text-gray-600">
+        <footer className="print:hidden px-8 py-6 border-t border-gray-200 dark:border-charcoal-700 text-sm text-gray-600 dark:text-neutral-400">
           © {new Date().getFullYear()} Jasper Kyle Catapang
         </footer>
       </div>

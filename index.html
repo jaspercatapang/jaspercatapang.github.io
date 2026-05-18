@@ -10,7 +10,17 @@
     <meta name="description" content="Portfolio of Jasper Kyle Catapang — PhD researcher in NLP, explainable AI, and LLM post-training (Tokyo University of Foreign Studies). Expert assessor for the UKRI Metascience Novelty Indicators Challenge." />
     <meta name="author" content="Jasper Kyle Catapang" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" id="theme-color-meta" />
+    <script>
+      (function () {
+        try {
+          var k = 'portfolio-theme';
+          var t = localStorage.getItem(k);
+          if (t === 'dark')
+            document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
     <meta name="google-site-verification" content="s3USmu1vltxwuuNdcmDAN-Lzx1fAgLPawkPrdH4SisA" />
     <!-- Open Graph / social previews -->
     <meta property="og:type" content="website" />
