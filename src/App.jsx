@@ -310,7 +310,7 @@ function PublicationActions ({ codeUrl, pdfUrl, onCite, onInfo, showInfo, classN
   )
 }
 
-function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, codeUrl, readMinutes, featured, sdgs }) {
+function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, posterUrl, codeUrl, readMinutes, featured, sdgs }) {
   const [citeOpen, setCiteOpen] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
   const pdfKey = publicationPdfKey(pdfUrl)
@@ -350,7 +350,19 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
                   <FeaturedStarIcon />
                 </span>
               )}
-              <h4 className="font-sans text-[1rem] font-semibold text-black m-0 min-w-0 flex-1 pr-1">{title}</h4>
+              <span className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2 gap-y-0 pr-1">
+                <h4 className="font-sans text-[1rem] font-semibold text-black m-0 min-w-0">{title}</h4>
+                {posterUrl ? (
+                  <a
+                    href={publicationPdfHref(posterUrl)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-normal text-accent underline underline-offset-2 hover:opacity-90 shrink-0"
+                  >
+                    [Poster]
+                  </a>
+                ) : null}
+              </span>
             </div>
             <PublicationActions
               className="w-full md:w-auto"
@@ -523,8 +535,8 @@ const PUBLICATION_TAGS = ['NLP', 'LLMs', 'AI safety', 'World Englishes', 'migrat
 
 const PUBLICATION_CARDS = [
   { category: 'pending', featured: true, title: 'Thesis Proposal: An Explainable Multimodal Framework for Detecting Harmful Content in Code-Switched Children\'s Media', authors: 'Guillermo, J.I.A., Catapang, J.K., & Oco, N.', monthYear: 'July 2026', venue: 'ACL 2026 · San Diego, CA, USA', citation: 'Guillermo, J.I.A., Catapang, J.K., & Oco, N. (forthcoming). <em>Thesis Proposal: An Explainable Multimodal Framework for Detecting Harmful Content in Code-Switched Children\'s Media</em>. The 64th Annual Meeting of the Association for Computational Linguistics (ACL). San Diego, California, USA.', pdfUrl: '/publications/thesis-proposal-multimodal-harmful-children-acl-2026.pdf', tags: ['NLP', 'AI safety', 'vision-language', 'machine learning'], sdgs: [3, 10, 16] },
-  { category: 'pending', title: 'A Metric Typology for Language Model Evaluation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'GEM @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (forthcoming). <em>A Metric Typology for Language Model Evaluation</em>. The 5th Workshop on Generation, Evaluation and Metrics (GEM). ACL 2026. San Diego, California, USA.', pdfUrl: '/publications/metric-typology-gem-acl-2026.pdf', tags: ['LLMs', 'machine learning', 'AI safety', 'NLP'], sdgs: [9, 17] },
-  { category: 'pending', title: 'When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'MAGMaR @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (forthcoming). <em>When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation</em>. The 2nd Workshop on Multimodal Augmented Generation via MultimodAl Retrieval (MAGMaR). ACL 2026. San Diego, California, USA.', pdfUrl: '/publications/when-image-text-disagree-magmar-acl-2026.pdf', codeUrl: 'https://github.com/jaspercatapang/cmc-bench', tags: ['LLMs', 'NLP', 'machine learning', 'vision-language'], sdgs: [9, 10, 16] },
+  { category: 'pending', title: 'A Metric Typology for Language Model Evaluation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'GEM @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (forthcoming). <em>A Metric Typology for Language Model Evaluation</em>. The 5th Workshop on Generation, Evaluation and Metrics (GEM). ACL 2026. San Diego, California, USA.', pdfUrl: '/publications/metric-typology-gem-acl-2026.pdf', posterUrl: '/posters/metric-typology-gem-acl-2026-poster.pdf', tags: ['LLMs', 'machine learning', 'AI safety', 'NLP'], sdgs: [9, 17] },
+  { category: 'pending', title: 'When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'MAGMaR @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (forthcoming). <em>When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation</em>. The 2nd Workshop on Multimodal Augmented Generation via MultimodAl Retrieval (MAGMaR). ACL 2026. San Diego, California, USA.', pdfUrl: '/publications/when-image-text-disagree-magmar-acl-2026.pdf', posterUrl: '/posters/when-image-text-disagree-magmar-acl-2026-poster.pdf', codeUrl: 'https://github.com/jaspercatapang/cmc-bench', tags: ['LLMs', 'NLP', 'machine learning', 'vision-language'], sdgs: [9, 10, 16] },
   { category: 'pending', title: 'Conyo English', authors: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S.', monthYear: 'In press', venue: 'Journal of English and Applied Linguistics', citation: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S. (in press). <em>Conyo English</em>. Journal of English and Applied Linguistics. De La Salle University.', pdfUrl: '', tags: ['World Englishes', 'NLP'], sdgs: [4, 10] },
   { category: 'pending', title: 'Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes</em>.', pdfUrl: '', tags: ['World Englishes', 'AI safety'], sdgs: [10, 16] },
   { category: 'pending', title: 'ChatGPT as a Tool in Describing Variation and Change in English Worldwide', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>ChatGPT as a Tool in Describing Variation and Change in English Worldwide</em>.', pdfUrl: '', tags: ['NLP', 'World Englishes'], sdgs: [4, 9, 10] },
@@ -904,7 +916,7 @@ export default function App() {
 
           <Section id="research" title="Research & Consulting">
             <Entry
-              role="Expert assessor (AI)"
+              role="Expert Assessor (AI)"
               company="UKRI Metascience Novelty Indicators Challenge"
               date="March 2026"
               meta={
@@ -979,6 +991,7 @@ export default function App() {
                   venue={pub.venue}
                   citation={pub.citation}
                   pdfUrl={pub.pdfUrl}
+                  posterUrl={pub.posterUrl}
                   codeUrl={pub.codeUrl}
                   readMinutes={pub.pdfUrl ? publicationReadingMinutes[publicationPdfKey(pub.pdfUrl)] : undefined}
                   featured={pub.featured}
@@ -997,6 +1010,7 @@ export default function App() {
                   venue={pub.venue}
                   citation={pub.citation}
                   pdfUrl={pub.pdfUrl}
+                  posterUrl={pub.posterUrl}
                   codeUrl={pub.codeUrl}
                   readMinutes={pub.pdfUrl ? publicationReadingMinutes[publicationPdfKey(pub.pdfUrl)] : undefined}
                   featured={pub.featured}
@@ -1015,6 +1029,7 @@ export default function App() {
                   venue={pub.venue}
                   citation={pub.citation}
                   pdfUrl={pub.pdfUrl}
+                  posterUrl={pub.posterUrl}
                   codeUrl={pub.codeUrl}
                   readMinutes={pub.pdfUrl ? publicationReadingMinutes[publicationPdfKey(pub.pdfUrl)] : undefined}
                   featured={pub.featured}
@@ -1035,6 +1050,7 @@ export default function App() {
                       venue={pub.venue}
                       citation={pub.citation}
                       pdfUrl={pub.pdfUrl}
+                      posterUrl={pub.posterUrl}
                       codeUrl={pub.codeUrl}
                       readMinutes={pub.pdfUrl ? publicationReadingMinutes[publicationPdfKey(pub.pdfUrl)] : undefined}
                       featured={pub.featured}
