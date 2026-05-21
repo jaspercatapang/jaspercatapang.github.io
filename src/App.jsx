@@ -604,7 +604,7 @@ const RECENT_UPDATES_ITEMS = [
     date: 'May 2, 2026',
     body: (
       <>
-        Accepted 1 main conference paper (via SRW) and 2 workshop papers at{' '}
+        I'm thrilled to have one main conference paper (via SRW) and two workshop papers accepted at{' '}
         <a href="https://2026.aclweb.org/" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">ACL 2026</a>
         .
       </>
@@ -616,7 +616,7 @@ const RECENT_UPDATES_ITEMS = [
     date: 'February 9, 2026',
     body: (
       <>
-        Published a journal article about a future-proof AI lifecycle governance framework in{' '}
+        I published a piece on a future-proof AI lifecycle governance framework in{' '}
         <a href="/publications/ethical-ai-framework-2026.pdf" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer"><em>AI and Ethics</em></a>.
       </>
     ),
@@ -627,7 +627,7 @@ const RECENT_UPDATES_ITEMS = [
     date: 'December 22, 2025',
     body: (
       <>
-        Published a journal article about migration linguistics and AI in the{' '}
+        I have a journal article out on migration linguistics and AI in the{' '}
         <a href="/publications/language-migration-chatgpt-2025.pdf" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer"><em>Journal of Modern Languages</em></a>.
       </>
     ),
