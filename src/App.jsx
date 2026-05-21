@@ -594,6 +594,46 @@ const SKILLS = [
   { title: 'Languages', text: 'Python, SQL, JavaScript, C++.' },
 ]
 
+/** Newest first; only the first `RECENT_UPDATES_MAX` rows render. */
+const RECENT_UPDATES_MAX = 5
+
+const RECENT_UPDATES_ITEMS = [
+  {
+    key: '2026-05-02-acl',
+    isoDate: '2026-05-02',
+    date: 'May 2, 2026',
+    body: (
+      <>
+        Accepted 1 main conference paper (via SRW) and 2 workshop papers at{' '}
+        <a href="https://2026.aclweb.org/" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">ACL 2026</a>
+        .
+      </>
+    ),
+  },
+  {
+    key: '2026-02-09-ai-ethics',
+    isoDate: '2026-02-09',
+    date: 'February 9, 2026',
+    body: (
+      <>
+        Published a journal article about a future-proof AI lifecycle governance framework in{' '}
+        <a href="/publications/ethical-ai-framework-2026.pdf" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer"><em>AI and Ethics</em></a>.
+      </>
+    ),
+  },
+  {
+    key: '2025-12-22-jml',
+    isoDate: '2025-12-22',
+    date: 'December 22, 2025',
+    body: (
+      <>
+        Published a journal article about migration linguistics and AI in the{' '}
+        <a href="/publications/language-migration-chatgpt-2025.pdf" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer"><em>Journal of Modern Languages</em></a>.
+      </>
+    ),
+  },
+]
+
 const MEDIA_ITEMS = [
   {
     title: 'Breaking the illusion of language data scarcity in the Philippines',
@@ -878,6 +918,49 @@ function Sidebar({ theme, setTheme }) {
   )
 }
 
+/** Newest-first vertical timeline capped at {@link RECENT_UPDATES_MAX} entries; spine fades below the oldest shown row. */
+function RecentUpdatesTimeline() {
+  const items = RECENT_UPDATES_ITEMS.slice(0, RECENT_UPDATES_MAX)
+
+  return (
+    <div className="max-w-[38rem] mt-10 mb-10">
+      <h3 className="font-sans text-base font-semibold uppercase tracking-wide text-gray-600 dark:text-neutral-400 m-0 mb-4">
+        Recent updates
+      </h3>
+      <ul className="m-0 list-none p-0" aria-label="Recent updates timeline">
+        {items.map((item, i) => {
+          const isLast = i === items.length - 1
+          return (
+            <li key={item.key} className={`relative m-0 ${isLast ? 'pb-0' : 'pb-8'} pl-10`}>
+              <span
+                className="absolute left-0 top-[0.4375rem] z-[1] box-border h-3 w-3 rounded-full border-2 border-accent bg-white ring-4 ring-white dark:bg-charcoal-950 dark:ring-charcoal-950"
+                aria-hidden
+              />
+              {!isLast && (
+                <span
+                  className="pointer-events-none absolute left-[5px] top-[calc(0.4375rem+0.75rem)] bottom-0 z-0 w-0.5 bg-gray-300 dark:bg-charcoal-600"
+                  aria-hidden
+                />
+              )}
+              {isLast && (
+                <span
+                  className="pointer-events-none absolute left-[5px] top-[calc(0.4375rem+0.75rem)] z-0 h-16 w-0.5 bg-gradient-to-b from-gray-300 to-transparent dark:from-charcoal-600 dark:to-transparent"
+                  aria-hidden
+                />
+              )}
+              <time className="block text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-neutral-500 mb-1.5 tabular-nums" dateTime={item.isoDate}>
+                {item.date}
+              </time>
+              <p className="m-0 text-[0.95rem] leading-relaxed text-gray-700 dark:text-neutral-300">{item.body}</p>
+            </li>
+          )
+        })}
+      </ul>
+      <p className="m-0 mt-3 pl-10 text-lg leading-none text-gray-400 dark:text-neutral-600 select-none" aria-hidden>…</p>
+    </div>
+  )
+}
+
 export default function App() {
   const [theme, setTheme] = useState(getPreferredTheme)
   const [showAllExperience, setShowAllExperience] = useState(false)
@@ -946,6 +1029,7 @@ export default function App() {
                 Currently pursuing a PhD at the Tokyo University of Foreign Studies, I balance advanced research with cross-functional technical leadership, bridging the gap between responsible AI principles and robust, real-world product deployment.
               </p>
             </div>
+            <RecentUpdatesTimeline />
           </Section>
 
           <section id="skills" className="md:hidden py-8 border-b border-gray-200 dark:border-charcoal-700">
