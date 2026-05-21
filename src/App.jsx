@@ -826,6 +826,7 @@ function MobileIntro({ theme, setTheme }) {
   const navItems = [
     { href: '#skills', label: 'Technical skills' },
     { href: '#about', label: 'About' },
+    { href: '#recent-updates', label: 'Updates' },
     { href: '#experience', label: 'Experience' },
     { href: '#research', label: 'Research' },
     { href: '#grants', label: 'Grants' },
@@ -918,15 +919,12 @@ function Sidebar({ theme, setTheme }) {
   )
 }
 
-/** Newest-first vertical timeline capped at {@link RECENT_UPDATES_MAX} entries; spine fades below the oldest shown row. */
+/** Newest-first vertical timeline capped at {@link RECENT_UPDATES_MAX} entries; spine fades below the oldest shown row. Section title lives on the wrapping {@link Section}. */
 function RecentUpdatesTimeline() {
   const items = RECENT_UPDATES_ITEMS.slice(0, RECENT_UPDATES_MAX)
 
   return (
-    <div className="max-w-[38rem] mt-10 mb-10">
-      <h3 className="font-sans text-base font-semibold uppercase tracking-wide text-gray-600 dark:text-neutral-400 m-0 mb-4">
-        Recent updates
-      </h3>
+    <div className="max-w-[38rem]">
       <ul className="m-0 list-none p-0" aria-label="Recent updates timeline">
         {items.map((item, i) => {
           const isLast = i === items.length - 1
@@ -986,10 +984,18 @@ export default function App() {
       <div className="flex-1 flex flex-col min-w-0">
         <header className="hidden md:block print:hidden sticky top-0 z-10 bg-white/92 dark:bg-charcoal-950/92 backdrop-blur-md border-b border-gray-200 dark:border-charcoal-700">
           <nav className="px-8 py-6 flex flex-wrap gap-4">
-            {['About', 'Experience', 'Research', 'Grants', 'Publications', 'Media'].map((label) => (
+            {[
+              ['About', 'about'],
+              ['Updates', 'recent-updates'],
+              ['Experience', 'experience'],
+              ['Research', 'research'],
+              ['Grants', 'grants'],
+              ['Publications', 'publications'],
+              ['Media', 'media'],
+            ].map(([label, id]) => (
               <a
-                key={label}
-                href={`#${label.toLowerCase()}`}
+                key={id}
+                href={`#${id}`}
                 className="text-sm font-medium uppercase tracking-widest text-gray-600 dark:text-neutral-400 hover:text-accent transition-colors"
               >
                 {label}
@@ -1029,6 +1035,9 @@ export default function App() {
                 Currently pursuing a PhD at the Tokyo University of Foreign Studies, I balance advanced research with cross-functional technical leadership, bridging the gap between responsible AI principles and robust, real-world product deployment.
               </p>
             </div>
+          </Section>
+
+          <Section id="recent-updates" title="Recent updates">
             <RecentUpdatesTimeline />
           </Section>
 
