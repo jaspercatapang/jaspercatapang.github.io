@@ -1151,7 +1151,7 @@ export default function App() {
               company="Tokyo University of Foreign Studies"
               date="Oct 2024 – Present"
               location="Tokyo, Japan"
-              desc={<>Language and Culture Program.<br />Dissertation: Lexical Innovations of World Englishes: A Corpus-Based Computational Analysis of News Discourse.</>}
+              desc={<>Language and Culture Program.<br />Dissertation: A Computational Theory of Lexical Legitimization in World Englishes.</>}
               meta="Supervisor: Dr. Ariane Macalinga Borlongan"
             />
             <Entry
