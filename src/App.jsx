@@ -588,10 +588,57 @@ const HuggingFaceIcon = () => (
   </svg>
 )
 
+const SKILL_LINK_CLASSES = 'text-accent hover:underline'
+const SKILL_LINK_PROPS = { className: SKILL_LINK_CLASSES, target: '_blank', rel: 'noopener noreferrer' }
+
 const SKILLS = [
   { title: 'LLM & Post-Training', text: 'SFT, RLHF, Model Alignment, Prompt Engineering, RAG, Agentic AI, Evaluation Pipeline.' },
-  { title: 'Frameworks & Tools', text: 'PyTorch, LangChain, HuggingFace Transformers, Azure, Amazon Web Services, WandB, Datadog, Rollbar, Docker, Cursor, React, Tailwind.' },
-  { title: 'Languages', text: 'Python, SQL, JavaScript, C++.' },
+  {
+    title: 'Frameworks & Tools',
+    text: (
+      <>
+        <a href="https://pytorch.org/" {...SKILL_LINK_PROPS}>PyTorch</a>
+        {', '}
+        <a href="https://www.langchain.com/" {...SKILL_LINK_PROPS}>LangChain</a>
+        {', '}
+        <a href="https://huggingface.co/docs/transformers" {...SKILL_LINK_PROPS}>HuggingFace Transformers</a>
+        {', '}
+        <a href="https://azure.microsoft.com/" {...SKILL_LINK_PROPS}>Azure</a>
+        {', '}
+        <a href="https://aws.amazon.com/" {...SKILL_LINK_PROPS}>Amazon Web Services</a>
+        {', '}
+        <a href="https://wandb.ai/" {...SKILL_LINK_PROPS}>WandB</a>
+        {', '}
+        <a href="https://www.datadoghq.com/" {...SKILL_LINK_PROPS}>Datadog</a>
+        {', '}
+        <a href="https://rollbar.com/" {...SKILL_LINK_PROPS}>Rollbar</a>
+        {', '}
+        <a href="https://www.docker.com/" {...SKILL_LINK_PROPS}>Docker</a>
+        {', '}
+        <a href="https://cursor.com/" {...SKILL_LINK_PROPS}>Cursor</a>
+        {', '}
+        <a href="https://react.dev/" {...SKILL_LINK_PROPS}>React</a>
+        {', '}
+        <a href="https://tailwindcss.com/" {...SKILL_LINK_PROPS}>Tailwind</a>
+        .
+      </>
+    ),
+  },
+  {
+    title: 'Languages',
+    text: (
+      <>
+        <a href="https://www.python.org/" {...SKILL_LINK_PROPS}>Python</a>
+        {', '}
+        <a href="https://en.wikipedia.org/wiki/SQL" {...SKILL_LINK_PROPS}>SQL</a>
+        {', '}
+        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" {...SKILL_LINK_PROPS}>JavaScript</a>
+        {', '}
+        <a href="https://isocpp.org/" {...SKILL_LINK_PROPS}>C++</a>
+        .
+      </>
+    ),
+  },
 ]
 
 /** Newest first; only the first `RECENT_UPDATES_MAX` rows render. */
