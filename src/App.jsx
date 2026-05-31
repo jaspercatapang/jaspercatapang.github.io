@@ -35,7 +35,7 @@ function syncDomTheme(theme) {
 const publicationPdfKey = (pdfUrl) => (pdfUrl ? pdfUrl.split('?')[0] : '')
 
 /** Bump when you replace any PDF under `public/publications/`. Format: `date +%Y%m%d%H%M%S` */
-const PDF_CACHE_VERSION = '20260521092949'
+const PDF_CACHE_VERSION = '20260601010820'
 
 /** Append global cache version for View/Download links (JSON keys use path-only). */
 const publicationPdfHref = (pdfUrl) =>
@@ -1152,7 +1152,12 @@ export default function App() {
               date="Oct 2024 – Present"
               location="Tokyo, Japan"
               desc={<>Language and Culture Program.<br />Dissertation: A Computational Theory of Lexical Legitimization in World Englishes.</>}
-              meta="Supervisor: Dr. Ariane Macalinga Borlongan"
+              meta={
+                <>
+                  Supervisor:{' '}
+                  <a href="https://www.tufs.ac.jp/research/researcher/people/english/ariane_macalinga_borlongan.html" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Dr. Ariane Macalinga Borlongan</a>
+                </>
+              }
             />
             <Entry
               role="Master of Arts, Applied Linguistics"
@@ -1160,7 +1165,12 @@ export default function App() {
               date="Dec 2020 – Jul 2023"
               location="Birmingham, United Kingdom"
               desc={<>Student Representative 2021/2022.<br />Dissertation: A cross-cultural corpus analysis of honorifics in spoken and written text corpora of American, British, Philippine, and Singapore Englishes.</>}
-              meta="Supervisor: Prof. Lorraine Adriano"
+              meta={
+                <>
+                  Supervisor:{' '}
+                  <a href="https://www.birmingham.ac.uk/staff/profiles/elal/adriano-lorraine" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Prof. Lorraine Adriano</a>
+                </>
+              }
             />
             <Entry
               role="Bachelor of Science, Computer Science"
@@ -1168,7 +1178,12 @@ export default function App() {
               date="Aug 2015 – Jan 2020"
               location="Manila, Philippines"
               desc="Thesis: SmartRetail: A bilingual retail chatbot using support vector machine."
-              meta="Supervisor: Dr. Geoffrey A. Solano"
+              meta={
+                <>
+                  Supervisor:{' '}
+                  <a href="https://scholar.google.com/citations?user=FDIZgt0AAAAJ&hl=en" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Dr. Geoffrey A. Solano</a>
+                </>
+              }
             />
             <p className="text-sm text-gray-600 dark:text-neutral-400 mt-4">ALPS 2021: Advanced Language Processing School, Université Grenoble Alpes, L’Escandille, France (Jan 2021).</p>
           </Section>
