@@ -2,6 +2,8 @@
  * Extracts Abstract sections from PDFs in public/publications.
  * Writes src/publicationAbstracts.json (pdfUrl path -> plain text).
  * Skips files where no Abstract block is detected.
+ * Merges src/publicationAbstractOverrides.json last (curated text for preprints
+ * or PDFs where layout lacks a clear Abstract heading).
  */
 import fs from 'fs'
 import path from 'path'
@@ -12,11 +14,17 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = path.join(__dirname, '..')
 const pubDir = path.join(root, 'public', 'publications')
 const outFile = path.join(root, 'src', 'publicationAbstracts.json')
+const overridesFile = path.join(root, 'src', 'publicationAbstractOverrides.json')
 
-/** Text after "Abstract" until a common following section. */
+/**
+ * Text after a section-style "Abstract" / "ABSTRACT" until a common following section.
+ * Case-sensitive on "Abstract" so we do not match the word "abstract" inside phrases like
+ * "abstract concepts" (a prior /\bAbstract/.../i false positive).
+ */
 function extractAbstract (raw) {
   const t = (raw || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n').replace(/\f/g, '\n')
-  const m = t.match(/\bAbstract\s*[.:—\-–]?\s*/i)
+  const header = /(?:^|\n)\s*(?:Abstract|ABSTRACT)\s*[.:—\-–]?\s*/
+  const m = t.match(header)
   if (!m || m.index === undefined) return null
   let rest = t.slice(m.index + m[0].length)
   const endPatterns = [
@@ -80,6 +88,21 @@ async function main () {
       }
     } catch (e) {
       console.warn(`${key}: skip (${e.message})`)
+    }
+  }
+  if (fs.existsSync(overridesFile)) {
+    try {
+      const overrides = JSON.parse(fs.readFileSync(overridesFile, 'utf8'))
+      if (overrides && typeof overrides === 'object') {
+        for (const [k, v] of Object.entries(overrides)) {
+          if (typeof v === 'string' && v.trim().length > 0) {
+            map[k] = v.trim()
+            console.log(`${k}: abstract (override, ${v.trim().length} chars)`)
+          }
+        }
+      }
+    } catch (e) {
+      console.warn(`Overrides file invalid or unreadable: ${e.message}`)
     }
   }
   fs.writeFileSync(outFile, `${JSON.stringify(map, null, 2)}\n`, 'utf8')
