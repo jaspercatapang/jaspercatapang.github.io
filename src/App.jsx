@@ -35,7 +35,7 @@ function syncDomTheme(theme) {
 const publicationPdfKey = (pdfUrl) => (pdfUrl ? pdfUrl.split('?')[0] : '')
 
 /** Bump when you replace any PDF under `public/publications/`. Format: `date +%Y%m%d%H%M%S` */
-const PDF_CACHE_VERSION = '20260601010820'
+const PDF_CACHE_VERSION = '20260603153613'
 
 /** Append global cache version for View/Download links (JSON keys use path-only). */
 const publicationPdfHref = (pdfUrl) =>
