@@ -14,8 +14,8 @@ This file is the **full reporting set** of everything in the portfolio’s `PUBL
 1. Thesis Proposal: Explainable Multimodal Framework… (ACL 2026 SRW)  
 2. A Metric Typology for Language Model Evaluation (GEM @ ACL 2026)  
 3. When Image and Text Disagree… (MAGMaR @ ACL 2026)  
-4. Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes  
-5. Conyo English  
+4. Conyo English  
+5. Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes (*Asian Englishes*, 2026)  
 6. Building the Ethical AI Framework of the Future… (*AI and Ethics*)  
 7. Language, Migration, and ChatGPT (*Journal of Modern Languages*)  
 8. Interdisciplinary Approach… COVID-19 Misinformation on Twitter (*JMIR Formative Research*)  
@@ -38,13 +38,13 @@ This file is the **full reporting set** of everything in the portfolio’s `PUBL
 
 ## 1. Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes
 
-**Status:** In press  
+**Status:** Published (online)  
 **Authors:** Catapang, J.K.  
 **Affiliations:** *Not in repository metadata — see the published article.*  
 **Venue:** Asian Englishes  
-**Publication date (as listed on site):** In press  
+**Publication date (as listed on site):** 2026 (online 7 June 2026)  
 **Dissertation relevance (heuristic rank):** 100/100  
-**APA-style reference (plain text):** Catapang, J.K. (in press). Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes . Asian Englishes.  
+**APA-style reference (plain text):** Catapang, J.K. (2026). Asymmetrical pluralism and the normative power of artificial intelligence in Asian Englishes. *Asian Englishes*. https://doi.org/10.1080/13488678.2026.2685377  
 **PDF (site):** https://jaspercatapang.github.io/publications/asymmetrical-pluralism-normative-power-ai-asian-englishes.pdf  
 
 **TL;DR (curator summary):** The paper leads with a concrete case: when Singapore English 'Can or not?' is smoothed into something like 'Is it possible?', that is not just copy-editing—it is a normative judgment, automated and at scale. Frontier chatbots are becoming everyday gatekeepers of "good" English, but they do not treat all varieties equally. This study uses critical discourse analysis on a corpus of interactions with GPT-5.1, Claude Opus 4.5, and Gemini 3 Pro across Singapore, Indian, Philippine, and Japanese English (alongside American and British norms). It shows how models often recast Asian English features as errors to fix, privileging globally dominant varieties in data and behavior—so many Englishes can appear in use while normative authority stays sharply uneven, a pattern the paper calls asymmetrical pluralism.
