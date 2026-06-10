@@ -35,7 +35,7 @@ function syncDomTheme(theme) {
 const publicationPdfKey = (pdfUrl) => (pdfUrl ? pdfUrl.split('?')[0] : '')
 
 /** Bump when you replace any PDF under `public/publications/`. Format: `date +%Y%m%d%H%M%S` */
-const PDF_CACHE_VERSION = '20260603153613'
+const PDF_CACHE_VERSION = '20260609163214'
 
 /** Append global cache version for View/Download links (JSON keys use path-only). */
 const publicationPdfHref = (pdfUrl) =>
@@ -645,6 +645,18 @@ const SKILLS = [
 const RECENT_UPDATES_MAX = 5
 
 const RECENT_UPDATES_ITEMS = [
+  {
+    key: '2026-06-08-asian-englishes',
+    isoDate: '2026-06-08',
+    date: 'June 8, 2026',
+    body: (
+      <>
+        I published an article on asymmetrical pluralism and how AI systems redistribute normative authority across Asian Englishes in{' '}
+        <a href="/publications/asymmetrical-pluralism-normative-power-ai-asian-englishes.pdf" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer"><em>Asian Englishes</em></a>
+        .
+      </>
+    ),
+  },
   {
     key: '2026-05-02-acl',
     isoDate: '2026-05-02',
