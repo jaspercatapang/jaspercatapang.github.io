@@ -41,6 +41,14 @@ const PDF_CACHE_VERSION = '20260609163214'
 const publicationPdfHref = (pdfUrl) =>
   pdfUrl ? `${publicationPdfKey(pdfUrl)}?v=${PDF_CACHE_VERSION}` : pdfUrl
 
+/**
+ * Bump when replacing `public/Catapang_CV.pdf`. Shown next to [CV] and used as `?v=` so browsers
+ * pick up the new PDF without a hard refresh (same idea as `PDF_CACHE_VERSION`).
+ * Format: YYYY/M/D.
+ */
+const CV_AS_OF = '2026/6/15'
+const cvPdfHref = `/Catapang_CV.pdf?v=${CV_AS_OF.split('/').map((p) => p.padStart(2, '0')).join('')}`
+
 const Section = ({ id, title, children, className = '' }) => (
   <section id={id} className={`py-10 border-b border-gray-200 dark:border-charcoal-700 last:border-b-0 ${className}`}>
     <h2 className="font-sans text-xl font-semibold uppercase tracking-widest text-gray-600 dark:text-neutral-400 mb-6 pb-2 border-b border-gray-200 dark:border-charcoal-700">
@@ -753,7 +761,7 @@ const PUBLICATION_CARDS = [
   { category: 'pending', title: 'When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'MAGMaR @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (forthcoming). <em>When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation</em>. The 2nd Workshop on Multimodal Augmented Generation via MultimodAl Retrieval (MAGMaR). ACL 2026. San Diego, California, USA.', pdfUrl: '/publications/when-image-text-disagree-magmar-acl-2026.pdf', posterUrl: '/posters/when-image-text-disagree-magmar-acl-2026-poster.pdf', codeUrl: 'https://github.com/jaspercatapang/cmc-bench', tags: ['LLMs', 'NLP', 'machine learning', 'vision-language'], sdgs: [9, 10, 16] },
   { category: 'pending', title: 'Conyo English', authors: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S.', monthYear: 'In press', venue: 'Journal of English and Applied Linguistics', citation: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S. (in press). <em>Conyo English</em>. Journal of English and Applied Linguistics. De La Salle University.', pdfUrl: '', tags: ['World Englishes', 'NLP'], sdgs: [4, 10] },
   { category: 'pending', title: 'ChatGPT as a Tool in Describing Variation and Change in English Worldwide', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>ChatGPT as a Tool in Describing Variation and Change in English Worldwide</em>.', pdfUrl: '', tags: ['NLP', 'World Englishes'], sdgs: [4, 9, 10] },
-  { category: 'pending', title: 'Concept Activation Regions for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Concept Activation Regions for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models</em>.', pdfUrl: '', tags: ['LLMs', 'machine learning', 'AI safety'], sdgs: [9, 10, 16] },
+  { category: 'pending', title: 'Orthogonality Is Not Disentanglement: Directional and Measure Entanglement in Language Model Concept Representations', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Orthogonality Is Not Disentanglement: Directional and Measure Entanglement in Language Model Concept Representations</em>.', pdfUrl: '', tags: ['LLMs', 'machine learning', 'AI safety'], sdgs: [9, 10, 16] },
   { category: 'journal', title: 'Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes', authors: 'Catapang, J.K.', monthYear: '2026', venue: 'Asian Englishes', citation: 'Catapang, J.K. (2026). <em>Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes</em>. Asian Englishes. <a href="https://doi.org/10.1080/13488678.2026.2685377" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1080/13488678.2026.2685377</a>', pdfUrl: '/publications/asymmetrical-pluralism-normative-power-ai-asian-englishes.pdf', codeUrl: 'https://doi.org/10.6084/m9.figshare.31354009', tags: ['World Englishes', 'AI safety'], sdgs: [10, 16] },
   { category: 'journal', title: 'Building the Ethical AI Framework of the Future: From Philosophy to Practice', authors: 'Catapang, J.K.', monthYear: '2026', venue: 'AI and Ethics', citation: 'Catapang, J.K. (2026). <em>Building the Ethical AI Framework of the Future: From Philosophy to Practice</em>. AI and Ethics, 6, 150. <a href="https://doi.org/10.1007/s43681-026-01003-8" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1007/s43681-026-01003-8</a>', pdfUrl: '/publications/ethical-ai-framework-2026.pdf', tags: ['AI safety', 'LLMs'], sdgs: [12, 13, 16, 17] },
   { category: 'journal', title: 'Language, Migration, and ChatGPT', authors: 'Catapang, J.K., Borlongan, A.M., & Go, M.A.C.', monthYear: '2025', venue: 'Journal of Modern Languages', citation: 'Catapang, J.K., Borlongan, A.M., & Go, M.A.C. (2025). <em>Language, Migration, and ChatGPT</em>. Journal of Modern Languages, 35(2), 167–189. <a href="https://doi.org/10.22452/jml.vol35no2.9" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">https://doi.org/10.22452/jml.vol35no2.9</a>', pdfUrl: '/publications/language-migration-chatgpt-2025.pdf', tags: ['migration linguistics', 'NLP', 'LLMs'], sdgs: [4, 8, 10] },
@@ -912,8 +920,8 @@ function MobileIntro({ theme, setTheme }) {
         <p className="text-base text-gray-600 dark:text-neutral-400 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
         <p className="text-sm text-gray-600 dark:text-neutral-400 italic mb-2">PhD Candidate, Tokyo University of Foreign Studies</p>
         <p className="text-sm text-gray-600 dark:text-neutral-400 mb-4">
-          <a href="/Catapang_CV.pdf" target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
-          {' '}(as of 2026/6/15)
+          <a href={cvPdfHref} target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
+          {' '}(as of {CV_AS_OF})
         </p>
         <div className="space-y-2 flex flex-col items-center">
           <a href="mailto:jasperkylecatapang@gmail.com" className="font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
@@ -1086,8 +1094,8 @@ export default function App() {
                 <p className="text-lg text-gray-600 dark:text-neutral-400 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
                 <p className="text-[0.95rem] text-gray-600 dark:text-neutral-400 italic mb-1">PhD Candidate, Tokyo University of Foreign Studies</p>
                 <p className="text-sm text-gray-600 dark:text-neutral-400">
-                  <a href="/Catapang_CV.pdf" target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
-                  {' '}(as of 2026/6/15)
+                  <a href={cvPdfHref} target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
+                  {' '}(as of {CV_AS_OF})
                 </p>
               </div>
             </div>

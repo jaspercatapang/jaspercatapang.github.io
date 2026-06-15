@@ -5,7 +5,7 @@
 
 This file is the **full reporting set** of everything in the portfolio’s `PUBLICATION_CARDS` (`src/App.jsx`) that is **not** `Submitted`: **20** works (in press, published journals, published proceedings, and accepted forthcoming). Metadata and abstracts are drawn from `src/publicationAbstracts.json`, `src/publicationAbstractOverrides.json`, and `src/publicationLaySummaries.json` where available.
 
-**Excluded on purpose (under review / not yet accepted):** *ChatGPT as a Tool in Describing Variation and Change in English Worldwide*; *Concept Activation Regions for Multi-Concept Activation and its (Dis)Entanglement in Large Language Models*.
+**Excluded on purpose (under review / not yet accepted):** *ChatGPT as a Tool in Describing Variation and Change in English Worldwide*; *Orthogonality Is Not Disentanglement: Directional and Measure Entanglement in Language Model Concept Representations*.
 
 **Order of the detailed sections below:** Sorted for **dissertation narrative** (estimated relevance to World Englishes / lexical legitimization / AI-mediated norms, then reverse-chronological date). That order differs from the portfolio website and from a typical graduate-school list PDF.
 
