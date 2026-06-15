@@ -1,0 +1,577 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Medium Length Graduate Curriculum Vitae
+% LaTeX Template
+% Version 1.2 (3/28/15)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Rensselaer Polytechnic Institute 
+% (http://www.rpi.edu/dept/arc/training/latex/resumes/)
+%
+% Modified by:
+% Daniel L Marks}\\$\langle$xleafr@gmail.com$\rangle$ 3/28/2015
+%
+% Important note:
+% This template requires the res.cls file to be in the same directory as the
+% .tex file. The res.cls file provides the resume style used for structuring the
+% document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%-------------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% You can have multiple style options the legal options ones are:
+%
+%   centered:	the name and address are centered at the top of the page 
+%				(default)
+%
+%   line:		the name is the left with a horizontal line then the address to
+%				the right
+%
+%   overlapped:	the section titles overlap the body text (default)
+%
+%   margin:		the section titles are to the left of the body text
+%		
+%   11pt:		use 11 point fonts instead of 10 point fonts
+%
+%   12pt:		use 12 point fonts instead of 10 point fonts
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[margin]{res}  
+
+% Default font is the helvetica postscript font
+\usepackage{ebgaramond}
+\usepackage{hanging}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+% Increase text height
+\textheight=700pt
+
+\makeatletter
+\newcommand{\anchortarget}[1]{\Hy@raisedlink{\hyper@anchorstart{#1}\hyper@anchorend}}
+\makeatother
+
+\newcommand{\SubItem}[1]{
+    {\setlength\itemindent{15pt} \item[-] #1}
+}
+
+% --- Employer block for multiple roles ---
+\newcommand{\employerblock}[3]{%
+  \noindent\textbf{\href{#1}{#2}} \hfill \textit{#3}\par
+}
+
+\newcommand{\roleblock}[4]{%
+  \noindent\textbf{#1} \hfill #2\par
+  \noindent\textit{#3} \hfill #4\par
+}
+
+\begin{document}
+
+%-------------------------------------------------------------------------------
+%	NAME AND ADDRESS SECTION
+%-------------------------------------------------------------------------------
+\name{\href{https://scholar.google.com/citations?user=yNIX3HQAAAAJ}{Jasper Kyle Catapang}}
+
+% Note that addresses can be used for other contact information:
+% -phone numbers
+% -email addresses
+% -linked-in profile
+
+\address{Email: \href{mailto:jasperkylecatapang@gmail.com}{jasperkylecatapang@gmail.com}\\Address: \href{https://maps.app.goo.gl/UpkPn4X9774Gkkd3A}{Suginami-ku, Tokyo-to, Japan}\\}
+\address{Linkedin: \href{https://www.linkedin.com/in/jcatapang/}{jcatapang}\\Website: \href{https://jaspercatapang.github.io/}{jaspercatapang.github.io}}
+
+% Uncomment to add a third address
+%\address{Address 3 line 1\\Address 3 line 2\\Address 3 line 3}
+%-------------------------------------------------------------------------------
+
+\begin{resume}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%	EXPERIENCE SECTION
+%-------------------------------------------------------------------------------
+% Modify the format of each position
+\begin{format}
+\title{l}\employer{r}\\
+\dates{l}\location{r}\\
+\body\\
+\end{format}
+
+\section{SUMMARY}
+With seven years of experience in NLP and AI, Jasper Kyle Catapang specializes in explainable AI (XAI), LLM post-training, and agentic evaluation, most notably leading the fine-tuning of the top-ranked GodziLLa-2 model. Grounded in computer science and applied linguistics, his work prioritizes ethical alignment and model transparency—critical assets for developing safe, trustworthy, and culturally aware multimodal agents. Currently pursuing a PhD at the Tokyo University of Foreign Studies, he balances advanced research with cross-functional technical leadership, bridging the gap between responsible AI principles and robust, real-world product deployment.
+
+%-------------------------------------------------------------------------------
+%	EDUCATION SECTION
+%-------------------------------------------------------------------------------
+\section{EDUCATION}
+\href{https://www.tufs.ac.jp/english/}{\textbf{Tokyo University of Foreign Studies}}, Tokyo, Japan\\
+{\sl Doctor of Philosophy}, Global Studies, Language and Culture Program, Oct 2024---\hfill\\
+Dissertation: A Computational Theory of Lexical Legitimization in World Englishes.
+\vskip 0.01in
+\href{https://www.birmingham.ac.uk/index.aspx}{\textbf{University of Birmingham}}, Birmingham, United Kingdom\\
+{\sl Master of Arts}, Applied Linguistics, Dec 2020 - Jul 2023\hfill\\
+Student Representative 2021/2022\\
+\href{https://drive.google.com/file/d/1ngbks2IUxQhZs2TnTlXovnwnzyZ8HrUp/view?usp=sharing}{Dissertation: A cross-cultural corpus analysis of honorifics in spoken and written text corpora of American, British, Philippine, and Singapore Englishes}
+\vskip 0.01in
+\href{https://up.edu.ph/}{\textbf{University of the Philippines}}, Manila, Philippines\\
+{\sl Bachelor of Science}, Computer Science, Aug 2015 - Jan 2020\hfill\\
+\href{https://ieeexplore.ieee.org/document/9065208}{Thesis: SmartRetail: A bilingual retail chatbot using support vector machine}
+
+\textbf{INFORMAL EDUCATION}\\
+\href{http://alps-2021.imag.fr/}{\textbf{ALPS 2021: Advanced Language Processing School}}\\
+\href{https://www.univ-grenoble-alpes.fr/}{Université Grenoble Alpes}, 
+L'Escandille, France, (Jan 2021).
+
+\section{TECHNICAL\\SKILLS}
+\textbf{LLM \& Post-Training}: SFT, RLHF, Model Alignment, Prompt Engineering, RAG, Agentic AI, Evaluation Pipeline.\\
+\textbf{Frameworks \& Tools}: PyTorch, LangChain, HuggingFace Transformers, Azure, Amazon Web Services, WandB, Datadog, Rollbar, Docker, Cursor, React, Tailwind, A2A, MCP.\\
+\textbf{Languages}: Python, SQL, JavaScript, C++.
+
+\section{PROFESSIONAL\\EXPERIENCE}
+
+%-------------------------------------------------------------------------------
+%   MONEY FORWARD (GROUPED EXPERIENCE)
+%-------------------------------------------------------------------------------
+
+% Money Forward overall header (printed once)
+\noindent\textbf{\href{https://corp.moneyforward.com/en/}{Money Forward}} \hfill Tokyo, JP\\
+\noindent\textit{Overall tenure: Aug 2024 -- Present}\par\vspace{-2mm}
+% --- Current role ---
+\employer{} % intentionally blank
+\location{} % intentionally blank
+\dates{January 2026 -- Present}
+\title{\textbf{AI Agent Development Lead}}
+\begin{position}
+I lead the design, development, and delivery of internal AI modules at Money Forward, overseeing cross-team execution while ensuring alignment among product intent, technical architecture, and operational constraints.\\
+\vspace{-3mm}
+\begin{itemize}
+    \item \textbf{Progression}: Expanded scope from lead AI decision quality to end-to-end ownership of internal products' AI agent development and delivery across multiple initiatives starting Jan 2026.
+    \item \textbf{People \& Collaboration}: Work closely with product managers, engineering leads, platform teams, and senior stakeholders to define agent roadmaps, prioritize features, and coordinate releases. Acted as the primary technical liaison between business and engineering teams.
+    \item \textbf{Significant Projects}:
+    \SubItem{\textbf{AI Cowork}: Lead cross-functional execution of high-impact AI agent initiatives, coordinating architecture decisions, development timelines, and quality gates across multiple teams. \href{https://corp.moneyforward.com/en/news/release/service/20260407-mf-press-1/}{Press release.}}
+    \newpage
+    \SubItem{\textbf{Accounting Agent}: Architected and shipped a production-grade accounting automation agent—owned the full lifecycle from design through enterprise deployment; scaled automation coverage and throughput while driving step-change gains in reliability and quality (task completion rate, error reduction).}
+    \item \textbf{Technologies}: Python, Azure, A2A, MCP, PyTorch, Cursor, GPT-5, Claude, Datadog, Rollbar
+    \item \textbf{Data Language}: Japanese, English
+    \item \textbf{Supervisor}: \href{https://www.linkedin.com/in/%E5%81%A5%E5%A4%AA-%E5%A0%80%E6%BE%A4-5934491b8/}{Kenta Horisawa}
+\end{itemize}
+\end{position}
+% --- Previous role ---
+\employer{} % intentionally blank
+\location{} % intentionally blank
+\dates{September 2025 - December 2025}
+\title{\textbf{AI Evaluation Lead}} 
+\begin{position}
+I led AI quality enforcement and research for the Expense AI Agent, ensuring robust schema design, reliable rule retrieval, and agent performance benchmarking.\\
+\vspace{-3mm}
+\begin{itemize}
+    \item \textbf{Progression}: Promotion from \hyperlink{seniorAI}{Senior AI Engineer} to lead AI evaluation for the Expense Agent starting Sep 2025.
+    \item \textbf{People \& Collaboration}: Coordinated with cross-functional teams to establish QA standards and align rulebook quality with the company’s AI strategy. Provided guidance on evaluation methodology and facilitated discussions on AI evaluation.
+    \item \textbf{Hiring \& Calibration}: Screened $\sim$10 candidates for Principal AI QA Engineer roles (resume review + technical interview loop), aligning evaluation criteria with stakeholders and improving signal quality for final-round decisions.
+    \item \textbf{Significant Projects}:
+    \SubItem{\textbf{Valid8R (LLM Evaluation Suite)}}: Architected a scalable pipeline to benchmark agent performance across prompt variations. Automated regression testing for hallucination and reasoning capabilities, reducing iteration time for model alignment experiments by 75\%. The suite leverages DeepEval and Azure OpenAI for backend evaluation pipelines.
+    \begin{itemize}
+        \item Reduced manual QA and review effort by approximately 40\% by replacing ad-hoc human checks with reproducible, metrics-driven evaluations.
+        \item Enabled scalable comparison across agents and releases, supporting faster decision-making for model upgrades and prompt changes.
+    \end{itemize}
+    \SubItem{\textbf{Expense Agent}: Spearheaded schema development and quality evaluation pipelines in the expense agent. Designed benchmarking protocols for retrieval and validation, prototyped hybrid retrieval methods (dense retrieval, RAG), and introduced selective-abstention strategies. Achieved 45\% improvement in rule retrieval precision.}
+    \item \textbf{Technologies}: Python, Azure, A2A, MCP, PyTorch, Cursor, GPT-5, Datadog, Rollbar
+    \item \textbf{Data Language}: Japanese, English
+    \item \textbf{Supervisor}: \href{https://www.linkedin.com/in/%E5%81%A5%E5%A4%AA-%E5%A0%80%E6%BE%A4-5934491b8/}{Kenta Horisawa}
+\end{itemize}
+\end{position}
+
+\vspace{-1mm}
+
+% --- Previous role ---
+\employer{} % intentionally blank to avoid repetition
+\location{} % intentionally blank to avoid repetition
+\dates{August 2024 - August 2025}
+\title{\textbf{Senior AI Engineer}\anchortarget{seniorAI}}
+\begin{position}
+I researched and developed different components and modules for the internal AI assistant project of Money Forward, powered by state-of-the-art generative AI technologies.\\
+\vspace{-3mm}
+\begin{itemize}
+    \item \textbf{People \& Collaboration}: Contributed to collaborative architectural design with an international team of AI, platform, and UI/UX engineers; participated in internal discussions with team lead to align the generative AI strategy. Facilitated Scrum development and supported leadership in improving inter- and intra- team processes.
+    \item \textbf{Significant Projects}:
+    \SubItem{\textbf{AI Agent Platform}: Developed a modular A2A hybrid architecture that orchestrated specialized agents and tools, reducing mean time to resolution (MTTR) for internal AI assistant tasks by 60\%.}
+    \SubItem{\textbf{SQL Generator}: Reduced engineering toil by 40\% and boosted query generation speed by 5x via automation of SQL creation using a RAG-like architecture and Model Definition Language schema reduction.}
+    \SubItem{\textbf{GraphQL Generator}: Scaled internal automation to cover 150\% more production database schemas than the SQL Generator, handling over 70\% of common query types across services.}
+    \item \textbf{Technologies}: Python, Azure, Cursor, LangChain, GPT-5, GPT-4o, Docker, Ruby, Kotlin, Gradle, Redis
+    \item \textbf{Data Language}: Japanese, English
+    \item \textbf{Supervisor}: \href{https://linkedin.com/in/keisuke-nagashima-704338b5}{Keisuke Nagashima}, \href{https://www.linkedin.com/in/%E5%81%A5%E5%A4%AA-%E5%A0%80%E6%BE%A4-5934491b8/}{Kenta Horisawa}
+\end{itemize}
+\end{position}
+
+\vspace{1mm}
+\hrule
+\vspace{1mm}
+
+\employer{\href{https://www.maya.ph/}{\textbf{Maya Philippines}}}
+\location{Mandaluyong City, PH}
+\dates{April 2023 - July 2024}
+\title{\textbf{NLP Lead}}
+\begin{position}
+I researched and developed different ethical NLP technologies for various features of the Maya fintech app---e.g., conversational AI agents and fake name detection. I also supervised the Chatbot (NLP) team in the Data Science department. I partnered closely with different stakeholders to facilitate inter-department collaboration and synergy.\\
+\vspace{-3mm}
+\begin{itemize}
+    \item \textbf{People \& Collaboration}: Built roadmaps and architected solutions for various business use cases solvable by AI/NLP technology. Supervised a cross-functional NLP team of 4 engineers; conducted weekly syncs, code reviews, and growth plans. Fostered collaboration across Data Science, Customer Support, and Product departments to ensure alignment and deployment readiness of AI solutions.
+    \item \textbf{Significant Projects}:
+    \SubItem{\href{https://huggingface.co/MayaPH/GodziLLa2-70B}{\textbf{GodziLLa-2}}}: Achieved rank \#2 on the \href{https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard}{Hugging Face Open LLM leaderboard} with \href{https://www.rappler.com/technology/maya-philippines-open-source-llm-godzilla-2-surpasses-chatgpt-truthfulness/}{local media coverage}; surpassed GPT-3.5 and GPT-4 on a truthfulness benchmark.
+    \SubItem{\textbf{Mayari}: Developed and deployed an LLM-powered RAG agent handling ~40k daily active sessions. Achieved a 95\% resolution rate (up from 61\% manual), resulting in a 58\% gain in support efficiency, a 56\% reduction in ticket costs, and a 1.8x increase in stakeholder promoter score.}
+    %\newpage
+    \item \textbf{Technologies}: Python, PyTorch, Hugging Face, LangChain, spaCy, LanceDB, AWS
+    \item \textbf{Data Language}: Filipino, English
+    \item \textbf{Supervisor}: \href{https://www.linkedin.com/in/megvillanueva}{Megan Villanueva}
+\end{itemize}
+\end{position}
+\employer{\href{https://docquity.com/}{\textbf{Docquity}}}
+\location{Bonifacio Global City, PH}
+\dates{May 2022 - Nov 2022}
+\title{\textbf{Lead Machine Learning Engineer}}
+\begin{position}
+I researched and developed different ethical ML, NLP, and biology-inspired technologies for the SEA region. I did prompt engineering for LLMs, such as GPT-3. I also led different NLP projects.\\
+\vspace{-3mm}
+\begin{itemize}
+    \item \textbf{People \& Collaboration}: Led a small data science team (3 engineers) on AI-focused solutions across Southeast Asia; collaborated closely with product and growth teams to localize ML solutions across 5 regional markets.
+    \item \textbf{Significant Projects}:
+    \SubItem{\textbf{Actionome}: user behavior analysis (300,000+ users) through genome-like processing of in-app actions, shortening delivery of user behavior reports from 1 week to less than an hour.}
+    \item \textbf{Technologies}: Python, GPT-3, PyTorch, Hugging Face, AWS, Amazon Redshift, Whisper
+    \item \textbf{Data Language}: English, Indonesian, Malaysian, Vietnamese, Thai
+    \item \textbf{Supervisor}: \href{https://www.linkedin.com/in/michael-clarin-7571366}{Michael Clarin}
+\end{itemize}
+\end{position}
+
+\employer{\href{https://ccap.ph/2017/02/02/henry-sy-jr-dado-banatao-back-startup-to-help-bpos-cope-with-automation-threat/}{\textbf{Augmented Intelligence Pros}}}
+\location{Silicon Valley, CA, US}
+\dates{Feb 2021 - Apr 2022}
+\title{\textbf{Machine Learning Lead}}
+\begin{position}
+I researched and developed different AI and NLP frameworks and models for different modules of the company's products in online gaming and learning management systems.\\
+\vspace{-3mm}
+\begin{itemize}
+    \item \textbf{People \& Collaboration}: Acted as interim lead for ML development vis-a-vis the learning management system.
+    \item \textbf{Significant Projects}:
+    \SubItem{\textbf{Chat Deviation Handler}: Implemented a transformer-based handling of conversation deviation tracked via a PPO reinforcement learning algorithm, lessening unhandled user message cases by 75\%.}
+    \item \textbf{Technologies}: Python, PyTorch, Tensorflow, Hugging Face, wav2vec, spaCy
+    \item \textbf{Data Language}: Chinese, English
+    \item \textbf{Supervisors}: \href{https://scholar.google.com.ph/citations?user=wKwXbiUAAAAJ}{Dr. Charibeth Cheng}, \href{https://scholar.google.com.ph/citations?user=ICq-zukAAAAJ}{Nathaniel Oco}
+\end{itemize}
+\end{position}
+
+\employer{\href{https://alfafusion.com/}{\textbf{Alfafusion}}}
+\location{Quezon City, PH}
+\dates{Jul 2020 - Jan 2021}
+\title{\textbf{Machine Learning Lead}}
+\begin{position}
+I managed all operations in AI, NLP, and analytics.\\
+\vspace{-3mm}
+\begin{itemize}
+    \item \textbf{People \& Collaboration}: Pioneered the company’s first AI Lab; recruited and mentored junior engineers; initiated cross-training workshops to integrate ML capabilities across design and dev teams.
+    \item \textbf{Technologies}: Python, RasaNLU, Scikit-Learn, Statsmodels, spaCy, Flask
+    \item \textbf{Data Language}: Filipino, English
+    \item \textbf{Supervisor}: Christian Coronel
+\end{itemize}
+\end{position}
+
+\employer{\href{https://www.monstershop.co.uk/}{\textbf{Monster Group (UK)}}}
+\location{York, UK}
+\dates{Aug 2020 - Dec 2020}
+\title{\textbf{AI Engineer}}
+\begin{position}
+I developed tools to improve SEO and to reverse engineer search result algorithms of 
+different platforms through deep learning and NLP.\\
+\vspace{-3mm}
+\begin{itemize}
+    \item \textbf{Technologies}: Python, Scikit-Learn, imblearn, Beautiful Soup, SciPy, JavaScript
+    \item \textbf{Supervisor}: \href{https://www.linkedin.com/in/rana-harvey-8256282a}{Rana Harvey}
+\end{itemize}
+\end{position}
+
+\employer{\href{https://www.roxasholdings.com.ph/}{\textbf{Roxas Holdings, Inc.}}}
+\location{Taguig City, PH}
+\dates{May 2019 - Dec 2019}
+\title{\textbf{Business Intelligence Engineer}}
+\begin{position}
+I developed and maintained different administrative dashboards regarding the company's production data.\\
+\vspace{-3mm}
+\begin{itemize}
+    \item \textbf{Technologies}: Python, PHP, MySQL, MS SQL, Power BI, Statsmodels
+    \item \textbf{Supervisor}: \href{https://www.linkedin.com/in/jeffrey-chan-088818}{Jeffrey Chan}
+\end{itemize}
+\end{position}
+
+%-------------------------------------------------------------------------------
+%	TEACHING EXPERIENCE SECTION
+%-------------------------------------------------------------------------------
+\section{TEACHING EXPERIENCE}
+\employer{\href{https://www.benilde.edu.ph/}{\textbf{De La Salle - College of Saint Benilde}}}
+\location{Manila City, PH}
+\dates{Aug 2021 - May 2024}
+\title{\textbf{Analytics Lecturer}}
+\begin{position}
+I advised and paneled for undergraduate theses and defenses under the Business Intelligence and Analytics Programme. I also taught classes in data analytics and AI ethics.
+\begin{itemize}
+    \item \textbf{Supervisor}: \href{https://scholar.google.com/citations?user=75JpdEcAAAAJ&hl=en}{Jelica Enriquez}
+\end{itemize}
+\end{position}
+
+%-------------------------------------------------------------------------------
+%	RESEARCH SECTION
+%-------------------------------------------------------------------------------
+\section{RESEARCH EXPERIENCE}
+\employer{\href{https://www.ukri.org/}{\textbf{UK Research and Innovation}}}
+\location{United Kingdom}
+\dates{March 2026}
+\title{\textbf{Expert Assessor (AI), Metascience Novelty Indicators Challenge}}
+\begin{position}
+Assessment work for the UKRI Metascience Novelty Indicators Challenge in collaboration with the \href{https://www.sussex.ac.uk/business-school/research/spru/}{University of Sussex SPRU} and \href{https://www.randeurope.org/}{RAND Europe}.
+\end{position}
+\employer{\href{https://asti.dost.gov.ph/}{\textbf{DOST-ASTI}}}
+\location{Quezon City, PH}
+\dates{Jun 2022 - Dec 2022}
+\title{\textbf{NLI Consultant}}
+\begin{position}
+I provided advice on traditional and advanced techniques used in semantic parsing, prompt engineering, and machine translation to aid in developing a natural language querying engine for government use. I also provided relevant roadmaps and POCs.
+\begin{itemize}
+    \item \textbf{Technologies}: GPT-3, Python
+    \item \textbf{Supervisor}: Elmer Peramo
+\end{itemize}
+\end{position}
+\employer{\href{https://up.edu.ph/}{\textbf{University of the Philippines}}}
+\location{Manila City, PH}
+\dates{Sep 2020 - Apr 2021}
+\title{\textbf{Research Assistant}}
+\begin{position}
+I advised and assisted on NLP code-switching research about COVID-19 misinformation in the Philippines.
+\begin{itemize}
+    \item \textbf{Technologies}: Python, scikit-learn
+    \item \textbf{Supervisor}: Dr. Geoffrey Solano
+\end{itemize}
+\end{position}
+
+\section{GRANTS \& FUNDING}
+\employer{\textbf{UP Intelligent Systems Center}}
+\location{Manila, PH}
+\dates{(upcoming)}
+\title{\textbf{\href{https://isc.up.edu.ph/opportunities/research-grants-2025-26}{UP ISC Research Grant 2026--2028}}}
+\begin{position}
+Research Project: \textit{Design, Development, and Evaluation of a Filipino Conversational Agent for the Self-management of Type 2 Diabetes Mellitus}.
+\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+    \item Investigators: Isip-Tan, I.T.; Solano, G.A.; Marasigan, M.J.C.; Ongkeko Jr., A.M.; Pugoy, R.A.d.L.; and \textbf{Catapang, J.K.}
+\end{itemize}
+\end{position}
+
+%-------------------------------------------------------------------------------
+%	PROFESSIONAL ACTIVITIES SECTION
+%-------------------------------------------------------------------------------
+\section{PROFESSIONAL ACTIVITIES}
+\textbf{PENDING WORK}\\
+\hangpara{3em}{2} Guillermo, J.I.A., \textbf{Catapang, J.K.}, \& Oco, N. (forthcoming). \textit{Thesis Proposal: An Explainable Multimodal Framework for Detecting Harmful Content in Code-Switched Children's Media}. The 64th Annual Meeting of the Association for Computational Linguistics (ACL 2026). San Diego, California, USA.
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \textbf{Catapang, J.K.} (forthcoming). \textit{A Metric Typology for Language Model Evaluation}. The 5th Workshop on Generation, Evaluation and Metrics (GEM). ACL 2026. San Diego, California, USA.
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \textbf{Catapang, J.K.} (forthcoming). \textit{When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation}. The 2nd Workshop on Multimodal Augmented Generation via MultimodAl Retrieval (MAGMaR). ACL 2026. San Diego, California, USA. \href{https://github.com/jaspercatapang/cmc-bench}{CMC-Bench (code/data).}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} Borlongan, A.M., \textbf{Catapang, J.K.}, Samejon, K., \& Asamura, S. (in press). \textit{Conyo English}. Journal of English and Applied Linguistics. De La Salle University.
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \textbf{Catapang, J.K.} (submitted). \textit{ChatGPT as a Tool in Describing Variation and Change in English Worldwide}.
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \textbf{Catapang, J.K.} (submitted). \textit{Concept Activation Regions for Multi-Concept Activation and its (Dis)\\Entanglement in Large Language Models}.
+
+\textbf{JOURNAL ARTICLES}\\
+\hangpara{3em}{2} \href{https://doi.org/10.1080/13488678.2026.2685377}{\textbf{Catapang, J.\,K.}, (2026). \textit{Asymmetrical Pluralism and the Normative Power of Artificial Intelligence in Asian Englishes}. Asian Englishes. DOI: 10.1080/13488678.2026.2685377}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://doi.org/10.1007/s43681-026-01003-8}{\textbf{Catapang, J.\,K.}, (2026). \textit{Building the Ethical AI Framework of the Future: From Philosophy to Practice}. AI and Ethics, 6, 150. DOI: 10.1007/s43681-026-01003-8}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://ejournal.um.edu.my/index.php/JML/article/view/60338}{\textbf{Catapang, J.\,K.}, Borlongan, A.\,M., \& Go, M.\,A.\,C. (2025). \textit{Language, Migration, and ChatGPT}. Journal of Modern Languages, 35(2), 167--189. https://doi.org/10.22452/jml.vol35no2.9}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://doi.org/10.1007/978-3-031-97141-9_8}{\textbf{Catapang, J.K.}, (2025). \textit{Explaining Bias in Internal Representations of Large Language Models via Concept Activation Vectors}. In: Ichise, R. (eds) Natural Language Processing and Information Systems. NLDB 2025. Lecture Notes in Computer Science, vol 15836. Springer, Cham. DOI: 10.1007/978-3-031-97141-9\_8}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://formative.jmir.org/2023/1/e41134}{Isip-Tan, I.T., Cleofas, J.V., Solano, G.A., Pillejera, J.G.A., \textbf{Catapang, J.K.}, (2023). \textit{Interdisciplinary Approach to Identify and Characterize COVID-19 Misinformation on Twitter: Mixed Methods Study}. JMIR Formative Research, 7, e41134. DOI: 10.2196/41134}
+
+\newpage
+\textbf{CONFERENCE PROCEEDINGS}\\
+\hangpara{3em}{2} \href{https://aclanthology.org/2024.paclic-1.85}{\textbf{Catapang, J.K.}, (December 2024). \textit{Can we repurpose multiple-choice question-answering models to rerank retrieved documents?} 38th Pacific Asia Conference on Language, Information and Computation. Tokyo, Japan. ACL. URL: https://aclanthology.org/2024.paclic-1.85}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://aclanthology.org/2023.nlp4dh-1.1/}{\textbf{Catapang, J.K.}, \& Visperas, M., (December 2023). \textit{Emotion-based Morality in Tagalog and English Scenarios (EMoTES-3K): A Parallel Corpus for Explaining (Im)morality of Actions}. Joint 3rd International Conference on Natural Language Processing for Digital Humanities and 8th International Workshop on Computational Linguistics for Uralic Languages. Tokyo, Japan. pp. 1-6. ACL. URL: https://aclanthology.org/2023.nlp4dh-1.1}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://ieeexplore.ieee.org/document/10254404}{\textbf{Catapang, J.K.}, Santiago, D.E., \& Isip-Tan, I.T., (September 2023). \textit{Improving detection of diabetic retinopathy in low-resolution images via latent diffusion}. 2023 IEEE 6th International Conference on Multimedia Information Processing and Retrieval. Singapore, pp. 53-58. DOI: 10.1109/MIPR59079.2023.00024. \textbf{Acceptance Rate: 19.5\%}.}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://ieeexplore.ieee.org/document/10067134}{Visperas, M., Adoptante, A.J., Borjal, C.J., Abia, M.T., \textbf{Catapang, J.K.}, Peramo, E., (February 2023). \textit{On Modern Text-to-SQL Semantic Parsing Methodologies for Natural Language Interface to Databases: A Comparative Study}. 2023 International Conference on Artificial Intelligence in Information and Communication. Bali, Indonesia. pp. 390-396. DOI: 10.1109/ICAI IC57133.2023.10067134}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://ieeexplore.ieee.org/document/10066976}{Borjal, C.J., Visperas, M., Adoptante, A.J., Abia, M.T., \textbf{Catapang, J.K.}, Peramo, E., (February 2023). \textit{Parallel Corpus Curation for Filipino Text-to-SQL Semantic Parsing}. 2023 International Conference on Artificial Intelligence in Information and Communication. Bali, Indonesia. pp. 163-169. IEEE. DOI: 10.1109/ICAIIC57133.2023.10066976}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://ieeexplore.ieee.org/document/10068484}{\textbf{Catapang, J.K.}, (November 2022). \textit{Hadamard Estimated Attention Transformer (HEAT): Fast Approximation of Dot Product Self-attention for Transformers Using Low-Rank Projection of Hadamard Product}. 2022 International Conference on Soft Computing \& Machine Intelligence. Toronto, Canada. pp. 203-206. IEEE. DOI: 10.1109/ISCMI56532.2022.10068484}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://ieeexplore.ieee.org/document/10068476}{\textbf{Catapang, J.K.}, (November 2022). \textit{Optimizing Speed and Accuracy Trade-off in Machine Learning Models via Stochastic Gradient Descent Approximation}. 2022 International Conference on Soft Computing \& Machine Intelligence. Toronto, Canada. pp. 124-128. IEEE. DOI: 10.1109/ISCMI56532.2022.10068476}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://ieeexplore.ieee.org/document/9722623}{Clamor, T.D.S, Solano, G.A., Oco, N., \textbf{Catapang, J.K.}, Cleofas, J.V., \& Isip-Tan, I.T., (February 2022). \textit{Identification and Analysis of COVID-19-related Misinformation Tweets via Kullback-Leibler Divergence for Informativeness and Phraseness and Biterm Topic Modeling}. 2022 International Conference on Artificial Intelligence in Information and Communication. Jeju, South Korea. pp. 451-456. IEEE. DOI: 10.1109/ICAIIC54071.2022.9722623}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://ieeexplore.ieee.org/document/9736280}{\textbf{Catapang, J.K.}, \& Cleofas, J.V., (January 2022). \textit{Topic Modeling, Clade-assisted Sentiment Analysis, and Vaccine Brand Reputation Analysis of COVID-19 Vaccine-related Facebook Comments in the Philippines}. 2022 IEEE International Conference on Semantic Computing. Laguna Hills, California, USA. pp. 123-130. IEEE. DOI: 10.1109/ICSC 52841.2022.00026. \textbf{Acceptance Rate: 20\%}.}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://ieeexplore.ieee.org/document/9621108}{\textbf{Catapang, J.K.}, \& Solano, G.A., (October 2021). \textit{A Floyd-Warshall-based Reoptimization of Q Matrix on the Single DVRPPD with On-demand Cancellations}. 2021 International Conference on Information and Communication Technology Convergence. Jeju, South Korea. pp. 172-177. IEEE. DOI: 10.1109/ICTC52510.2021.9621108}
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \href{https://ieeexplore.ieee.org/document/9065208}{\textbf{Catapang, J.K.}, Solano, G.A., \& Oco, N., (February 2020). \textit{A Bilingual Chatbot Using Support Vector Classifier on an Automatic Corpus Engine Dataset}. 2020 International Conference on Artificial Intelligence in Information and Communication. Fukuoka, Japan. pp. 187-192. IEEE. DOI: 10.1109/ICAIIC48513.2020.\\9065208}
+
+\textbf{CONFERENCE PRESENTATIONS}\\
+\hangpara{3em}{2} \textbf{Catapang, J.K.}, (January 2026). \textit{Stance and Register Variation in Philippine English Journalism: Quantitative Evidence from Media Coverage of a National Controversy}. The 56th Japanese Association of Asian Englishes (JAFAE) National Conference. Hiroshima, Japan.
+
+\vspace{-12pt}
+
+\hangpara{3em}{1} \textbf{Catapang, J.K.}, (June 2025). \textit{Explaining Lexical Innovations of Southeast Asian Englishes in Social Media: A Framework-Driven Survey}. The 55th Japanese Association of Asian Englishes (JAFAE) National Conference. Chiba, Japan.
+
+\newpage
+\textbf{LECTURES}\\
+$\cdot$ Ethics fatigue of the modern Sisyphus in the age of AI. (April 12, 2026). Association of Filipino Students in Japan.\\
+$\cdot$ Transformers for Natural Language Processing. (February 9-11, 2026). Tokyo University of Foreign Studies, Japan.\\
+$\cdot$ Do the Models Hear Us? Artificial Intelligence and the (In)visibility of Migrant Voices and Languages. (December 5, 2025). 2nd International Conference on Migration Linguistics. University of Santo Tomas, Philippines.\\
+$\cdot$ LLM Theory to Practice Series. (August 20, 2025). Tokyo University of Foreign Studies, Japan.\\
+$\cdot$ Interpretability on how large language models process information. (July 14, 2025). De La Salle University, Philippines.\\
+$\cdot$ How does a machine know the matters of the heart? A lecture on emotion-based AI morality. (June 6, 2024). De La Salle University, Philippines.\\
+$\cdot$ From generic to genius: Finetuning LLMs to enhance AI performance and reliability, (May 30, 2024). De La Salle University, Philippines.\\
+$\cdot$ Text is superficial: Commonsense as dark matter of language, (May 4, 2023). University of the Philippines Manila.\\
+$\cdot$ Language in the Time of Pandemic, (November 22, 2021). Tokyo University of Foreign Studies, Singapore Association for Applied Linguistics, and Oxford Languages.\\
+$\cdot$ Natural Language Processing 101: From Characters to Meaning, (August 19, 2021). \textbf{NLPinas}, University of the Philippines Diliman, and Philippine-California Advanced Research Institutes.\\
+$\cdot$ Artificial intelligence for natural language processing, (March 6, 2020). University of the Philippines Manila.
+
+\textbf{SPEAKING ENGAGEMENTS}\\
+$\cdot$ Eskwelabs Data Science Sprint Judging, (April 18, 2026). Eskwelabs.\\
+$\cdot$ MARISTory: A Homecoming Odyssey, (January 26, 2024). Marist School Marikina, Philippines.\\
+$\cdot$ ML/AI Unleashed: Exploring Potential and Impact, (July 29, 2023). Amazon Web Services Philippines.\\
+$\cdot$ Eskwelabs Data Science Sprint Judging, (April 13, 2023). Eskwelabs.\\
+$\cdot$ DPSM Science e-Camp 2021, (August 3, 2021). University of the Philippines Manila.\\
+$\cdot$ Eskwelabs Data Science Sprint Judging \& Fireside Chat, (July 10, 2021). Eskwelabs.\\
+$\cdot$ Data Talk: Open Citizens Data with NLPinas, (May 15, 2021). Eskwelabs.\\
+$\cdot$ Life of AI 2.0, (March 19, 2021). De La Salle - College of Saint Benilde.
+
+\section{PROFESSIONAL SERVICES}
+\textbf{PROGRAMME COMMITTEE MEMBERSHIPS}\\
+$\cdot$ PACLIC 38 2024.\\
+$\cdot$ LoResMT @ COLING 2022.\\
+$\cdot$ LoResMT @ MT Summit 2021.\\
+$\cdot$ LoResMT @ AACL-IJCLNP 2020.
+
+\textbf{JOURNAL REVIEWS}\\
+$\cdot$ \href{https://www.springer.com/journal/10579}{Language Resources and Evaluation}. (2025-2026). Springer.\\
+$\cdot$ \href{https://www.sciencedirect.com/journal/computers-in-biology-and-medicine}{Computers in Biology and Medicine}. (2021-2024). Elsevier.\\
+$\cdot$ \href{https://ieeeaccess.ieee.org/}{IEEE Access}. (2021). IEEE.\\
+$\cdot$ \href{https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=5962385}{IEEE Transactions on Neural Networks and Learning Systems}. (2021). IEEE.
+
+\textbf{CONFERENCE and WORKSHOP REVIEWS}\\
+$\cdot$ GEM at ACL 2026: The Fifth Generation, Evaluation \& Metrics Workshop. (July 2026). San Diego, California, USA.\\
+$\cdot$ PACLIC 38 (2024): The 36th Pacific Asia Conference on Language, Information and Computation. (December 2024). Tokyo University of Foreign Studies, Tokyo, Japan.\\
+$\cdot$ AMTA 2024: Association for Machine Translation in the Americas. (September 2024). Chicago, USA.\\
+$\cdot$ LREC-Coling 2024: The 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation. (May 2024). Lingotto Conference Centre, Turin, Italy.\\
+\newpage
+$\cdot$ Oriental COCOSDA 2022: The 25th Conference of the Oriental COCOSDA International Committee for the Coordination and Standardization of Speech Databases and Assessment Techniques. (August 2022). Hanoi University of Science – Vietnam National University of Hanoi, Vietnam.\\
+$\cdot$ LoResMT @ COLING 2022: The 5th Workshop on Technologies for MT of Low Resource Languages (LoResMT2022). (August 2022). Gyeongju, South Korea.\\
+$\cdot$ PACLIC 36 (2022): The 36th Pacific Asia Conference on Language, Information and Computation. (July 2022). De La Salle University, Manila, Philippines.\\
+$\cdot$ AMTA 2022: Association for Machine Translation in the Americas. (June 2022). Florida, USA.\\
+$\cdot$ LoResMT @ MT Summit 2021: The 4th Workshop on Technologies for MT of Low Resource Languages (LoResMT2021). (July 2021). Virtual.\\
+$\cdot$ PCSC 2021: Philippine Computing Science Congress 2021. (May 2021). University of the Philippines Diliman, Quezon City, Philippines.\\
+$\cdot$ LoResMT @ AACL-IJCLNP 2020: The 1st Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics and the 10th International Joint Conference on Natural Language Processing. (December 2020). Suzhou, China.\\
+$\cdot$ WCTP 2020: Workshop on Computation: Theory and Practice. (November 2020). Online.\\
+$\cdot$ Oriental COCOSDA 2020: The 23rd Conference of the Oriental COCOSDA International Committee for the Co-ordination and Standardization of Speech Databases and Assessment Techniques. (November 2020). University of Computer Studies, Yangon, Myanmar.\\
+$\cdot$ PACLIC 34 (2020): The 34th Pacific Asia Conference on Language, Information and Computation. (October 2020). Vietnam National University, Hanoi, Vietnam.\\
+$\cdot$ CSP-ICE 2020: The 3rd Information and Computing Education Conference. (October 2020). University of the Philippines Diliman, Quezon City, Philippines.
+
+%-------------------------------------------------------------------------------
+%	MEDIA COVERAGE SECTION
+%-------------------------------------------------------------------------------
+\section{MEDIA\\FEATURES}
+$\cdot$ \href{https://www.manilatimes.net/2024/11/10/opinion/columns/breaking-the-illusion-of-language-data-scarcity-in-the-philippines/2001098}{\textit{Breaking the illusion of language data scarcity in the Philippines}}. Guest column by Jasper Kyle Catapang via The Manila Times. November 10, 2024.\\
+$\cdot$ \href{https://www.rappler.com/technology/maya-philippines-open-source-llm-godzilla-2-surpasses-chatgpt-truthfulness/}{\textit{Maya PH’s open-source LLM, Godzilla 2, surpasses ChatGPT in truthfulness}}. Reported by Jessica Bonifacio via Rappler. September 6, 2023.
+
+%-------------------------------------------------------------------------------
+%	AFFILIATIONS SECTION
+%-------------------------------------------------------------------------------
+\section{AFFILIATIONS}
+$\cdot$ \textbf{NLPinas}, Founder. Aug 2020 - Present.\\
+$\cdot$ \textbf{Institute of Electrical and Electronics Engineers}, Member, July 2023 - Present.\\
+$\cdot$ \textbf{Association for Computational Linguistics}, Member. Oct 2020 - Present.\\
+$\cdot$ \textbf{Linguistic Society of the Philippines}, Member. Oct 2020 - Present.\\
+$\cdot$ \textbf{Japan Association for Asian Englishes}, Member. June 2025 - Present.
+
+%-------------------------------------------------------------------------------
+%	PROF DEV AND CERTIFICATES SECTION
+%-------------------------------------------------------------------------------
+
+\section{PROFESSIONAL DEVELOPMENT}
+$\cdot$ Strengthening Leadership and Management Foundations, (2024). Maya Philippines.\\
+
+\section{CERTIFICATES}
+$\cdot$ \href{https://www.coursera.org/account/accomplishments/verify/VLPA48SZ9NQP}{Machine Learning}, (2020). Stanford University. \\
+$\cdot$ \href{https://www.coursera.org/account/accomplishments/verify/KACYHT3CLLHQ}{Outbreaks and Epidemics}, (2020). Johns Hopkins University. \\
+$\cdot$ \href{https://www.coursera.org/account/accomplishments/verify/GF4H3CRX2TQS}{Measuring Disease in Epidemiology}, (2020). Imperial College London.
+
+%-------------------------------------------------------------------------------
+%	ADDTL QUALIFICATIONS
+%-------------------------------------------------------------------------------
+\section{ADDITIONAL\\QUALIFICATIONS}
+\href{https://immigration-lawyer.co.jp/visa/highly_skilled/?language=eng}{\textbf{Japanese Highly Skilled Professional (i) (b) Visa Holder}}\\
+$\cdot$ Recognized for advanced skills, qualifying for work and long-term residence in Japan.\\
+$\cdot$ Achieved a score above 80 points on the HSP visa evaluation.
+
+%-------------------------------------------------------------------------------
+%	PROJECTS SECTION
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+%	REFERENCES
+%-------------------------------------------------------------------------------
+
+%\href{https://scholar.google.com/citations?user=B0kMPWsAAAAJ}{\textbf{Ariane Macalinga Borlongan, PhD}}\\
+%Associate Professor of Sociolinguistics, Graduate School of Global Studies\\
+%Founder and Head, Migration Linguistics Unit, Tokyo University of Foreign Studies\\
+%\href{mailto:ariane@tufs.ac.jp}{ariane@tufs.ac.jp}, +81423305228
+
+%\href{https://scholar.google.com/citations?user=ICq-zukAAAAJ}{\textbf{Nathaniel Oco, MSc}}\\
+%\href{mailto:nathanoco@yahoo.com}{nathanoco@yahoo.com}, +639178477549
+\end{resume}
+\end{document}

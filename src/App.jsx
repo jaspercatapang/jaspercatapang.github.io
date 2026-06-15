@@ -620,6 +620,10 @@ const SKILLS = [
         <a href="https://react.dev/" {...SKILL_LINK_PROPS}>React</a>
         {', '}
         <a href="https://tailwindcss.com/" {...SKILL_LINK_PROPS}>Tailwind</a>
+        {', '}
+        <a href="https://a2a-protocol.org/" {...SKILL_LINK_PROPS}>A2A</a>
+        {', '}
+        <a href="https://modelcontextprotocol.io/" {...SKILL_LINK_PROPS}>MCP</a>
         .
       </>
     ),
@@ -873,8 +877,16 @@ const EXPERIENCE_ENTRIES = [
     meta: 'Python, Scikit-Learn, imblearn, Beautiful Soup, SciPy, JavaScript',
   },
   {
+    role: 'Business Intelligence Engineer',
+    company: 'Roxas Holdings, Inc.',
+    date: 'May 2019 – Dec 2019',
+    location: 'Taguig City, Philippines',
+    desc: 'Developed and maintained administrative dashboards regarding the company\'s production data.',
+    meta: 'Python, PHP, MySQL, MS SQL, Power BI, Statsmodels',
+  },
+  {
     role: 'Analytics Lecturer',
-    company: 'De La Salle–College of Saint Benilde',
+    company: 'De La Salle - College of Saint Benilde',
     date: 'Aug 2021 – May 2024',
     location: 'Manila, Philippines',
     desc: 'Advised and paneled for undergraduate theses and defenses under the Business Intelligence and Analytics Programme. Taught classes in data analytics and AI ethics.',
@@ -901,7 +913,7 @@ function MobileIntro({ theme, setTheme }) {
         <p className="text-sm text-gray-600 dark:text-neutral-400 italic mb-2">PhD Candidate, Tokyo University of Foreign Studies</p>
         <p className="text-sm text-gray-600 dark:text-neutral-400 mb-4">
           <a href="/Catapang_CV.pdf" target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
-          {' '}(as of 2026/5/10)
+          {' '}(as of 2026/6/15)
         </p>
         <div className="space-y-2 flex flex-col items-center">
           <a href="mailto:jasperkylecatapang@gmail.com" className="font-medium text-accent hover:underline text-sm">jasperkylecatapang@gmail.com</a>
@@ -1075,7 +1087,7 @@ export default function App() {
                 <p className="text-[0.95rem] text-gray-600 dark:text-neutral-400 italic mb-1">PhD Candidate, Tokyo University of Foreign Studies</p>
                 <p className="text-sm text-gray-600 dark:text-neutral-400">
                   <a href="/Catapang_CV.pdf" target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
-                  {' '}(as of 2026/5/10)
+                  {' '}(as of 2026/6/15)
                 </p>
               </div>
             </div>
@@ -1393,7 +1405,7 @@ export default function App() {
               <li>DPSM Science e-Camp 2021. (August 3, 2021). University of the Philippines Manila.</li>
               <li>Eskwelabs Data Science Sprint Judging & Fireside Chat. (July 10, 2021). Eskwelabs.</li>
               <li>Data Talk: Open Citizens Data with NLPinas. (May 15, 2021). Eskwelabs.</li>
-              <li>Life of AI 2.0. (March 19, 2021). De La Salle-College of Saint Benilde.</li>
+              <li>Life of AI 2.0. (March 19, 2021). De La Salle - College of Saint Benilde.</li>
             </ul>
           </Section>
 
