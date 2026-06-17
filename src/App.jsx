@@ -722,6 +722,14 @@ const MEDIA_ITEMS = [
     date: 'September 6, 2023',
     credit: 'Reported by Jessica Bonifacio',
   },
+  {
+    title: 'Introducing: FinOPT by Maya PH',
+    url: 'https://www.linkedin.com/posts/finopt-series-by-maya-ph-ugcPost-7086887981575278592-xmwf/',
+    outlet: 'LinkedIn',
+    domain: 'linkedin.com',
+    date: 'June 2023',
+    credit: 'Maya Philippines Public Affairs',
+  },
 ]
 
 const LECTURES = [
@@ -841,6 +849,7 @@ const EXPERIENCE_ENTRIES = [
     desc: 'Researched and developed ethical NLP technologies for the Maya fintech app; supervised the Chatbot (NLP) team in the Data Science department.',
     bullets: [
       '<strong>GodziLLa-2:</strong> Achieved rank #2 on the Hugging Face Open LLM leaderboard with local media coverage; surpassed GPT-3.5 and GPT-4 on a truthfulness benchmark.',
+      '<strong>FinOPT:</strong> Led the release of a family of open-source financial LLMs (125M, 350M, and 1.3B parameters) fine-tuned on a financial question-answering dataset; published on Hugging Face to advance AI and ML literacy in Philippine fintech. <a href="https://huggingface.co/MayaPH/FinOPT-Franklin" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">[models]</a>',
       '<strong>Mayari:</strong> Developed and deployed an LLM-powered RAG agent handling ~40k daily active sessions. Achieved a 95% resolution rate (up from 61% manual), resulting in a 58% gain in support efficiency, a 56% reduction in ticket costs, and a 1.8x increase in stakeholder promoter score.',
       'Supervised a cross-functional NLP team of 4 engineers.',
     ],
@@ -1104,10 +1113,12 @@ export default function App() {
           <Section id="about" title="About">
             <div className="max-w-[38rem] space-y-4">
               <p>
-                With seven years of experience in NLP and AI, I specialize in explainable AI (XAI), LLM post-training, and agentic evaluation—most notably leading the fine-tuning of the top-ranked GodziLLa-2 model (
+                With seven years of experience in NLP and AI, I specialize in explainable AI (XAI), LLM post-training, and agentic evaluation—most notably leading the development of open-source models at Maya Philippines, including the top-ranked GodziLLa-2 (
                   <a href="https://www.rappler.com/technology/maya-philippines-open-source-llm-godzilla-2-surpasses-chatgpt-truthfulness/" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Rappler article</a>
                   {', '}
                   <a href="https://huggingface.co/MayaPH/GodziLLa2-70B" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Hugging Face model</a>
+                ) and the FinOPT family of financial LLMs (
+                  <a href="https://huggingface.co/MayaPH/FinOPT-Franklin" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Hugging Face models</a>
                 ). Grounded in computer science and applied linguistics, my work prioritizes ethical alignment and model transparency—critical assets for developing safe, trustworthy, and culturally aware multimodal agents.
               </p>
               <p>
