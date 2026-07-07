@@ -46,7 +46,7 @@ const publicationPdfHref = (pdfUrl) =>
  * pick up the new PDF without a hard refresh (same idea as `PDF_CACHE_VERSION`).
  * Format: YYYY/M/D.
  */
-const CV_AS_OF = '2026/6/24'
+const CV_AS_OF = '2026/7/7'
 const cvPdfHref = `/Catapang_CV.pdf?v=${CV_AS_OF.split('/').map((p) => p.padStart(2, '0')).join('')}`
 
 const Section = ({ id, title, children, className = '' }) => (
@@ -764,8 +764,8 @@ const CONFERENCE_PRESENTATIONS = [
 const PUBLICATION_TAGS = ['NLP', 'LLMs', 'AI safety', 'World Englishes', 'migration linguistics', 'machine learning', 'vision-language']
 
 const PUBLICATION_CARDS = [
-  { category: 'pending', title: 'A Metric Typology for Language Model Evaluation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'GEM @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (forthcoming). <em>A Metric Typology for Language Model Evaluation</em>. The 5th Workshop on Generation, Evaluation and Metrics (GEM). ACL 2026. San Diego, California, USA.', pdfUrl: '/publications/metric-typology-gem-acl-2026.pdf', posterUrl: '/posters/metric-typology-gem-acl-2026-poster.pdf', tags: ['LLMs', 'machine learning', 'AI safety', 'NLP'], sdgs: [9, 17] },
-  { category: 'pending', title: 'When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'MAGMaR @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (forthcoming). <em>When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation</em>. The 2nd Workshop on Multimodal Augmented Generation via MultimodAl Retrieval (MAGMaR). ACL 2026. San Diego, California, USA.', pdfUrl: '/publications/when-image-text-disagree-magmar-acl-2026.pdf', posterUrl: '/posters/when-image-text-disagree-magmar-acl-2026-poster.pdf', codeUrl: 'https://github.com/jaspercatapang/cmc-bench', tags: ['LLMs', 'NLP', 'machine learning', 'vision-language'], sdgs: [9, 10, 16] },
+  { category: 'workshop', title: 'Position: Toward a Metric Typology for Language Model Evaluation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'GEM @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (July 2026). <em>Position: Toward a Metric Typology for Language Model Evaluation</em>. Proceedings of the Fifth Workshop on Generation, Evaluation and Metrics (GEM). San Diego, California, USA. pp. 1015-1020. ACL.', pdfUrl: '/publications/metric-typology-gem-acl-2026.pdf', posterUrl: '/posters/metric-typology-gem-acl-2026-poster.pdf', tags: ['LLMs', 'machine learning', 'AI safety', 'NLP'], sdgs: [9, 17] },
+  { category: 'workshop', title: 'When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'MAGMaR @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (July 2026). <em>When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation</em>. Proceedings of the 2nd Workshop on Multimodal Augmented Generation via MultimodAl Retrieval (MAGMaR 2026). San Diego, California, USA. pp. 1-10. ACL.', pdfUrl: '/publications/when-image-text-disagree-magmar-acl-2026.pdf', posterUrl: '/posters/when-image-text-disagree-magmar-acl-2026-poster.pdf', codeUrl: 'https://github.com/jaspercatapang/cmc-bench', tags: ['LLMs', 'NLP', 'machine learning', 'vision-language'], sdgs: [9, 10, 16] },
   { category: 'pending', title: 'Conyo English', authors: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S.', monthYear: 'In press', venue: 'Journal of English and Applied Linguistics', citation: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S. (in press). <em>Conyo English</em>. Journal of English and Applied Linguistics. De La Salle University.', pdfUrl: '', tags: ['World Englishes', 'NLP'], sdgs: [4, 10] },
   { category: 'pending', title: 'ChatGPT as a Tool in Describing Variation and Change in English Worldwide', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>ChatGPT as a Tool in Describing Variation and Change in English Worldwide</em>.', pdfUrl: '', tags: ['NLP', 'World Englishes'], sdgs: [4, 9, 10] },
   { category: 'pending', title: 'Orthogonality Is Not Disentanglement: Directional and Measure Entanglement in Language Model Concept Representations', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Orthogonality Is Not Disentanglement: Directional and Measure Entanglement in Language Model Concept Representations</em>.', pdfUrl: '', tags: ['LLMs', 'machine learning', 'AI safety'], sdgs: [9, 10, 16] },
@@ -1194,7 +1194,7 @@ export default function App() {
               company="Tokyo University of Foreign Studies"
               date="Oct 2024 – Present"
               location="Tokyo, Japan"
-              desc={<>Language and Culture Program.<br />Dissertation: A Computational Theory of Lexical Legitimization in World Englishes.</>}
+              desc={<>Language and Culture Program.<br />Dissertation: A Computational Theory of Lexical Stabilization in World Englishes.</>}
               meta={
                 <>
                   Supervisor:{' '}
