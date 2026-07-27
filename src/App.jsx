@@ -771,6 +771,18 @@ const RECENT_UPDATES_MAX = 5
 
 const RECENT_UPDATES_ITEMS = [
   {
+    key: '2026-07-27-pax-silica',
+    isoDate: '2026-07-27',
+    date: 'July 27, 2026',
+    body: (
+      <>
+        I released a{' '}
+        <a href="/publications/pax-silica-esz-2026.pdf" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">working paper</a>
+        {' '}on governance design for the Philippines' Pax Silica New Clark City AI hub.
+      </>
+    ),
+  },
+  {
     key: '2026-06-08-asian-englishes',
     isoDate: '2026-06-08',
     date: 'June 8, 2026',
@@ -1240,16 +1252,16 @@ export default function App() {
           <Section id="about" title="About">
             <div className="max-w-[38rem] space-y-4">
               <p>
-                With seven years of experience in NLP and AI, I specialize in explainable AI (XAI), LLM post-training, and agentic evaluation—most notably leading the development of open-source models at Maya Philippines, including the top-ranked GodziLLa-2 (
+                With seven years of experience in NLP and AI, I work across two tracks that I treat as inseparable: technical AI development and AI governance research. On the technical side, I specialize in explainable AI (XAI), LLM post-training, and agentic evaluation—most notably leading the development of open-source models at Maya Philippines, including the top-ranked GodziLLa-2 (
                   <a href="https://www.rappler.com/technology/maya-philippines-open-source-llm-godzilla-2-surpasses-chatgpt-truthfulness/" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Rappler article</a>
                   {', '}
                   <a href="https://huggingface.co/MayaPH/GodziLLa2-70B" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Hugging Face model</a>
                 ) and the FinOPT family of financial LLMs (
                   <a href="https://huggingface.co/MayaPH/FinOPT-Franklin" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Hugging Face models</a>
-                ). Grounded in computer science and applied linguistics, my work prioritizes ethical alignment and model transparency—critical assets for developing safe, trustworthy, and culturally aware multimodal agents.
+                ). On the research side, my published work addresses AI ethics, policy, and governance—including an ethics-by-design control architecture for AI lifecycle governance and a governance framework for AI infrastructure hosting agreements.
               </p>
               <p>
-                Currently pursuing a PhD at the Tokyo University of Foreign Studies, I balance advanced research with cross-functional technical leadership, bridging the gap between responsible AI principles and robust, real-world product deployment.
+                Currently pursuing a PhD at the Tokyo University of Foreign Studies, I combine technical fluency in how AI systems are built and evaluated with a policy-governance research focus—applying both to questions of how AI should be deployed, regulated, and governed at scale.
               </p>
             </div>
           </Section>
