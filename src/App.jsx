@@ -530,6 +530,119 @@ function PublicationCard ({ title, authors, monthYear, venue, citation, pdfUrl, 
   )
 }
 
+function FeaturedWorkingPaperCard({ title, subtitle, authors, monthYear, citation, pdfUrl, coverImage, abstract, tldr, sdgs, keywords }) {
+  const [citeOpen, setCiteOpen] = useState(false)
+  const [infoOpen, setInfoOpen] = useState(false)
+  const pdfHref = pdfUrl ? publicationPdfHref(pdfUrl) : null
+  const hasInfo = Boolean(abstract) || (Array.isArray(sdgs) && sdgs.length > 0)
+  return (
+    <>
+      <article className="rounded border border-amber-200 dark:border-amber-700/50 bg-white dark:bg-charcoal-950 px-4 pb-4 pt-3 shadow-sm ring-1 ring-amber-100/60 dark:ring-amber-900/20">
+        {/* Working paper badge */}
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3">
+          <span className="inline-flex items-center rounded-full bg-amber-600/10 dark:bg-amber-400/10 px-2.5 py-0.5 text-[0.63rem] font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400 ring-1 ring-amber-300/70 dark:ring-amber-600/50">
+            Working Paper
+          </span>
+          <span className="text-xs text-gray-500 dark:text-neutral-500">Preprint · not peer-reviewed · {monthYear}</span>
+        </div>
+
+        {/* Thumbnail + content row */}
+        <div className="flex gap-4 items-start">
+          {/* Small fully-visible thumbnail */}
+          {coverImage && (
+            <a
+              href={pdfHref ?? coverImage}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 w-[100px] sm:w-[120px] rounded overflow-hidden shadow ring-1 ring-black/10 dark:ring-white/10 hover:opacity-90 transition-opacity"
+              tabIndex={-1}
+              aria-hidden
+            >
+              <img
+                src={coverImage}
+                alt="Working paper cover"
+                className="w-full h-auto block"
+                loading="lazy"
+              />
+            </a>
+          )}
+
+          {/* Right: text + tldr + actions */}
+          <div className="flex-1 min-w-0 space-y-2">
+            <div>
+              <h4 className="font-sans text-[1rem] font-semibold text-black dark:text-neutral-200 m-0 mb-0.5 leading-snug">{title}</h4>
+              {subtitle && <p className="text-sm italic text-gray-500 dark:text-neutral-400 m-0 mb-1">{subtitle}</p>}
+              <p className="text-sm text-gray-600 dark:text-neutral-400 m-0" dangerouslySetInnerHTML={{ __html: boldAuthor(authors) }} />
+            </div>
+
+            {/* TL;DR — exposed */}
+            {tldr && (
+              <div>
+                <h5 className="text-[0.63rem] font-bold uppercase tracking-widest text-accent m-0 mb-1">TL;DR</h5>
+                <p className="text-[0.875rem] text-gray-700 dark:text-neutral-300 m-0 leading-relaxed">{tldr}</p>
+              </div>
+            )}
+
+            {/* Keywords */}
+            {keywords && keywords.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 pt-0.5">
+                {keywords.map((kw) => (
+                  <span key={kw} className="rounded-full bg-gray-100 dark:bg-charcoal-800 px-2.5 py-0.5 text-[0.7rem] text-gray-600 dark:text-neutral-400">{kw}</span>
+                ))}
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-0.5">
+              {pdfHref && (
+                <a href={pdfHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline" title="View PDF">
+                  <EyeIcon />
+                  <span>View PDF</span>
+                </a>
+              )}
+              {pdfHref && (
+                <a href={pdfHref} download={pdfUrl.split('/').pop()} rel="noopener noreferrer" className="inline-flex items-center justify-center p-1 rounded text-accent hover:text-black dark:hover:text-neutral-200 hover:bg-accent/10 transition-colors" title="Download PDF" aria-label="Download PDF">
+                  <DownloadIcon className="w-4 h-4" />
+                </a>
+              )}
+              {hasInfo && (
+                <button
+                  type="button"
+                  onClick={() => setInfoOpen(true)}
+                  className="inline-flex items-center justify-center p-1 rounded text-accent hover:text-black dark:hover:text-neutral-200 hover:bg-accent/10 transition-colors"
+                  aria-label="Open abstract and SDGs"
+                  title="Abstract & SDGs"
+                >
+                  <InfoIcon className="w-4 h-4" />
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setCiteOpen(true)}
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
+              >
+                <CiteIcon />
+                <span>Cite (temporary)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      {citeOpen && <CitationModal citationHtml={citation} onClose={() => setCiteOpen(false)} />}
+      {infoOpen && (
+        <PublicationInfoModal
+          title={title}
+          laySummary=""
+          abstractText={abstract}
+          sdgs={sdgs}
+          onClose={() => setInfoOpen(false)}
+        />
+      )}
+    </>
+  )
+}
+
 const Entry = ({ role, company, date, location, desc, bullets, meta }) => (
   <article className="pb-10 mb-10 border-b border-gray-200 dark:border-charcoal-700 last:border-b-0 last:pb-0 last:mb-0">
     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-1">
@@ -787,6 +900,20 @@ const PUBLICATION_CARDS = [
   { category: 'conference', title: 'A Floyd-Warshall-based Reoptimization of Q Matrix on the Single DVRPPD with On-demand Cancellations', authors: 'Catapang, J.K., & Solano, G.A.', monthYear: 'October 2021', venue: 'ICTC 2021 · Jeju, South Korea', citation: 'Catapang, J.K., & Solano, G.A. (October 2021). <em>A Floyd-Warshall-based Reoptimization of Q Matrix on the Single DVRPPD with On-demand Cancellations</em>. 2021 International Conference on Information and Communication Technology Convergence. Jeju, South Korea. pp. 172-177. IEEE. <a href="https://ieeexplore.ieee.org/document/9621108" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICTC52510.2021.9621108</a>', pdfUrl: '/publications/floyd-warshall-dvrppd-ictc-2021.pdf', codeUrl: 'https://colab.research.google.com/drive/1t9QDIdOj56NdllEwR2vHX45aQB4cWR8t', tags: ['machine learning'], sdgs: [9, 11] },
   { category: 'conference', title: 'A Bilingual Chatbot Using Support Vector Classifier on an Automatic Corpus Engine Dataset', authors: 'Catapang, J.K., Solano, G.A., & Oco, N.', monthYear: 'February 2020', venue: 'ICAIIC 2020 · Fukuoka, Japan', citation: 'Catapang, J.K., Solano, G.A., & Oco, N. (February 2020). <em>A Bilingual Chatbot Using Support Vector Classifier on an Automatic Corpus Engine Dataset</em>. 2020 International Conference on Artificial Intelligence in Information and Communication. Fukuoka, Japan. pp. 187-192. IEEE. <a href="https://ieeexplore.ieee.org/document/9065208" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">DOI: 10.1109/ICAIIC48513.2020.9065208</a>', pdfUrl: '/publications/bilingual-chatbot-icaiic-2020.pdf', tags: ['NLP', 'machine learning'], sdgs: [8, 9, 10] },
 ]
+
+const PAX_SILICA_PAPER = {
+  title: "Governance Design for the Philippines' Pax Silica Economic Security Zone",
+  subtitle: 'A Constraints-Before-Compensation Framework for AI Infrastructure Host Agreements',
+  authors: 'Catapang, J.K.',
+  monthYear: 'July 2026',
+  citation: "Catapang, J.K. (2026). <em>Governance Design for the Philippines' Pax Silica Economic Security Zone: A Constraints-Before-Compensation Framework for AI Infrastructure Host Agreements</em>. Working paper. Graduate School of Global Studies, Tokyo University of Foreign Studies. <em style=\"color:inherit;opacity:.6\">[Temporary citation — preprint, venue not yet assigned.]</em>",
+  pdfUrl: '/publications/pax-silica-esz-2026.pdf',
+  coverImage: '/publications/pax-silica-esz-2026-cover.png',
+  abstract: 'The November 2026 framework agreement for New Clark City will make the Philippines the first country to host a physical facility of the Pax Silica economic security bloc: a 1,618-hectare AI infrastructure zone on a former United States military base in Tarlac Province. These negotiations are not only about whether to proceed, but about what proceeding means. This paper takes a conditional-proceed position — neither cancellation nor acceleration — occupying the middle ground that no existing government document or coalition has yet articulated rigorously. The central analytical device is a three-way cost taxonomy: compensable costs (relocation, lost income) answerable with money; mitigable costs (water stress, grid pressure, pollution) answerable with engineering; and non-compensable costs (extinguished ancestral domain claims, irreversible aquifer loss, foreclosed ways of life) answerable by neither. Standard cost-benefit analysis converts the third category into the first by pricing everything; this paper argues the error is analytical, not merely ethical. The corrective is the Constraints-Before-Compensation (CBC) framework: a three-gate evaluation architecture requiring rights preconditions and critical natural capital screening to be settled before any distributional analysis begins. Twelve draft instruments translate the framework into agreement language.',
+  tldr: "Standard cost-benefit analysis can price relocation and lost income, but cannot price the extinguishment of ancestral domain or irreversible aquifer depletion. This paper proposes the Constraints-Before-Compensation (CBC) framework — a three-gate governance architecture requiring rights preconditions and environmental caps to be locked into the agreement before any distributional negotiation begins. Whatever the Philippines signs by November 2026 becomes the template every subsequent Pax Silica host country is offered.",
+  keywords: ['AI governance', 'Pax Silica', 'indigenous rights', 'FPIC', 'sovereign AI', 'Philippines'],
+  sdgs: [10, 15, 16, 17],
+}
 
 /** Pending: highlighted first, then dated forthcoming (e.g. July 2026), then in press, then submitted — title A→Z within each band. */
 const comparePendingPublications = (a, b) => {
@@ -1296,6 +1423,10 @@ export default function App() {
                   <button type="button" onClick={() => setPubTagFilter([])} className="text-sm font-medium text-gray-600 dark:text-neutral-400 hover:text-accent underline">Clear all</button>
                 </>
               )}
+            </div>
+            <SubsectionTitle>Featured</SubsectionTitle>
+            <div className="mb-6">
+              <FeaturedWorkingPaperCard {...PAX_SILICA_PAPER} />
             </div>
             <SubsectionTitle>Pending</SubsectionTitle>
             <div className="space-y-3 mb-6">
