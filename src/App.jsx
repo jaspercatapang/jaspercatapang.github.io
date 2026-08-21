@@ -35,7 +35,7 @@ function syncDomTheme(theme) {
 const publicationPdfKey = (pdfUrl) => (pdfUrl ? pdfUrl.split('?')[0] : '')
 
 /** Bump when you replace any PDF under `public/publications/`. Format: `date +%Y%m%d%H%M%S` */
-const PDF_CACHE_VERSION = '20260727194400'
+const PDF_CACHE_VERSION = '20260821150341'
 
 /** Append global cache version for View/Download links (JSON keys use path-only). */
 const publicationPdfHref = (pdfUrl) =>
@@ -46,7 +46,7 @@ const publicationPdfHref = (pdfUrl) =>
  * pick up the new PDF without a hard refresh (same idea as `PDF_CACHE_VERSION`).
  * Format: YYYY/M/D.
  */
-const CV_AS_OF = '2026/7/7'
+const CV_AS_OF = '2026/8/21'
 const cvPdfHref = `/Catapang_CV.pdf?v=${CV_AS_OF.split('/').map((p) => p.padStart(2, '0')).join('')}`
 
 const Section = ({ id, title, children, className = '' }) => (
@@ -771,6 +771,18 @@ const RECENT_UPDATES_MAX = 5
 
 const RECENT_UPDATES_ITEMS = [
   {
+    key: '2026-08-21-mmhrdc-health-ai-ethics',
+    isoDate: '2026-08-21',
+    date: 'August 21, 2026',
+    body: (
+      <>
+        I gave a lecture on{' '}
+        <a href="/lectures/current-issues-health-ai-ethics-2026.pdf" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">current issues in ethics in the integration of AI in healthcare</a>
+        {' '}at the Metro Manila Health Research and Development Consortium.
+      </>
+    ),
+  },
+  {
     key: '2026-07-27-pax-silica',
     isoDate: '2026-07-27',
     date: 'July 27, 2026',
@@ -858,6 +870,7 @@ const MEDIA_ITEMS = [
 ]
 
 const LECTURES = [
+  { title: 'Current Issues in Ethics in the Integration of AI in Healthcare', date: 'August 21, 2026', venue: 'Metro Manila Health Research and Development Consortium', slides: '/lectures/current-issues-health-ai-ethics-2026.pdf' },
   { title: 'Ethics fatigue of the modern Sisyphus in the age of AI', date: 'April 12, 2026', venue: 'Association of Filipino Students in Japan', slides: '/lectures/ethics-fatigue-dunong-afsj-2026.pdf' },
   { title: 'Transformers for Natural Language Processing', date: 'February 9-11, 2026', venue: 'Tokyo University of Foreign Studies, Japan', slides: null },
   { title: 'Do the Models Hear Us? Artificial Intelligence and the (In)visibility of Migrant Voices and Languages', date: 'December 5, 2025', venue: '2nd International Conference on Migration Linguistics. University of Santo Tomas, Philippines', slides: '/lectures/do-the-models-hear-us-2025.pdf' },
