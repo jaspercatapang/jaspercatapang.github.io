@@ -1265,16 +1265,10 @@ export default function App() {
           <Section id="about" title="About">
             <div className="max-w-[38rem] space-y-4">
               <p>
-                With seven years of experience in NLP and AI, I work across two tracks that I treat as inseparable: technical AI development and AI governance research. On the technical side, I specialize in explainable AI (XAI), LLM post-training, and agentic evaluation—most notably leading the development of open-source models at Maya Philippines, including the top-ranked GodziLLa-2 (
-                  <a href="https://www.rappler.com/technology/maya-philippines-open-source-llm-godzilla-2-surpasses-chatgpt-truthfulness/" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Rappler article</a>
-                  {', '}
-                  <a href="https://huggingface.co/MayaPH/GodziLLa2-70B" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Hugging Face model</a>
-                ) and the FinOPT family of financial LLMs (
-                  <a href="https://huggingface.co/MayaPH/FinOPT-Franklin" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Hugging Face models</a>
-                ). On the research side, my published work addresses AI ethics, policy, and governance—including an ethics-by-design control architecture for AI lifecycle governance and a governance framework for AI infrastructure hosting agreements.
+                Jasper Kyle Catapang is an AI Engineer at Money Forward in Tokyo and a PhD researcher at the Tokyo University of Foreign Studies. His work focuses on catching the gap between AI systems that appear to work correctly and ones that actually do — from bias hidden in language models to AI governance policies that look good on paper but aren't enforced in practice.
               </p>
               <p>
-                Currently pursuing a PhD at the Tokyo University of Foreign Studies, I combine technical fluency in how AI systems are built and evaluated with a policy-governance research focus—applying both to questions of how AI should be deployed, regulated, and governed at scale.
+                He previously led development of GodziLLa-2, a top-ranked open-source LLM, and the FinOPT family of financial LLMs at Maya Philippines. His recent research has been published at premier venues for AI research, covering bias in language model representations, how AI systems handle conflicting information, and how to make AI governance enforceable rather than aspirational.
               </p>
             </div>
           </Section>
