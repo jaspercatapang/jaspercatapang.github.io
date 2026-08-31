@@ -1087,7 +1087,7 @@ function MobileIntro({ theme, setTheme }) {
       <div className="flex flex-col items-center text-center mb-6">
         <img src="/professional_headshot.jpeg?v=2" alt="Jasper Kyle Catapang" width={88} height={88} className="w-[88px] h-[88px] shrink-0 rounded-full object-cover mb-4" />
         <h1 className="font-sans text-2xl font-bold tracking-tight text-black dark:text-neutral-200 mb-2">Jasper Kyle Catapang</h1>
-        <p className="text-base text-gray-600 dark:text-neutral-400 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
+        <p className="text-base text-gray-600 dark:text-neutral-400 mb-1">Explainable AI · LLM Post-Training · AI Governance</p>
         <p className="text-sm text-gray-600 dark:text-neutral-400 italic mb-2">PhD Candidate, Tokyo University of Foreign Studies</p>
         <p className="text-sm text-gray-600 dark:text-neutral-400 mb-4">
           <a href={cvPdfHref} target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
@@ -1261,7 +1261,7 @@ export default function App() {
                 <h1 className="font-sans text-3xl md:text-4xl font-bold tracking-tight text-black dark:text-neutral-200 mb-1.5">
                   Jasper Kyle Catapang
                 </h1>
-                <p className="text-lg text-gray-600 dark:text-neutral-400 mb-1">NLP & AI Research · Explainable AI · LLM Post-Training</p>
+                <p className="text-lg text-gray-600 dark:text-neutral-400 mb-1">Explainable AI · LLM Post-Training · AI Governance</p>
                 <p className="text-[0.95rem] text-gray-600 dark:text-neutral-400 italic mb-1">PhD Candidate, Tokyo University of Foreign Studies</p>
                 <p className="text-sm text-gray-600 dark:text-neutral-400">
                   <a href={cvPdfHref} target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">[CV]</a>
