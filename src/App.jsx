@@ -845,6 +845,14 @@ const RECENT_UPDATES_ITEMS = [
 
 const MEDIA_ITEMS = [
   {
+    title: 'ACL 2026: On Building More Reliable and Trustworthy AI',
+    url: 'https://global.moneyforward-dev.jp/2026/07/23/acl-2026/',
+    outlet: 'Money Forward Engineering',
+    domain: 'global.moneyforward-dev.jp',
+    date: 'July 23, 2026',
+    credit: 'Money Forward Developers',
+  },
+  {
     title: 'Breaking the illusion of language data scarcity in the Philippines',
     url: 'https://www.manilatimes.net/2024/11/10/opinion/columns/breaking-the-illusion-of-language-data-scarcity-in-the-philippines/2001098',
     outlet: 'The Manila Times',
