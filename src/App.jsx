@@ -35,7 +35,7 @@ function syncDomTheme(theme) {
 const publicationPdfKey = (pdfUrl) => (pdfUrl ? pdfUrl.split('?')[0] : '')
 
 /** Bump when you replace any PDF under `public/publications/`. Format: `date +%Y%m%d%H%M%S` */
-const PDF_CACHE_VERSION = '20260821150341'
+const PDF_CACHE_VERSION = '20260831000000'
 
 /** Append global cache version for View/Download links (JSON keys use path-only). */
 const publicationPdfHref = (pdfUrl) =>
@@ -46,7 +46,7 @@ const publicationPdfHref = (pdfUrl) =>
  * pick up the new PDF without a hard refresh (same idea as `PDF_CACHE_VERSION`).
  * Format: YYYY/M/D.
  */
-const CV_AS_OF = '2026/8/21'
+const CV_AS_OF = '2026/8/31'
 const cvPdfHref = `/Catapang_CV.pdf?v=${CV_AS_OF.split('/').map((p) => p.padStart(2, '0')).join('')}`
 
 const Section = ({ id, title, children, className = '' }) => (
@@ -713,6 +713,7 @@ const SKILL_LINK_CLASSES = 'text-accent hover:underline'
 const SKILL_LINK_PROPS = { className: SKILL_LINK_CLASSES, target: '_blank', rel: 'noopener noreferrer' }
 
 const SKILLS = [
+  { title: 'AI Governance & Assurance', text: 'Ethical Frameworks, Interpretability, Model Transparency, Evaluation & Assurance Methodology, Sociolinguistic Bias Analysis, AI Policy Analysis.' },
   { title: 'LLM & Post-Training', text: 'SFT, RLHF, Model Alignment, Prompt Engineering, RAG, Agentic AI, Evaluation Pipeline.' },
   {
     title: 'Frameworks & Tools',
@@ -1265,7 +1266,7 @@ export default function App() {
           <Section id="about" title="About">
             <div className="max-w-[38rem] space-y-4">
               <p>
-                Jasper Kyle Catapang is an AI Engineer at Money Forward in Tokyo and a PhD researcher at the Tokyo University of Foreign Studies. His work focuses on catching the gap between AI systems that appear to work correctly and ones that actually do — from bias hidden in language models to AI governance policies that look good on paper but aren't enforced in practice.
+                Jasper Kyle Catapang is an AI Agent Development Lead at Money Forward in Tokyo and a PhD researcher at the Tokyo University of Foreign Studies. His work focuses on catching the gap between AI systems that appear to work correctly and ones that actually do — from bias hidden in language models to AI governance policies that look good on paper but aren't enforced in practice.
               </p>
               <p>
                 He previously led development of GodziLLa-2, a top-ranked open-source LLM, and the FinOPT family of financial LLMs at Maya Philippines. His recent research has been published at premier venues for AI research, covering bias in language model representations, how AI systems handle conflicting information, and how to make AI governance enforceable rather than aspirational.
