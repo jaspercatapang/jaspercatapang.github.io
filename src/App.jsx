@@ -35,7 +35,7 @@ function syncDomTheme(theme) {
 const publicationPdfKey = (pdfUrl) => (pdfUrl ? pdfUrl.split('?')[0] : '')
 
 /** Bump when you replace any PDF under `public/publications/`. Format: `date +%Y%m%d%H%M%S` */
-const PDF_CACHE_VERSION = '20260831000000'
+const PDF_CACHE_VERSION = '20260910000000'
 
 /** Append global cache version for View/Download links (JSON keys use path-only). */
 const publicationPdfHref = (pdfUrl) =>
@@ -913,6 +913,7 @@ const PUBLICATION_TAGS = ['NLP', 'LLMs', 'AI safety', 'AI governance', 'World En
 const PUBLICATION_CARDS = [
   { category: 'workshop', title: 'Position: Toward a Metric Typology for Language Model Evaluation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'GEM @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (July 2026). <em>Position: Toward a Metric Typology for Language Model Evaluation</em>. Proceedings of the Fifth Workshop on Generation, Evaluation and Metrics (GEM). San Diego, California, USA. pp. 1015-1020. ACL.', pdfUrl: '/publications/metric-typology-gem-acl-2026.pdf', posterUrl: '/posters/metric-typology-gem-acl-2026-poster.pdf', tags: ['LLMs', 'machine learning', 'AI safety', 'NLP'], sdgs: [9, 17] },
   { category: 'workshop', title: 'When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation', authors: 'Catapang, J.K.', monthYear: 'July 2026', venue: 'MAGMaR @ ACL 2026 · San Diego, CA, USA', citation: 'Catapang, J.K. (July 2026). <em>When Image and Text Disagree: Cross-Modal Evidence Conflict in Multimodal Retrieval-Augmented Generation</em>. Proceedings of the 2nd Workshop on Multimodal Augmented Generation via MultimodAl Retrieval (MAGMaR 2026). San Diego, California, USA. pp. 1-10. ACL.', pdfUrl: '/publications/when-image-text-disagree-magmar-acl-2026.pdf', posterUrl: '/posters/when-image-text-disagree-magmar-acl-2026-poster.pdf', codeUrl: 'https://github.com/jaspercatapang/cmc-bench', tags: ['LLMs', 'NLP', 'machine learning', 'vision-language'], sdgs: [9, 10, 16] },
+  { category: 'pending', title: 'How Social Media Hollowed the Signal Before Generative AI', authors: 'Catapang, J.K.', monthYear: 'Preprint', venue: '—', citation: 'Catapang, J.K. (2026). <em>How Social Media Hollowed the Signal Before Generative AI</em>. TUFS Preprint. Graduate School of Global Studies, Tokyo University of Foreign Studies.', pdfUrl: '/publications/how-social-media-hollowed-signal-before-generative-ai.pdf', tags: ['LLMs', 'AI governance'], sdgs: [8, 9, 10] },
   { category: 'pending', title: 'Conyo English', authors: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S.', monthYear: 'In press', venue: 'Journal of English and Applied Linguistics', citation: 'Borlongan, A.M., Catapang, J.K., Samejon, K., Asamura, S. (in press). <em>Conyo English</em>. Journal of English and Applied Linguistics. De La Salle University.', pdfUrl: '', tags: ['World Englishes', 'NLP'], sdgs: [4, 10] },
   { category: 'pending', title: 'ChatGPT as a Tool in Describing Variation and Change in English Worldwide', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>ChatGPT as a Tool in Describing Variation and Change in English Worldwide</em>.', pdfUrl: '', tags: ['NLP', 'World Englishes'], sdgs: [4, 9, 10] },
   { category: 'pending', title: 'Orthogonality Is Not Disentanglement: Directional and Measure Entanglement in Language Model Concept Representations', authors: 'Catapang, J.K.', monthYear: 'Submitted', venue: '—', citation: 'Catapang, J.K. (submitted). <em>Orthogonality Is Not Disentanglement: Directional and Measure Entanglement in Language Model Concept Representations</em>.', pdfUrl: '', tags: ['LLMs', 'machine learning', 'AI safety'], sdgs: [9, 10, 16] },
@@ -1452,10 +1453,6 @@ export default function App() {
                 </>
               )}
             </div>
-            <SubsectionTitle>Featured</SubsectionTitle>
-            <div className="mb-6">
-              <FeaturedWorkingPaperCard {...PAX_SILICA_PAPER} />
-            </div>
             <SubsectionTitle>Pending</SubsectionTitle>
             <div className="space-y-3 mb-6">
               {PUBLICATION_CARDS.filter(p => p.category === 'pending' && matchesTagFilter(p)).sort(comparePendingPublications).map((pub, i) => (
@@ -1551,6 +1548,13 @@ export default function App() {
                   )}
                 </li>
               ))}
+            </ul>
+            <SubsectionTitle>Preprints</SubsectionTitle>
+            <ul className="pl-5 space-y-1.5 text-sm mb-6">
+              <li>
+                Catapang, J.K. (2026). <em>Governance Design for the Philippines&rsquo; Pax Silica Economic Security Zone: A Constraints-Before-Compensation Framework for AI Infrastructure Host Agreements</em>. Working paper. Graduate School of Global Studies, Tokyo University of Foreign Studies.{' '}
+                <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7186820" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">[SSRN]</a>
+              </li>
             </ul>
             <SubsectionTitle>Lectures</SubsectionTitle>
             <ul className="pl-5 space-y-1.5 text-sm">
