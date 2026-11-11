@@ -46,7 +46,7 @@ const publicationPdfHref = (pdfUrl) =>
  * pick up the new PDF without a hard refresh (same idea as `PDF_CACHE_VERSION`).
  * Format: YYYY/M/D.
  */
-const CV_AS_OF = '2026/8/31'
+const CV_AS_OF = '2026/11/11'
 const cvPdfHref = `/Catapang_CV.pdf?v=${CV_AS_OF.split('/').map((p) => p.padStart(2, '0')).join('')}`
 
 const Section = ({ id, title, children, className = '' }) => (
@@ -968,9 +968,20 @@ const comparePendingPublications = (a, b) => {
 
 const EXPERIENCE_ENTRIES = [
   {
+    role: 'AI Safety Researcher',
+    company: 'Money Forward',
+    date: 'Nov 2026 – Present',
+    location: 'Tokyo, Japan',
+    desc: 'I research AI safety at the AI Transformation, Evaluation, and Safety Team, Money Forward’s in-house research lab for AI transformation, evaluation, and safety.',
+    bullets: [
+      'Transitioned from AI Agent Development Lead to AI safety research starting Nov 2026.',
+      '<strong>Model Context &amp; Harness R&amp;D:</strong> Drive research and development from ideation through implementation to evaluation on model context and agent harness design—how the context supplied to a model, and the harness that orchestrates it, shape its safety and reliability.',
+    ],
+  },
+  {
     role: 'AI Agent Development Lead',
     company: 'Money Forward',
-    date: 'Jan 2026 – Present',
+    date: 'Jan 2026 – Oct 2026',
     location: 'Tokyo, Japan',
     desc: 'I lead the design, development, and delivery of internal AI modules at Money Forward, overseeing cross-team execution while ensuring alignment among product intent, technical architecture, and operational constraints.',
     bullets: [
@@ -1279,7 +1290,7 @@ export default function App() {
           <Section id="about" title="About">
             <div className="max-w-[38rem] space-y-4">
               <p>
-                Jasper Kyle Catapang is an AI Agent Development Lead at Money Forward in Tokyo and a PhD researcher at the Tokyo University of Foreign Studies. His work focuses on catching the gap between AI systems that appear to work correctly and ones that actually do — from bias hidden in language models to AI governance policies that look good on paper but aren't enforced in practice.
+                Jasper Kyle Catapang is an AI Safety Researcher at Money Forward in Tokyo and a PhD researcher at the Tokyo University of Foreign Studies. His work focuses on catching the gap between AI systems that appear to work correctly and ones that actually do — from bias hidden in language models to AI governance policies that look good on paper but aren't enforced in practice.
               </p>
               <p>
                 He previously led development of GodziLLa-2, a top-ranked open-source LLM, and the FinOPT family of financial LLMs at Maya Philippines. His recent research has been published at premier venues for AI research, covering bias in language model representations, how AI systems handle conflicting information, and how to make AI governance enforceable rather than aspirational.
