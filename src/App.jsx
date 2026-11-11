@@ -772,6 +772,16 @@ const RECENT_UPDATES_MAX = 5
 
 const RECENT_UPDATES_ITEMS = [
   {
+    key: '2026-11-01-aites',
+    isoDate: '2026-11-01',
+    date: 'November 1, 2026',
+    body: (
+      <>
+        I joined Money Forward's AI Transformation, Evaluation, and Safety Team, the company's in-house research lab, as an AI Safety Researcher.
+      </>
+    ),
+  },
+  {
     key: '2026-08-21-mmhrdc-health-ai-ethics',
     isoDate: '2026-08-21',
     date: 'August 21, 2026',
@@ -804,40 +814,6 @@ const RECENT_UPDATES_ITEMS = [
         I published an article on asymmetrical pluralism and how AI systems redistribute normative authority across Asian Englishes in{' '}
         <a href="/publications/asymmetrical-pluralism-normative-power-ai-asian-englishes.pdf" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer"><em>Asian Englishes</em></a>
         .
-      </>
-    ),
-  },
-  {
-    key: '2026-05-02-acl',
-    isoDate: '2026-05-02',
-    date: 'May 2, 2026',
-    body: (
-      <>
-        I'm thrilled to have one main conference paper (via SRW) and two workshop papers accepted at{' '}
-        <a href="https://2026.aclweb.org/" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">ACL 2026</a>
-        .
-      </>
-    ),
-  },
-  {
-    key: '2026-02-09-ai-ethics',
-    isoDate: '2026-02-09',
-    date: 'February 9, 2026',
-    body: (
-      <>
-        I published a piece on a future-proof AI lifecycle governance framework in{' '}
-        <a href="/publications/ethical-ai-framework-2026.pdf" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer"><em>AI and Ethics</em></a>.
-      </>
-    ),
-  },
-  {
-    key: '2025-12-22-jml',
-    isoDate: '2025-12-22',
-    date: 'December 22, 2025',
-    body: (
-      <>
-        I have a journal article out on migration linguistics and AI in the{' '}
-        <a href="/publications/language-migration-chatgpt-2025.pdf" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer"><em>Journal of Modern Languages</em></a>.
       </>
     ),
   },
