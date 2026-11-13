@@ -46,7 +46,7 @@ const publicationPdfHref = (pdfUrl) =>
  * pick up the new PDF without a hard refresh (same idea as `PDF_CACHE_VERSION`).
  * Format: YYYY/M/D.
  */
-const CV_AS_OF = '2026/11/11'
+const CV_AS_OF = '2026/11/14'
 const cvPdfHref = `/Catapang_CV.pdf?v=${CV_AS_OF.split('/').map((p) => p.padStart(2, '0')).join('')}`
 
 const Section = ({ id, title, children, className = '' }) => (
