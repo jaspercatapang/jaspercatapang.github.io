@@ -121,6 +121,16 @@
   .player .play svg { width: 28px; height: 28px; fill: var(--ink); margin-left: 4px; }
   .player .soon { position: absolute; left: 1rem; bottom: 1rem; padding: .35rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 800; background: rgba(0,0,0,.55); }
   .caption { font-size: .9rem; color: rgba(238,244,239,.7); margin-top: .7rem; }
+  /* film credits: an end-credits block, roles right-aligned against names */
+  .credits { margin: 1.1rem 0 0; padding-top: 1.1rem; border-top: 1px solid rgba(238,244,239,.12); display: grid; gap: .55rem; }
+  .credits > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 1.1rem; align-items: baseline; }
+  .credits dt { text-align: right; font-size: .7rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: rgba(238,244,239,.55); line-height: 1.5; }
+  .credits dd { margin: 0; font-size: .95rem; font-weight: 700; color: #EEF4EF; line-height: 1.4; }
+  @media (max-width: 560px) {
+    .credits { gap: .8rem; text-align: center; }
+    .credits > div { grid-template-columns: 1fr; row-gap: .15rem; }
+    .credits dt { text-align: center; }
+  }
 
   /* features */
   .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; margin-top: 2.2rem; }
@@ -340,7 +350,12 @@
         <div class="player h" data-yt="YOUTUBE_ID_16x9" data-title="Kusabi launch film">
           <img src="img/hero.webp" alt="Still from the Kusabi film" loading="lazy">
         </div>
-        <p class="caption">Direction, lighting, camera and cinematography: Jasper Kyle Catapang · Captions: Jasper Kyle Catapang · Animation: Claude Fable 5.2 · Rendered in Blender.</p>
+        <dl class="caption credits" aria-label="Film credits">
+          <div><dt>Direction, lighting, camera and cinematography</dt><dd>Jasper Kyle Catapang</dd></div>
+          <div><dt>Captions</dt><dd>Jasper Kyle Catapang</dd></div>
+          <div><dt>Animation</dt><dd>Claude Fable 5.2</dd></div>
+          <div><dt>Rendered in</dt><dd>Blender</dd></div>
+        </dl>
       </div>
       <div class="v">
         <!-- Paste the YouTube Shorts ID of the vertical cut into data-yt. -->
