@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kusabi: a small wedge of calm · Jasper Kyle Catapang</title>
+<meta name="description" content="Kusabi is a small AI desk companion with a calm face: you can talk with it, use it as a live interpreter, or open it up as a mini PC. Designed by an AI researcher, with hardware made alongside an AI assistant. Project page and launch film.">
+<meta name="author" content="Jasper Kyle Catapang">
+<link rel="canonical" href="https://jaspercatapang.github.io/projects/kusabi/">
+<link rel="icon" type="image/svg+xml" href="img/kusabi_symbol.svg">
+<meta name="theme-color" content="#2E3A36">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Jasper Kyle Catapang">
+<meta property="og:title" content="Kusabi: a small wedge of calm">
+<meta property="og:description" content="A small AI desk companion you can talk with, with a calm face, a live interpreter and a mini PC mode. Designed by Jasper Kyle Catapang, with hardware made alongside an AI assistant.">
+<meta property="og:url" content="https://jaspercatapang.github.io/projects/kusabi/">
+<meta property="og:image" content="https://jaspercatapang.github.io/projects/kusabi/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kusabi: a small wedge of calm">
+<meta name="twitter:description" content="A small AI desk companion you can talk with, with a calm face, a live interpreter and a mini PC mode. Designed by Jasper Kyle Catapang, with hardware made alongside an AI assistant.">
+<meta name="twitter:image" content="https://jaspercatapang.github.io/projects/kusabi/og.jpg">
+<script>
+  // Follow the main site's theme choice (same localStorage key as the portfolio).
+  (function () {
+    try {
+      var t = localStorage.getItem('portfolio-theme');
+      if (t === 'dark') document.documentElement.classList.add('dark');
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --matcha: #CFE3C4; --door: #B7D6BE; --etch: #7FA98C; --cream: #FFF4DC; --ink: #2E3A36;
+    --bg: #FBF8F1; --surface: #FFFFFF; --text: #2E3A36; --muted: #5E6B66; --line: #E4E0D4;
+    --radius: 22px;
+  }
+  html.dark {
+    --bg: #161a19; --surface: #1f2523; --text: #E7EEE9; --muted: #A3B0AA; --line: #2f3835;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 400 1.0625rem/1.65 "Nunito", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .wrap { width: min(1120px, 100% - 3rem); margin-inline: auto; }
+  .narrow { width: min(720px, 100% - 3rem); margin-inline: auto; }
+
+  /* top bar */
+  .bar { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--bg) 85%, transparent); border-bottom: 1px solid var(--line); }
+  .bar .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 1rem; }
+  .bar a { text-decoration: none; font-weight: 700; font-size: .9rem; letter-spacing: .02em; color: var(--muted); }
+  .bar a:hover { color: var(--etch); }
+  .bar nav { display: flex; gap: 1.4rem; }
+  @media (max-width: 640px) { .bar nav { display: none; } }
+
+  /* hero */
+  .hero { position: relative; overflow: hidden; background: #0e1211; color: #fff; }
+  .hero img.bg { width: 100%; aspect-ratio: 16/9; object-fit: cover; min-height: 520px; opacity: .92; }
+  .hero .over { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 0 clamp(2rem, 6vw, 4.5rem); background: linear-gradient(180deg, transparent 45%, rgba(10,14,13,.78)); }
+  .hero .wordmark { width: clamp(180px, 26vw, 300px); filter: brightness(0) invert(1); margin-bottom: .9rem; }
+  .hero .tag { font: 800 clamp(1.5rem, 3.4vw, 2.6rem)/1.15 "M PLUS Rounded 1c", sans-serif; margin: 0 0 .6rem; }
+  .hero .lede { max-width: 38rem; margin: 0 0 1.4rem; color: rgba(255,255,255,.82); font-size: 1.1rem; }
+  .btns { display: flex; flex-wrap: wrap; gap: .7rem; }
+  .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.25rem; border-radius: 999px;
+    font-weight: 800; font-size: .95rem; text-decoration: none; border: 0; cursor: pointer; }
+  .btn.primary { background: var(--matcha); color: var(--ink); }
+  .btn.ghost { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.3); }
+  .btn:hover { filter: brightness(1.06); }
+  @media (max-width: 640px) {
+    .hero img.bg { min-height: 0; aspect-ratio: 4/3; object-position: 62% 40%; opacity: 1; }
+    .hero .over { position: static; background: #0e1211; padding: 1.6rem 0 2.4rem; }
+  }
+
+  section { padding: clamp(3.5rem, 8vw, 6rem) 0; }
+  .eyebrow { font: 800 .78rem/1 "Nunito", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--etch); margin: 0 0 .9rem; }
+  h2 { font: 800 clamp(1.7rem, 3.6vw, 2.5rem)/1.15 "M PLUS Rounded 1c", sans-serif; margin: 0 0 1rem; letter-spacing: -.01em; }
+  h3 { font: 800 1.2rem/1.3 "M PLUS Rounded 1c", sans-serif; margin: 0 0 .35rem; }
+  p { margin: 0 0 1rem; }
+  .muted { color: var(--muted); }
+
+  /* film */
+  .film { background: var(--ink); color: #EEF4EF; }
+  .film .eyebrow { color: var(--matcha); }
+  .film-grid { display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; align-items: start; }
+  @media (max-width: 860px) { .film-grid { grid-template-columns: 1fr; } .film-grid .v { max-width: 320px; } }
+  .player { position: relative; border-radius: var(--radius); overflow: hidden; background: #0c100f; box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+  .player.h { aspect-ratio: 16/9; } .player.v { aspect-ratio: 9/16; }
+  .player img, .player iframe { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; }
+  .player .play { position: absolute; inset: 0; display: grid; place-items: center; background: transparent; border: 0; cursor: pointer; color: #fff; }
+  .player .play span { width: 74px; height: 74px; border-radius: 50%; background: rgba(207,227,196,.95); display: grid; place-items: center; box-shadow: 0 8px 30px rgba(0,0,0,.35); }
+  .player .play svg { width: 28px; height: 28px; fill: var(--ink); margin-left: 4px; }
+  .player .soon { position: absolute; left: 1rem; bottom: 1rem; padding: .35rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 800; background: rgba(0,0,0,.55); }
+  .caption { font-size: .9rem; color: rgba(238,244,239,.7); margin-top: .7rem; }
+
+  /* features */
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; margin-top: 2.2rem; }
+  @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .features { grid-template-columns: 1fr; } }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .card img { aspect-ratio: 16/10; object-fit: cover; width: 100%; background: #111; }
+  .card .body { padding: 1rem 1.2rem 1.25rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .97rem; }
+
+  /* split */
+  .split { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+  .split.rev { grid-template-columns: 1fr 1.05fr; }
+  .split.rev .media { order: 2; }
+  @media (max-width: 860px) { .split, .split.rev { grid-template-columns: 1fr; } .split.rev .media { order: 0; } }
+  .media img { border-radius: var(--radius); width: 100%; }
+  .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+  .chip { padding: .3rem .8rem; border-radius: 999px; background: var(--matcha); color: var(--ink); font-weight: 700; font-size: .85rem; }
+  html.dark .chip { background: #2b3a33; color: var(--matcha); }
+
+  /* evolution */
+  .tint { background: color-mix(in srgb, var(--matcha) 35%, var(--bg)); }
+  html.dark .tint { background: #1b2420; }
+  .evo { display: grid; grid-template-columns: repeat(5, 1fr); gap: .9rem; margin-top: 2rem; }
+  @media (max-width: 900px) { .evo { grid-template-columns: repeat(2, 1fr); } }
+  .evo figure { margin: 0; background: var(--surface); border-radius: 18px; overflow: hidden; border: 1px solid var(--line); }
+  .evo img { aspect-ratio: 1/1; object-fit: cover; width: 100%; }
+  .evo figcaption { padding: .7rem .85rem .85rem; font-size: .88rem; color: var(--muted); }
+  .evo figcaption b { display: block; color: var(--text); font-family: "M PLUS Rounded 1c", sans-serif; font-size: .95rem; }
+
+  /* case study */
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2rem 0 2.5rem; }
+  @media (max-width: 760px) { .facts { grid-template-columns: repeat(2, 1fr); } }
+  .fact { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 1rem 1.1rem; }
+  .fact b { display: block; font: 800 1.6rem/1.1 "M PLUS Rounded 1c", sans-serif; color: var(--etch); }
+  .fact span { font-size: .9rem; color: var(--muted); }
+  .cs h3 { margin-top: 2.2rem; }
+  .cs ul { padding-left: 1.2rem; margin: 0 0 1rem; }
+  .cs li { margin-bottom: .45rem; }
+  .note { border-left: 4px solid var(--etch); background: var(--surface); padding: 1rem 1.2rem; border-radius: 0 14px 14px 0; margin: 1.5rem 0; }
+  .status { display: grid; gap: .6rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+  .status li { display: flex; gap: .75rem; align-items: baseline; }
+  .dot { flex: none; width: .7rem; height: .7rem; border-radius: 50%; transform: translateY(.05rem); }
+  .dot.done { background: var(--etch); } .dot.now { background: #E0B04B; } .dot.next { background: var(--line); border: 2px solid var(--etch); }
+
+  footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; font-size: .92rem; color: var(--muted); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; }
+  footer img { width: 34px; }
+  html.dark .wm-ink { filter: brightness(0) invert(1); opacity: .9; }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a href="/">← Jasper Kyle Catapang</a>
+    <nav>
+      <a href="#film">Film</a>
+      <a href="#features">Features</a>
+      <a href="#design">Design</a>
+      <a href="#making">How it was made</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <img class="bg" src="img/hero.webp" alt="Kusabi, a small sage-green robot with a soft face on its screen, sitting on a wooden desk at night" fetchpriority="high">
+  <div class="over">
+    <div class="wrap">
+      <img class="wordmark" src="img/kusabi_wordmark.svg" alt="kusabi">
+      <p class="tag">A small wedge of calm.</p>
+      <p class="lede">A small AI desk companion with a gentle face. Talk with it, let it interpret for you, or open the mini PC hidden inside. A personal project: I designed it and I'm building its software and AI.</p>
+      <div class="btns">
+        <a class="btn primary" href="#film">▶ Watch the film</a>
+        <a class="btn ghost" href="#making">How it was made</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FILM -->
+<section id="film" class="film">
+  <div class="wrap">
+    <p class="eyebrow">The launch film</p>
+    <h2>Seventy seconds of Kusabi</h2>
+    <div class="film-grid">
+      <div>
+        <!-- Paste the YouTube video ID of the 16:9 film into data-yt (e.g. data-yt="dQw4w9WgXcQ"). -->
+        <div class="player h" data-yt="YOUTUBE_ID_16x9" data-title="Kusabi launch film">
+          <img src="img/hero.webp" alt="Still from the Kusabi film" loading="lazy">
+        </div>
+        <p class="caption">Rendered in Blender. Every shot, caption and sound was built for this project.</p>
+      </div>
+      <div class="v">
+        <!-- Paste the YouTube Shorts ID of the vertical cut into data-yt. -->
+        <div class="player v" data-yt="YOUTUBE_ID_VERTICAL" data-title="Kusabi vertical cut">
+          <img src="img/face.webp" alt="Still from the vertical cut" loading="lazy" style="object-position: 50% 50%">
+        </div>
+        <p class="caption">The vertical cut, for phones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <p class="eyebrow">What it does</p>
+    <h2>Small enough for a desk. Built like a gadget.</h2>
+    <p class="muted" style="max-width:40rem">About 12 cm across, Kusabi drives around your desk, holds AI conversations, interprets between languages, and opens into a tiny computer when you need one. The features below are the design target; the companion software is in development.</p>
+
+    <div class="features">
+      <article class="card"><img src="img/face.webp" alt="Kusabi smiling" loading="lazy"><div class="body"><h3>A calm face</h3><p>Moods, blinks and glances on a 5-inch touchscreen. Expressive without being loud.</p></div></article>
+      <article class="card"><img src="img/interpret.webp" alt="Kusabi in conversation, showing what it heard on screen" loading="lazy"><div class="body"><h3>Talks with you</h3><p>An AI companion you can chat with and ask things, out loud. It can also interpret live: Japanese, English and many more.</p></div></article>
+      <article class="card"><img src="img/minipc.webp" alt="Kusabi showing its mini PC launcher" loading="lazy"><div class="body"><h3>Mini PC mode</h3><p>Press the dial and the face gives way to its own launcher: notes, browser, terminal, music.</p></div></article>
+      <article class="card"><img src="img/desk.webp" alt="Kusabi driving on a desk" loading="lazy"><div class="body"><h3>Drives itself</h3><p>Two motors with wheel encoders take it anywhere on your desk.</p></div></article>
+      <article class="card"><img src="img/edge.webp" alt="Kusabi near the edge of a desk" loading="lazy"><div class="body"><h3>Edge sensors</h3><p>It knows where the desk ends, and stops before it gets there.</p></div></article>
+      <article class="card"><img src="img/senses.webp" alt="The camera and microphones on Kusabi's forehead" loading="lazy"><div class="body"><h3>Sees and hears</h3><p>Autofocus camera, microphone and speaker for conversation.</p></div></article>
+      <article class="card"><img src="img/hands.webp" alt="Close-up of one of Kusabi's side dials" loading="lazy"><div class="body"><h3>Hands-on</h3><p>Two dials, two buttons and a status light on the antenna. No app needed for the basics.</p></div></article>
+      <article class="card"><img src="img/pi.webp" alt="A Raspberry Pi 5 inside Kusabi" loading="lazy"><div class="body"><h3>Raspberry Pi 5 inside</h3><p>A quad-core computer runs the face, the voice and the apps.</p></div></article>
+      <article class="card"><img src="img/battery.webp" alt="Kusabi's battery bay" loading="lazy"><div class="body"><h3>Fully cordless</h3><p>Swappable batteries with USB-C charging.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- FACE -->
+<section class="tint">
+  <div class="wrap split">
+    <div class="media"><img src="img/faces.webp" alt="A sheet of Kusabi's facial expressions: neutral, happy, sleepy, thinking and listening, plus the interpreter view" loading="lazy"></div>
+    <div>
+      <p class="eyebrow">Personality</p>
+      <h2>A face you can live with</h2>
+      <p>Most desk robots perform all the time. Kusabi is designed to be quiet company: slow blinks, small glances, a sleepy face at night, and a clear view of what it heard while you talk.</p>
+      <p class="muted">The colours come from matcha: a soft green body, cream accents and a deep green screen. The name means "wedge" in Japanese, which is the shape of its body from the side and of the "a" in its wordmark.</p>
+      <div class="chips"><span class="chip">楔 kusabi = wedge</span><span class="chip">Matcha palette</span><span class="chip">Original character</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN EVOLUTION -->
+<section id="design">
+  <div class="wrap">
+    <p class="eyebrow">Design</p>
+    <h2>From a doorstop to a desk companion</h2>
+    <p class="muted" style="max-width:42rem">Kusabi started as a literal wedge and grew taller as the requirements did: a real screen, room for a Raspberry Pi, a battery you can swap, and something to carry it by.</p>
+    <div class="evo">
+      <figure><img src="img/evo1.webp" alt="First concept: a white wedge with a square screen" loading="lazy"><figcaption><b>1. The wedge</b>The first idea: a wedge-shaped body with a screen face.</figcaption></figure>
+      <figure><img src="img/evo2.webp" alt="Second concept in pastel green with ears" loading="lazy"><figcaption><b>2. Softer</b>Pastel colours, rounded edges, small "ears".</figcaption></figure>
+      <figure><img src="img/evo3.webp" alt="Taller concept with a portrait screen" loading="lazy"><figcaption><b>3. Taller</b>A portrait screen, so it can be a computer too.</figcaption></figure>
+      <figure><img src="img/evo4.webp" alt="Concept with a folding carry handle" loading="lazy"><figcaption><b>4. Portable</b>A carry handle, dials and an antenna.</figcaption></figure>
+      <figure><img src="img/sleep.webp" alt="The final Kusabi on a desk" loading="lazy"><figcaption><b>5. Kusabi</b>The final design, as engineered for 3D printing.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section id="making" class="tint cs">
+  <div class="narrow">
+    <p class="eyebrow">How it was made</p>
+    <h2>A hardware project by a software researcher</h2>
+    <p>I research AI for a living: explainability, LLM post-training and how these systems are evaluated. Hardware is not my field. Kusabi is partly a robot I want on my desk, and partly an experiment: <strong>how far can one person outside a field get with AI tools, and where do those tools quietly go wrong?</strong></p>
+
+    <div class="facts">
+      <div class="fact"><b>7</b><span>shell iterations</span></div>
+      <div class="fact"><b>12</b><span>circuit board revisions</span></div>
+      <div class="fact"><b>7</b><span>custom boards in one robot</span></div>
+      <div class="fact"><b>1</b><span>designer, with an AI assistant</span></div>
+    </div>
+
+    <h3>The process</h3>
+    <p>I came up with Kusabi: the concept, the character, its look and its face, and I made the design decisions throughout. The software and AI features are mine to build. For the hardware, I worked with Claude Fable 5.2 as my design assistant, directing and checking every step:</p>
+    <ul>
+      <li><strong>Industrial design.</strong> Concept renders, colour, naming and a small brand system.</li>
+      <li><strong>Mechanical design.</strong> A 3D-printable shell, refined over seven versions for fit, access to the battery and ports, and printability.</li>
+      <li><strong>Electronics.</strong> A custom motion controller and six small satellite boards for the buttons, dials, lights, edge sensors and microphone, ready for factory assembly.</li>
+      <li><strong>Software.</strong> Drive firmware with safety limits and an edge-stop, a host library for the Raspberry Pi, the animated face, and automated tests that run against simulated hardware.</li>
+      <li><strong>Film.</strong> The launch film above, rendered in Blender with captions, effects and a sung sonic logo.</li>
+    </ul>
+
+    <h3>What the AI got wrong, and how it was caught</h3>
+    <p>The tools were fast and often impressively right. They were also confidently wrong in ways that only show up when you look at the whole thing. A few examples:</p>
+    <ul>
+      <li><strong>A part that hid another part.</strong> The shoulder buttons were designed to sit exactly over the microphone holes. Each part was fine on its own; together they made the robot partly deaf. I spotted it in a render, not in the design files.</li>
+      <li><strong>Details from datasheets.</strong> Pin orders, polarities and component footprints were the most common source of errors across the board revisions, and the hardest for a non-specialist to verify.</li>
+      <li><strong>Plausible but physically wrong.</strong> In an early cut of the film, a dial floated off the robot as it was "pressed". It looked fine frame by frame and wrong in motion.</li>
+    </ul>
+    <div class="note">The pattern so far: AI tools are strong at producing each piece, and weaker at the relationships between pieces. That is where a human, or a second checker, earns their keep.</div>
+
+    <h3>Bringing in a human expert</h3>
+    <p>Before anything is manufactured, the electronics are being reviewed by a veteran circuit engineer with more than 30 years of experience designing electronics, including world-first consumer devices. Besides the usual list of fixes, I asked for something extra: notes on what looks unusually good, unusually odd, or simply wrong for a human designer. Those notes become data on where AI-assisted design holds up and where it doesn't.</p>
+
+    <h3>Status</h3>
+    <ul class="status">
+      <li><span class="dot done"></span><span>Industrial and mechanical design, drive software and launch film: done.</span></li>
+      <li><span class="dot now"></span><span>Electronics in independent expert review (November 2026).</span></li>
+      <li><span class="dot next"></span><span>Board manufacturing, 3D printing and first power-up.</span></li>
+      <li><span class="dot next"></span><span>The companion software: AI conversation, interpreting and mini PC mode on the real hardware.</span></li>
+    </ul>
+
+    <h3>What this page leaves out</h3>
+    <p class="muted">This is a portfolio piece, not a kit. The design files, circuit schematics, board layouts and parts list are deliberately not published. Kusabi is an original design and character.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span style="display:flex;align-items:center;gap:.7rem"><img class="wm-ink" src="img/kusabi_symbol.svg" alt=""> Kusabi © 2026 Jasper Kyle Catapang</span>
+    <a href="/">← Back to the portfolio</a>
+  </div>
+</footer>
+
+<script>
+  // Click-to-load YouTube players: nothing loads from YouTube until a visitor presses play.
+  document.querySelectorAll('.player[data-yt]').forEach(function (el) {
+    var id = el.getAttribute('data-yt') || '';
+    var ready = /^[A-Za-z0-9_-]{11}$/.test(id);
+    if (!ready) {
+      var s = document.createElement('span'); s.className = 'soon'; s.textContent = 'Film coming soon';
+      el.appendChild(s); return;
+    }
+    var b = document.createElement('button'); b.className = 'play'; b.setAttribute('aria-label', 'Play ' + (el.dataset.title || 'video'));
+    b.innerHTML = '<span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>';
+    b.addEventListener('click', function () {
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';
+      f.title = el.dataset.title || 'Video';
+      f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share';
+      f.allowFullscreen = true;
+      el.innerHTML = ''; el.appendChild(f);
+    });
+    el.appendChild(b);
+  });
+</script>
+</body>
+</html>

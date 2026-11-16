@@ -1069,6 +1069,7 @@ function MobileIntro({ theme, setTheme }) {
     { href: '#recent-updates', label: 'Updates' },
     { href: '#experience', label: 'Experience' },
     { href: '#research', label: 'Research' },
+    { href: '#projects', label: 'Projects' },
     { href: '#grants', label: 'Grants' },
     { href: '#publications', label: 'Publications' },
     { href: '#media', label: 'Media' },
@@ -1229,6 +1230,7 @@ export default function App() {
               ['Updates', 'recent-updates'],
               ['Experience', 'experience'],
               ['Research', 'research'],
+              ['Projects', 'projects'],
               ['Grants', 'grants'],
               ['Publications', 'publications'],
               ['Media', 'media'],
@@ -1409,6 +1411,32 @@ export default function App() {
               location="Manila, Philippines"
               desc="Advised and assisted on NLP code-switching research about COVID-19 misinformation in the Philippines. Technologies: Python, scikit-learn."
             />
+          </Section>
+
+          <Section id="projects" title="Projects">
+            <a
+              href="/projects/kusabi/"
+              className="group flex flex-col sm:flex-row gap-5 p-4 rounded border border-gray-200 dark:border-charcoal-700 bg-white dark:bg-charcoal-950 hover:border-accent transition-colors no-underline"
+            >
+              <img
+                src="/projects/kusabi/img/card.webp"
+                alt="Kusabi, a small sage-green desk robot with a calm face on its screen"
+                width={800}
+                height={450}
+                loading="lazy"
+                className="w-full sm:w-64 shrink-0 rounded object-cover aspect-video"
+              />
+              <div className="min-w-0">
+                <h4 className="font-sans text-base font-semibold m-0 mb-1 text-black dark:text-neutral-200 group-hover:text-accent">
+                  Kusabi: a small wedge of calm
+                </h4>
+                <p className="text-sm text-gray-600 dark:text-neutral-400 m-0 mb-2">Personal project · 2026 · Robotics, AI-assisted design</p>
+                <p className="text-[0.95rem] m-0 text-gray-700 dark:text-neutral-300">
+                  An AI desk companion with a calm face: it holds conversations, interprets live and doubles as a mini PC. My own design, with the software and AI built by me and the hardware designed with Claude Fable 5.2 as an assistant. Also a small study of where AI-assisted design holds up for a non-specialist, and where it quietly goes wrong.
+                </p>
+                <span className="inline-block mt-3 text-sm font-medium text-accent group-hover:underline">View project →</span>
+              </div>
+            </a>
           </Section>
 
           <Section id="grants" title="Grants and Funding">
