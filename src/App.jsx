@@ -769,6 +769,18 @@ const RECENT_UPDATES_MAX = 5
 
 const RECENT_UPDATES_ITEMS = [
   {
+    key: '2026-11-16-kusabi',
+    isoDate: '2026-11-16',
+    date: 'November 16, 2026',
+    body: (
+      <>
+        I shared{' '}
+        <a href="/projects/kusabi/" className="text-accent hover:underline">Kusabi</a>
+        , a personal project: an AI desk companion with a calm face that holds conversations, interprets live and doubles as a mini PC, and a small study of where AI-assisted hardware design holds up.
+      </>
+    ),
+  },
+  {
     key: '2026-11-01-aites',
     isoDate: '2026-11-01',
     date: 'November 1, 2026',
