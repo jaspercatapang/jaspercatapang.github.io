@@ -119,6 +119,10 @@
   .player .play { position: absolute; inset: 0; display: grid; place-items: center; background: transparent; border: 0; cursor: pointer; color: #fff; }
   .player .play span { width: 74px; height: 74px; border-radius: 50%; background: rgba(207,227,196,.95); display: grid; place-items: center; box-shadow: 0 8px 30px rgba(0,0,0,.35); }
   .player .play svg { width: 28px; height: 28px; fill: var(--ink); margin-left: 4px; }
+  /* thumbnails have baked-in titles: keep the play button in the empty space between the text and Kusabi */
+  .player.v .play span { position: absolute; left: 50%; top: 43.5%; transform: translate(-50%, -50%); width: 52px; height: 52px; }
+  .player.v .play svg { width: 20px; height: 20px; margin-left: 3px; }
+  @media (max-width: 560px) { .player.h .play span { position: absolute; left: 48%; top: 50%; transform: translate(-50%, -50%); width: 52px; height: 52px; } .player.h .play svg { width: 20px; height: 20px; margin-left: 3px; } }
   .player .soon { position: absolute; left: 1rem; bottom: 1rem; padding: .35rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 800; background: rgba(0,0,0,.55); }
   .caption { font-size: .9rem; color: rgba(238,244,239,.7); margin-top: .7rem; }
   /* film credits: an end-credits block, roles right-aligned against names */
@@ -357,7 +361,7 @@
       <div>
         <!-- Paste the YouTube video ID of the 16:9 film into data-yt (e.g. data-yt="dQw4w9WgXcQ"). -->
         <div class="player h" data-yt="iRZ15wwUPLE" data-title="Kusabi launch film">
-          <img src="img/hero.webp" alt="Still from the Kusabi film" loading="lazy">
+          <img src="img/thumb_film.webp" alt="Kusabi on a desk at night, next to the words: I designed my own AI robot. Talks, interprets, mini PC." loading="lazy">
         </div>
         <dl class="caption credits" aria-label="Film credits">
           <div><dt>Directed by</dt><dd>Jasper Kyle Catapang</dd></div>
@@ -373,7 +377,7 @@
       <div class="v">
         <!-- Paste the YouTube Shorts ID of the vertical cut into data-yt. -->
         <div class="player v" data-yt="n7I7uZicN5g" data-title="Kusabi vertical cut">
-          <img src="img/face.webp" alt="Still from the vertical cut" loading="lazy" style="object-position: 50% 50%">
+          <img src="img/thumb_vertical.webp" alt="Kusabi smiling under the words: I designed my own AI robot. Talks, interprets, mini PC." loading="lazy">
         </div>
         <dl class="caption credits filmfacts" aria-label="Film facts">
           <div><dt>Runtime</dt><dd>1:12</dd></div>
