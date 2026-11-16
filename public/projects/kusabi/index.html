@@ -146,10 +146,22 @@
   .cs ul { padding-left: 1.2rem; margin: 0 0 1rem; }
   .cs li { margin-bottom: .45rem; }
   .note { border-left: 4px solid var(--etch); background: var(--surface); padding: 1rem 1.2rem; border-radius: 0 14px 14px 0; margin: 1.5rem 0; }
-  .status { display: grid; gap: .6rem; margin: 1rem 0 0; padding: 0; list-style: none; }
-  .status li { display: flex; gap: .75rem; align-items: baseline; }
-  .dot { flex: none; width: .7rem; height: .7rem; border-radius: 50%; transform: translateY(.05rem); }
-  .dot.done { background: var(--etch); } .dot.now { background: #E0B04B; } .dot.next { background: var(--line); border: 2px solid var(--etch); }
+  /* status timeline: solid line through finished steps, dashed and greyed from the current step on */
+  .status { margin: 1rem 0 0; padding: 0; list-style: none; }
+  .status li { position: relative; display: flex; gap: .9rem; align-items: flex-start; padding-bottom: 1.15rem; }
+  .status li:last-child { padding-bottom: 0; }
+  .status li::before { content: ""; position: absolute; left: calc(.5rem - 1px); top: 1.625rem; bottom: -.125rem; border-left: 2px solid var(--etch); }
+  .status li:last-child::before { display: none; }
+  .status li:has(> .dot.now)::before, .status li:has(> .dot.next)::before { border-left-style: dashed; border-color: color-mix(in srgb, var(--muted) 45%, transparent); }
+  .dot { flex: none; position: relative; box-sizing: border-box; width: 1rem; height: 1rem; margin-top: .375rem; border-radius: 50%; }
+  .dot.done { background: var(--etch); }
+  .dot.done::after { content: ""; position: absolute; left: 5px; top: 2.5px; width: 3.5px; height: 7px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .dot.now { background: #E0B04B; box-shadow: 0 0 0 4px rgba(224,176,75,.28); animation: dotpulse 2.4s ease-in-out infinite; }
+  @keyframes dotpulse { 50% { box-shadow: 0 0 0 7px rgba(224,176,75,.08); } }
+  @media (prefers-reduced-motion: reduce) { .dot.now { animation: none; } }
+  .dot.next { background: transparent; border: 2px solid color-mix(in srgb, var(--muted) 55%, transparent); }
+  .status li:has(> .dot.now) > span:last-child { font-weight: 700; }
+  .status li:has(> .dot.next) > span:last-child { color: var(--muted); }
 
 
   /* hover clips */
