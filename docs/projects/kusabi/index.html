@@ -243,6 +243,8 @@
   .ba figcaption { font-size: .86rem; color: var(--muted); margin-top: .45rem; }
   .ba figcaption b { color: var(--text); }
   .figcap { font-size: .86rem; color: var(--muted); margin: 0 0 1.5rem; }
+  .hero video.bg { width: 100%; aspect-ratio: 16/9; object-fit: cover; min-height: 520px; display: block; background: #0e1211; }
+  @media (max-width: 640px) { .hero video.bg { min-height: 0; aspect-ratio: 16/9; } }
   footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; font-size: .92rem; color: var(--muted); }
   footer .wrap { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; }
   footer img { width: 34px; }
@@ -311,7 +313,9 @@
 
 <!-- HERO -->
 <div class="hero">
-  <img class="bg" src="img/hero.webp" alt="Kusabi, a small sage-green robot with a soft face on its screen, sitting on a wooden desk at night" fetchpriority="high">
+  <video class="bg" autoplay muted loop playsinline preload="auto" poster="img/hero_loop_poster.webp" aria-label="Kusabi driving back and forth on a desk at night, stopping to smile at the camera">
+    <source src="clips/hero_loop.mp4" type="video/mp4">
+  </video>
   <div class="over">
     <div class="wrap">
       <img class="wordmark" src="img/kusabi_wordmark.svg" alt="kusabi">
@@ -569,6 +573,8 @@
 <script>
 /* Feature cards: a short looping clip plays on hover (desktop) or while the card is in view (touch screens). */
 (function () {
+  var hv = document.querySelector('.hero video.bg');
+  if (hv && window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { hv.removeAttribute('autoplay'); hv.pause(); }
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hover = window.matchMedia && matchMedia('(hover: hover)').matches;
   var boxes = document.querySelectorAll('.cm');
