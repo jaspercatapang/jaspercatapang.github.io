@@ -352,7 +352,7 @@
 <section id="film" class="film">
   <div class="wrap">
     <p class="eyebrow">The launch film</p>
-    <h2>Seventy seconds of Kusabi</h2>
+    <h2>The film</h2>
     <div class="film-grid">
       <div>
         <!-- Paste the YouTube video ID of the 16:9 film into data-yt (e.g. data-yt="dQw4w9WgXcQ"). -->
@@ -439,7 +439,7 @@
 <section id="design">
   <div class="wrap">
     <p class="eyebrow">Design</p>
-    <h2>From a doorstop to a desk companion</h2>
+    <h2>From a wedge to a desk companion</h2>
     <p class="muted" style="max-width:42rem">Kusabi started as a literal wedge and grew taller as the requirements did: a real screen, room for a Raspberry Pi, a battery you can swap, and something to carry it by.</p>
     <div class="evo">
       <figure><img src="img/evo1.webp" alt="First concept: a white wedge with a square screen" loading="lazy"><figcaption><b>1. The wedge</b>The first idea: a wedge-shaped body with a screen face.</figcaption></figure>
@@ -470,16 +470,18 @@
       <div class="fact"><b>~640M</b><span>tokens with Claude (estimated)</span></div>
     </div>
     <p class="facts-note">Made on a Claude Max 5x plan.</p>
+    <p class="facts-note">Most of that is the model re-reading the same project context, not new work, but it is still real compute, and I think it should be disclosed rather than left out. It kept every design iteration in software instead of a failed print or board, and turned the project into a documented case of where AI-assisted design works for a non-specialist and where it quietly fails. It is also, honestly, a hobby.</p>
 
     <h3>The process</h3>
-    <p>I came up with Kusabi: the concept, the character, its look and its face, and I made the design decisions throughout. The software and AI features are mine to build. For the hardware, I worked with Claude Fable 5.2 as my design assistant, directing and checking every step:</p>
+    <p>I came up with Kusabi: the concept, the name, the character, its look and its face, and I made the design decisions throughout. The robot's software and AI features are mine to build. For the hardware and the film, I worked with Claude Fable 5.2 as my assistant, directing and checking every step:</p>
     <ul>
-      <li><strong>Industrial design.</strong> Concept renders, colour, naming and a small brand system.</li>
+      <li><strong>Industrial design.</strong> Concept renders and a small brand system, from my sketches and direction.</li>
       <li><strong>Mechanical design.</strong> A 3D-printable shell, refined over seven versions for fit, access to the battery and ports, and printability.</li>
       <li><strong>Electronics.</strong> A custom motion controller and six small satellite boards for the buttons, dials, lights, edge sensors and microphone, ready for factory assembly.</li>
-      <li><strong>Software.</strong> Drive firmware with safety limits and an edge-stop, a host library for the Raspberry Pi, the animated face, and automated tests that run against simulated hardware.</li>
       <li><strong>Film.</strong> The launch film above, rendered in Blender with captions, effects and a sung sonic logo.</li>
     </ul>
+    <h3>The software is mine</h3>
+    <p>Building AI applications is my day job, so this is the part of Kusabi I'm writing myself: the AI conversation, live interpreting, the mini PC mode, and the behaviour that makes the face feel alive, like eyes that follow you through the camera when you start talking. Claude helped scaffold the first drive firmware and the face prototype you can play with above; I'm reviewing and rebuilding all of it as the robot comes together.</p>
 
     <h3>How it fits together</h3>
     <div class="sysd" role="img" aria-label="System overview: batteries power a Raspberry Pi 5 and a custom motion controller; the Pi runs the face, voice and AI and talks to the motion controller over USB, which drives the motors, sensors, dials, buttons and lights.">
