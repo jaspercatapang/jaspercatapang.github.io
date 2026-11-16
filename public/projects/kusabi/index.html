@@ -142,7 +142,12 @@
   .tint { background: color-mix(in srgb, var(--matcha) 35%, var(--bg)); }
   html.dark .tint { background: #1b2420; }
   .evo { display: grid; grid-template-columns: repeat(5, 1fr); gap: .9rem; margin-top: 2rem; }
-  @media (max-width: 900px) { .evo { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 900px) {
+    .evo { grid-template-columns: repeat(2, 1fr); }
+    /* the final design closes the row as a full-width widescreen finale instead of sitting alone */
+    .evo > figure:last-child { grid-column: 1 / -1; }
+    .evo > figure:last-child img { aspect-ratio: 16/9; }
+  }
   .evo figure { margin: 0; background: var(--surface); border-radius: 18px; overflow: hidden; border: 1px solid var(--line); }
   .evo img { aspect-ratio: 1/1; object-fit: cover; width: 100%; }
   .evo figcaption { padding: .7rem .85rem .85rem; font-size: .88rem; color: var(--muted); }
