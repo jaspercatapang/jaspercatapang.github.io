@@ -111,8 +111,19 @@
   /* film */
   .film { background: var(--ink); color: #EEF4EF; }
   .film .eyebrow { color: var(--matcha); }
-  .film-grid { display: grid; grid-template-columns: minmax(0, 256fr) minmax(0, 81fr); gap: 1.5rem; align-items: start; }
-  @media (max-width: 860px) { .film-grid { grid-template-columns: 1fr; } .film-grid .v { max-width: 320px; width: 100%; justify-self: center; } }
+  /* one film at a time, chosen with the switch; both cuts share a height on desktop so switching never shifts the page */
+  .film-grid { display: grid; justify-items: center; }
+  .film-switch { display: inline-flex; gap: .25rem; padding: .3rem; margin: 0 0 1.3rem; border-radius: 999px; background: rgba(238,244,239,.07); border: 1px solid rgba(238,244,239,.12); }
+  .film-switch[hidden] { display: none; }
+  .film-switch button { font: 700 .88rem/1 "Nunito", sans-serif; padding: .6rem 1.15rem; border-radius: 999px; border: 0; background: transparent; color: rgba(238,244,239,.72); cursor: pointer; transition: background .2s ease, color .2s ease; }
+  .film-switch button:hover { color: #EEF4EF; }
+  .film-switch button[aria-pressed="true"] { background: var(--matcha); color: var(--ink); }
+  .film-stage { container-type: inline-size; width: 100%; max-width: 880px; display: grid; justify-items: center; gap: 1.5rem; }
+  .film-stage .player { width: 100%; }
+  .film-stage .player[hidden] { display: none; }
+  .film-stage .player.v { width: calc(100cqw * 81 / 256); }
+  @media (max-width: 860px) { .film-stage .player.v { width: min(100%, 360px, calc(75svh * 9 / 16)); } }
+  .film-grid > .credits { width: 100%; max-width: 880px; }
   .player { position: relative; border-radius: var(--radius); overflow: hidden; background: #0c100f; box-shadow: 0 20px 60px rgba(0,0,0,.35); }
   .player.h { aspect-ratio: 16/9; } .player.v { aspect-ratio: 9/16; }
   .player img, .player iframe { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; }
@@ -131,7 +142,7 @@
   .credits dt { text-align: right; font-size: .7rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: rgba(238,244,239,.55); line-height: 1.5; }
   .credits dd { margin: 0; font-size: .95rem; font-weight: 700; color: #EEF4EF; line-height: 1.4; }
   /* film facts under the vertical cut: same style, label stacked above value */
-  .credits.filmfacts { gap: .8rem; text-align: center; }
+  .credits.filmfacts { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem 2.4rem; margin-top: 1.3rem; padding-top: 0; border-top: 0; text-align: center; }
   .credits.filmfacts > div { grid-template-columns: 1fr; row-gap: .15rem; }
   .credits.filmfacts dt { text-align: center; }
   @media (max-width: 560px) {
@@ -358,33 +369,35 @@
     <p class="eyebrow">The film</p>
     <h2>Meet Kusabi</h2>
     <div class="film-grid">
-      <div>
+      <div class="film-switch" role="group" aria-label="Film version" hidden>
+        <button type="button" data-cut="h" aria-pressed="true">Widescreen</button>
+        <button type="button" data-cut="v" aria-pressed="false">Vertical</button>
+      </div>
+      <div class="film-stage">
         <!-- Paste the YouTube video ID of the 16:9 film into data-yt (e.g. data-yt="dQw4w9WgXcQ"). -->
         <div class="player h" data-yt="iRZ15wwUPLE" data-title="Kusabi launch film">
           <img src="img/thumb_film.webp" alt="Kusabi on a desk at night, next to the words: I designed my own AI robot. Talks, interprets, mini PC." loading="lazy">
         </div>
-        <dl class="caption credits" aria-label="Film credits">
-          <div><dt>Directed by</dt><dd>Jasper Kyle Catapang</dd></div>
-          <div><dt>Director of photography</dt><dd>Jasper Kyle Catapang</dd></div>
-          <div><dt>Modelled in</dt><dd>CadQuery 2.8 · Blender 5.2</dd></div>
-          <div><dt>Animated by</dt><dd>Claude Fable 5.2</dd></div>
-          <div><dt>Rendered in</dt><dd>Blender 5.2</dd></div>
-          <div><dt>Titles by</dt><dd>Jasper Kyle Catapang</dd></div>
-          <div><dt>Music by</dt><dd>Jasper Kyle Catapang</dd></div>
-          <div><dt>Sound effects by</dt><dd>uisfx (CC0)</dd></div>
-        </dl>
-      </div>
-      <div class="v">
         <!-- Paste the YouTube Shorts ID of the vertical cut into data-yt. -->
         <div class="player v" data-yt="n7I7uZicN5g" data-title="Kusabi vertical cut">
           <img src="img/thumb_vertical_v2.webp" alt="Kusabi smiling under the words: I designed my own AI robot. Talks, interprets, mini PC." loading="lazy">
         </div>
-        <dl class="caption credits filmfacts" aria-label="Film facts">
-          <div><dt>Runtime</dt><dd>1:12</dd></div>
-          <div><dt>Format</dt><dd>16:9 · 9:16</dd></div>
-          <div><dt>Year</dt><dd>2026</dd></div>
-        </dl>
       </div>
+      <dl class="caption credits filmfacts" aria-label="Film facts">
+        <div><dt>Runtime</dt><dd>1:12</dd></div>
+        <div><dt>Format</dt><dd>16:9 · 9:16</dd></div>
+        <div><dt>Year</dt><dd>2026</dd></div>
+      </dl>
+      <dl class="caption credits" aria-label="Film credits">
+        <div><dt>Directed by</dt><dd>Jasper Kyle Catapang</dd></div>
+        <div><dt>Director of photography</dt><dd>Jasper Kyle Catapang</dd></div>
+        <div><dt>Modelled in</dt><dd>CadQuery 2.8 · Blender 5.2</dd></div>
+        <div><dt>Animated by</dt><dd>Claude Fable 5.2</dd></div>
+        <div><dt>Rendered in</dt><dd>Blender 5.2</dd></div>
+        <div><dt>Titles by</dt><dd>Jasper Kyle Catapang</dd></div>
+        <div><dt>Music by</dt><dd>Jasper Kyle Catapang</dd></div>
+        <div><dt>Sound effects by</dt><dd>uisfx (CC0)</dd></div>
+      </dl>
     </div>
   </div>
 </section>
@@ -594,25 +607,44 @@
 </script>
 <script>
   // Click-to-load YouTube players: nothing loads from YouTube until a visitor presses play.
-  document.querySelectorAll('.player[data-yt]').forEach(function (el) {
-    var id = el.getAttribute('data-yt') || '';
-    var ready = /^[A-Za-z0-9_-]{11}$/.test(id);
-    if (!ready) {
-      var s = document.createElement('span'); s.className = 'soon'; s.textContent = 'Film coming soon';
-      el.appendChild(s); return;
+  // The switch shows one cut at a time; switching away stops that video and restores its thumbnail.
+  (function () {
+    var players = Array.prototype.slice.call(document.querySelectorAll('.player[data-yt]'));
+    function setup(el) {
+      var id = el.getAttribute('data-yt') || '';
+      if (!/^[A-Za-z0-9_-]{11}$/.test(id)) {
+        var s = document.createElement('span'); s.className = 'soon'; s.textContent = 'Film coming soon';
+        el.appendChild(s); return;
+      }
+      var b = document.createElement('button'); b.className = 'play'; b.setAttribute('aria-label', 'Play ' + (el.dataset.title || 'video'));
+      b.innerHTML = '<span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>';
+      b.addEventListener('click', function () {
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';
+        f.title = el.dataset.title || 'Video';
+        f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share';
+        f.allowFullscreen = true;
+        el.innerHTML = ''; el.appendChild(f);
+      });
+      el.appendChild(b);
     }
-    var b = document.createElement('button'); b.className = 'play'; b.setAttribute('aria-label', 'Play ' + (el.dataset.title || 'video'));
-    b.innerHTML = '<span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>';
-    b.addEventListener('click', function () {
-      var f = document.createElement('iframe');
-      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';
-      f.title = el.dataset.title || 'Video';
-      f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share';
-      f.allowFullscreen = true;
-      el.innerHTML = ''; el.appendChild(f);
-    });
-    el.appendChild(b);
-  });
+    players.forEach(function (el) { el.__thumb = el.innerHTML; setup(el); });
+    function reset(el) { if (el.querySelector('iframe')) { el.innerHTML = el.__thumb; setup(el); } }
+
+    var sw = document.querySelector('.film-switch'); if (!sw) return;
+    var btns = Array.prototype.slice.call(sw.querySelectorAll('button[data-cut]'));
+    function show(cut) {
+      players.forEach(function (el) {
+        var mine = el.classList.contains(cut);
+        if (!mine) reset(el);
+        el.hidden = !mine;
+      });
+      btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.cut === cut)); });
+    }
+    sw.hidden = false;
+    show(window.matchMedia && matchMedia('(max-width: 860px)').matches ? 'v' : 'h');
+    btns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.cut); }); });
+  })();
 </script>
 <script>
 /* Feature cards: a short looping clip plays on hover (desktop) or while the card is in view (touch screens). */
