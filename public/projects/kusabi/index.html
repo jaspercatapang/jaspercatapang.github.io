@@ -29,6 +29,14 @@
       if (t === 'dark') document.documentElement.classList.add('dark');
     } catch (e) {}
   })();
+  // Entrance and scroll animations, unless the visitor prefers reduced motion. If the animation
+  // script never runs, drop the class so nothing stays hidden.
+  (function () {
+    var de = document.documentElement;
+    if (!window.matchMedia || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    de.classList.add('motion');
+    setTimeout(function () { if (!window.__kMotionReady) de.classList.remove('motion'); }, 3000);
+  })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -234,6 +242,47 @@
   footer .wrap { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; }
   footer img { width: 34px; }
   html.dark .wm-ink { filter: brightness(0) invert(1); opacity: .9; }
+
+  /* ── Motion: short, small, once. Everything here is skipped when html.motion is absent (reduced motion). ── */
+  :root { --ease-out: cubic-bezier(.2, .7, .2, 1); }
+  /* top bar: soft shadow once the hero has scrolled away */
+  .bar { transition: box-shadow .25s ease; }
+  .bar.scrolled { box-shadow: 0 8px 24px -16px rgba(30, 50, 40, .45); }
+  html.dark .bar.scrolled { box-shadow: 0 8px 24px -14px rgba(0, 0, 0, .7); }
+  /* feature cards: gentle lift on hover (desktop) */
+  @media (hover: hover) {
+    .card { transition: translate .25s var(--ease-out), box-shadow .25s ease; }
+    .card:hover { translate: 0 -3px; box-shadow: 0 14px 30px -18px rgba(30, 50, 40, .45); }
+    html.dark .card:hover { box-shadow: 0 14px 30px -16px rgba(0, 0, 0, .75); }
+  }
+  /* theme switch: brief colour crossfade, only while switching */
+  html.theming, html.theming *, html.theming *::before, html.theming *::after {
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease, fill .25s ease !important; }
+  /* hero entrance on load */
+  @keyframes kRise { from { opacity: 0; translate: 0 12px; } }
+  @keyframes kSettle { from { scale: 1.03; } }
+  html.motion .hero img.bg { animation: kSettle 1.2s var(--ease-out) both; }
+  html.motion .hero .wrap > * { animation: kRise .6s var(--ease-out) both; }
+  html.motion .hero .wrap > :nth-child(1) { animation-delay: .1s; }
+  html.motion .hero .wrap > :nth-child(2) { animation-delay: .18s; }
+  html.motion .hero .wrap > :nth-child(3) { animation-delay: .26s; }
+  html.motion .hero .wrap > :nth-child(4) { animation-delay: .34s; }
+  /* scroll reveals: section titles and grids fade up once; body text stays put */
+  html.motion .rv { opacity: 0; translate: 0 12px; transition: opacity .5s ease-out, translate .5s var(--ease-out); transition-delay: var(--d, 0ms); }
+  html.motion .rv.in { opacity: 1; translate: none; }
+  /* system diagram builds in order */
+  html.motion .sysd > * { opacity: 0; translate: -8px 0; transition: opacity .4s ease-out, translate .4s var(--ease-out); }
+  @media (max-width: 760px) { html.motion .sysd > * { translate: 0 -8px; } }
+  html.motion .sysd.in > * { opacity: 1; translate: none; }
+  .sysd > :nth-child(2) { transition-delay: .1s; } .sysd > :nth-child(3) { transition-delay: .2s; }
+  .sysd > :nth-child(4) { transition-delay: .3s; } .sysd > :nth-child(5) { transition-delay: .4s; }
+  /* status timeline draws down: dot, then the line to the next step */
+  html.motion .status .dot { opacity: 0; scale: .5; transition: opacity .3s ease-out, scale .35s cubic-bezier(.3, 1.4, .5, 1); }
+  html.motion .status li::before { transform: scaleY(0); transform-origin: top; transition: transform .3s ease-out; }
+  html.motion .status.in .dot { opacity: 1; scale: 1; }
+  html.motion .status.in li::before { transform: none; }
+  .status li:nth-child(2) .dot { transition-delay: .3s; } .status li:nth-child(3) .dot { transition-delay: .6s; } .status li:nth-child(4) .dot { transition-delay: .9s; }
+  .status li:nth-child(1)::before { transition-delay: .12s; } .status li:nth-child(2)::before { transition-delay: .42s; } .status li:nth-child(3)::before { transition-delay: .72s; }
 </style>
 </head>
 <body>
@@ -465,9 +514,13 @@
       btn.setAttribute('aria-pressed', String(dark));
     }
     path.setAttribute('d', shape(t)); label();
+    var themingTimer = 0;
     btn.addEventListener('click', function () {
       dark = !dark;
-      document.documentElement.classList.toggle('dark', dark);
+      var de = document.documentElement;
+      de.classList.add('theming'); clearTimeout(themingTimer);
+      themingTimer = setTimeout(function () { de.classList.remove('theming'); }, 320);
+      de.classList.toggle('dark', dark);
       try { localStorage.setItem(KEY, dark ? 'dark' : 'light'); } catch (e) {}
       label();
       cancelAnimationFrame(raf);
@@ -681,6 +734,45 @@ const bd=document.getElementById('kDay'); bd.onclick=()=>{ const day=theme===THE
 if('IntersectionObserver' in window){ new IntersectionObserver(es=>{ visible = es[0].isIntersecting; }).observe(cv); }
 setMood('Calm');
 requestAnimationFrame(frame);
+})();
+</script>
+<script>
+/* Top-bar shadow, and one-time scroll reveals (only when html.motion is on). */
+(function () {
+  var de = document.documentElement;
+  var bar = document.querySelector('.bar'), hero = document.querySelector('.hero');
+  if (bar && hero && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { bar.classList.toggle('scrolled', !es[0].isIntersecting); },
+      { rootMargin: '-60px 0px 0px 0px' }).observe(hero);
+  }
+  window.__kMotionReady = true;
+  if (!de.classList.contains('motion')) return;
+  var groups = [
+    ['section .eyebrow, section h2', false],
+    ['.film-grid > *', true], ['.features > .card', true], ['.evo > figure', true]
+  ];
+  var targets = [];
+  groups.forEach(function (g) {
+    document.querySelectorAll(g[0]).forEach(function (el) {
+      if (g[1]) {
+        // Stagger across a row: 0, 70, 140 ms… by column, so each new row starts fresh.
+        var cols = getComputedStyle(el.parentNode).gridTemplateColumns.split(' ').length || 1;
+        var i = Array.prototype.indexOf.call(el.parentNode.children, el);
+        el.style.setProperty('--d', (i % cols) * 70 + 'ms');
+      }
+      el.classList.add('rv'); targets.push(el);
+    });
+  });
+  document.querySelectorAll('.sysd, .status').forEach(function (el) { targets.push(el); });
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target; el.classList.add('in'); io.unobserve(el);
+      // After a reveal finishes, hand the element back to its normal styles (e.g. card hover lift).
+      if (el.classList.contains('rv')) setTimeout(function () { el.classList.remove('rv', 'in'); el.style.removeProperty('--d'); }, 600 + (parseInt(el.style.getPropertyValue('--d'), 10) || 0));
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+  targets.forEach(function (el) { io.observe(el); });
 })();
 </script>
 
