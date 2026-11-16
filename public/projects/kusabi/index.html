@@ -179,6 +179,26 @@
   .ctl button[aria-pressed="true"] { background: var(--ink); color: var(--cream); border-color: var(--ink); }
   html.dark .ctl button[aria-pressed="true"] { background: var(--matcha); color: var(--ink); border-color: var(--matcha); }
   .hint { font-size: .88rem; color: var(--muted); margin-top: 1rem; }
+  /* system diagram + schematic figures */
+  .sysd { display: grid; grid-template-columns: 1fr auto 1.25fr auto 1.2fr; gap: .8rem; align-items: center; margin: 1.2rem 0 .6rem; }
+  .sysd .blk { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: .85rem 1rem; }
+  .sysd .blk b { display: block; font: 800 1rem/1.25 "M PLUS Rounded 1c", sans-serif; }
+  .sysd .blk span { display: block; font-size: .86rem; color: var(--muted); line-height: 1.45; margin-top: .2rem; }
+  .sysd .blk.main { border: 2px solid var(--etch); }
+  .sysd .tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
+  .sysd .tags i { font-style: normal; font-size: .78rem; font-weight: 700; padding: .2rem .55rem; border-radius: 999px; background: var(--matcha); color: var(--ink); }
+  html.dark .sysd .tags i { background: #2b3a33; color: var(--matcha); }
+  .sysd .arr { text-align: center; font-size: .78rem; font-weight: 800; color: var(--etch); line-height: 1.2; }
+  .sysd .arr::before { content: "⟶"; display: block; font-size: 1.5rem; }
+  .sysd .arr.two::before { content: "⟷"; }
+  @media (max-width: 760px) { .sysd { grid-template-columns: 1fr; } .sysd .arr::before { content: "↓"; } .sysd .arr.two::before { content: "↕"; } }
+  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.2rem 0 .4rem; }
+  @media (max-width: 640px) { .ba { grid-template-columns: 1fr; } }
+  .ba figure { margin: 0; }
+  .ba img { width: 100%; border-radius: 14px; border: 1px solid var(--line); }
+  .ba figcaption { font-size: .86rem; color: var(--muted); margin-top: .45rem; }
+  .ba figcaption b { color: var(--text); }
+  .figcap { font-size: .86rem; color: var(--muted); margin: 0 0 1.5rem; }
   footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; font-size: .92rem; color: var(--muted); }
   footer .wrap { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; }
   footer img { width: 34px; }
@@ -334,6 +354,17 @@
       <li><strong>Film.</strong> The launch film above, rendered in Blender with captions, effects and a sung sonic logo.</li>
     </ul>
 
+    <h3>How it fits together</h3>
+    <div class="sysd" role="img" aria-label="System overview: batteries power a Raspberry Pi 5 and a custom motion controller; the Pi runs the face, voice and AI and talks to the motion controller over USB, which drives the motors, sensors, dials, buttons and lights.">
+      <div class="blk"><b>Power</b><span>Two swappable batteries, USB-C charging. Feeds everything.</span></div>
+      <div class="arr">5 V</div>
+      <div class="blk main"><b>Raspberry Pi 5</b><span>The brain: the face, voice, AI conversation and apps.</span>
+        <div class="tags"><i>5" touchscreen</i><i>Camera</i><i>Microphone</i><i>Speaker</i><i>Wi-Fi</i></div></div>
+      <div class="arr two">USB</div>
+      <div class="blk"><b>Motion controller</b><span>A custom board with an RP2040 that handles the body.</span>
+        <div class="tags"><i>2 motors + encoders</i><i>Edge sensors</i><i>Dials &amp; buttons</i><i>Lights</i><i>Motion sensor</i></div></div>
+    </div>
+    <p class="figcap">A simplified view. The Pi decides what to do; the motion controller keeps the body safe, for example stopping at a desk edge even if the Pi is busy.</p>
     <h3>What the AI got wrong, and how it was caught</h3>
     <p>The tools were fast and often impressively right. They were also confidently wrong in ways that only show up when you look at the whole thing. A few examples:</p>
     <ul>
@@ -345,6 +376,11 @@
     <h3>What an engineer taught me about AI-generated designs</h3>
     <p>When I first asked engineers for quotes, one of them gave me the most useful advice of the whole project, before any work began. That labels-everywhere style, he said, is a telltale sign of AI-generated hardware; he had already reviewed several designs like it. Because no human can follow a circuit drawn that way, anyone who offers to "review" it as-is is in practice running it through an AI, which I could do myself. His advice: get the schematics redrawn as proper, wired diagrams first, so a human can actually check them.</p>
     <p>So I did. The schematics were redrawn as conventional wired diagrams, with exactly the same parts and connections as the boards, and they pass KiCad's electrical rules check with no errors or warnings. Only then did they go to a human reviewer.</p>
+    <div class="ba">
+      <figure><img src="img/schematic_before.webp" alt="Redacted excerpt of the original AI-generated schematic: parts drawn as isolated boxes with text labels on every pin, and small parts listed in a table" loading="lazy"><figcaption><b>Before:</b> the AI's version. Every part floats on its own; connections exist only as matching text labels, and small parts sit in a table.</figcaption></figure>
+      <figure><img src="img/schematic_after.webp" alt="Redacted excerpt of the redrawn schematic: the same motor driver circuit drawn with wires connecting the parts" loading="lazy"><figcaption><b>After:</b> the same circuit, redrawn with real wires. Same parts, same connections, and now a person can follow it.</figcaption></figure>
+    </div>
+    <p class="figcap">Excerpts from the motor driver sheet. Part names, values and signal names are blacked out.</p>
     <div class="note">The pattern so far: AI tools are strong at producing each piece, and weaker at the relationships between pieces. They also produce work that is technically correct but shaped for other machines, not for the people who have to check it. That is where a human, or a second checker, earns their keep.</div>
 
     <h3>Bringing in a human expert</h3>
