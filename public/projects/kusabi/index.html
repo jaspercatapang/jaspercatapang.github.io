@@ -111,6 +111,9 @@
   /* film */
   .film { background: var(--ink); color: #EEF4EF; }
   .film .eyebrow { color: var(--matcha); }
+  /* the film section is laid out on one centred axis: heading, switch, player, facts and credits */
+  .film .wrap > .eyebrow, .film .wrap > h2 { text-align: center; }
+  .film .wrap > h2 { margin-bottom: 1.4rem; }
   /* one film at a time, chosen with the switch; both cuts share a height on desktop so switching never shifts the page */
   .film-grid { display: grid; justify-items: center; }
   .film-switch { display: inline-flex; gap: .25rem; padding: .3rem; margin: 0 0 1.3rem; border-radius: 999px; background: rgba(238,244,239,.07); border: 1px solid rgba(238,244,239,.12); }
