@@ -14,15 +14,15 @@ In NLP we use that rule as a recipe. To make synthetic code-switched data, line 
 
 ## The answer
 
-Under a tidy model of the two languages, the set has a clean shape. It can be described by an ordinary grammar, so you can check a sentence with a parser or sample valid ones directly, instead of generating freely and filtering afterwards. That is the theorem. It is small, and part of it goes back to Sankoff in 1998.
+Under a tidy model of the two languages, the set has a clean shape. It can be described by an ordinary grammar, so you can check a sentence with a parser or sample valid ones directly, instead of generating freely and filtering afterwards. That is the theorem, and I'm calling it the EC closure theorem. It is small, and part of it goes back to Sankoff in 1998.
+
+The proof is formalized in Lean, à la Levent Alpöge's claimed proof of the Riemann Hypothesis this week, which he made with Claude. Mine is the small-scale version: a theorem short enough to hold in your head, and a machine that agrees. Whether his holds up is a whole different can of worms, and something I'm out of my depth to really tackle here. Anyway, we're getting off topic.
 
 ## The part I care about
 
 Tagalog puts the verb first and English puts the subject first, and that is where the recipe gets strict. Take *Bumili ako ng | new phone*. The recipe allows that switch, and speakers say it. Now take *Bumili ang | teacher ng libro*. I would say that too, but the recipe rules it out.
 
 So the rule we implement is narrower than the one linguists wrote down. What's new is that we can now say exactly how much narrower, for a given pair of grammars. The next step is to measure it on real Taglish.
-
-The proof is formalized in Lean, à la Levent Alpöge's claimed proof of the Riemann Hypothesis this week, which he made with Claude. Mine is the small-scale version: a theorem short enough to hold in your head, and a machine that agrees. Whether his holds up is a whole different can of worms, and something I'm out of my depth to really tackle here. Anyway, we're getting off topic.
 
 ## The rest is in the PDF
 
