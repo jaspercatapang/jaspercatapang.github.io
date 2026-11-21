@@ -196,6 +196,28 @@ ${THEME_JS}${extraScript}
 `
 }
 
+const ICON_LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'
+const ICON_FACEBOOK = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>'
+const ICON_X = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>'
+const ICON_LINKEDIN = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'
+
+/** Copy-link button plus Facebook, X and LinkedIn share links (plain links: they send nothing until clicked). */
+function shareBlock (p) {
+  const url = `${SITE}/notes/${p.slug}/`
+  const u = encodeURIComponent(url)
+  const link = (href, label, icon) => `<a class="sbtn" href="${href}" target="_blank" rel="noopener noreferrer" aria-label="${label}" title="${label}">${icon}</a>`
+  return `<div class="share" role="group" aria-label="Share this note">
+<span class="label">Share</span>
+<button type="button" class="sbtn" id="copy-link" data-url="${url}" aria-label="Copy link" title="Copy link">${ICON_LINK}</button>
+${link(`https://www.facebook.com/sharer/sharer.php?u=${u}`, 'Share on Facebook', ICON_FACEBOOK)}
+${link(`https://x.com/intent/post?url=${u}&amp;text=${encodeURIComponent(p.title)}`, 'Share on X', ICON_X)}
+${link(`https://www.linkedin.com/sharing/share-offsite/?url=${u}`, 'Share on LinkedIn', ICON_LINKEDIN)}
+<span class="copied" id="copied" role="status" aria-live="polite"></span>
+</div>`
+}
+
+const COPY_JS = `<script>(function(){var b=document.getElementById('copy-link'),s=document.getElementById('copied'),t;function say(m){s.textContent=m;clearTimeout(t);t=setTimeout(function(){s.textContent=''},2200)}function legacy(u){var a=document.createElement('textarea');a.value=u;a.setAttribute('readonly','');a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(a);return ok}b.addEventListener('click',function(){var u=b.getAttribute('data-url');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(function(){say('Link copied')},function(){say(legacy(u)?'Link copied':'Could not copy')})}else{say(legacy(u)?'Link copied':'Could not copy')}})})()</script>`
+
 function chips (tags) {
   return tags.length ? `<div class="chips">${tags.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div>` : ''
 }
@@ -230,6 +252,7 @@ function postPage (p, newer, older) {
 <p class="label"><time datetime="${p.date}">${fmtDate(p.date)}</time><span class="dot">&middot;</span>${p.minutes} min read</p>
 <h1>${esc(p.title)}</h1>
 ${chips(p.tags)}
+${shareBlock(p)}
 </header>
 <div class="prose">
 ${prose}
@@ -245,6 +268,7 @@ ${nav}
     ogTitle: p.title,
     body,
     extraHead: `<script type="application/ld+json">${JSON.stringify(ld)}</script>\n${hasMath ? '<link rel="stylesheet" href="/notes/katex/katex.min.css">\n' : ''}`,
+    extraScript: COPY_JS,
     navLink: '<a class="nav" href="/notes/">All notes</a>',
   })
 }
