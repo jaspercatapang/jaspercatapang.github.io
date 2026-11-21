@@ -5,7 +5,7 @@ tags: Computational sociolinguistics, World Englishes
 summary: A common recipe for generating code-switched text defines a set of sentences. The set has a clean shape, and for Tagalog and English it is stricter than real speech.
 files:
   - files/ec_closure.pdf | The write-up | Definitions, proof, and what is and isn't new
-  - files/ec_closure_files.zip | Proof and tests | Lean proof, test scripts, LaTeX source
+  - files/ec_closure_files.zip | Proof and tests | The Lean proof and the test scripts
 ---
 
 Bilingual speakers switch languages in the middle of a sentence, but not just anywhere. The oldest precise guess about where is Shana Poplack's Equivalence Constraint (1980): switch only at a point where the word orders of the two languages agree.
@@ -16,7 +16,7 @@ In NLP we use that rule as a recipe. To make synthetic code-switched data, line 
 
 Under a tidy model of the two languages, the set has a clean shape. It can be described by an ordinary grammar, so you can check a sentence with a parser or sample valid ones directly, instead of generating freely and filtering afterwards. That is the theorem, and I'm calling it the EC closure theorem. It is small, and part of it goes back to Sankoff in 1998.
 
-The proof is formalized in Lean, à la Levent Alpöge's claimed proof of the Riemann Hypothesis this week, which he made with Claude. Mine is the small-scale version: a theorem short enough to hold in your head, and a machine that agrees. Whether his holds up is a whole different can of worms, and something I'm out of my depth to really tackle here. Anyway, we're getting off topic.
+The proof is formalized in Lean, à la Levent Alpöge's claimed proof of the Riemann Hypothesis [this week](https://www.nytimes.com/2026/11/20/science/anthropic-ai-math-riemann-hypothesis.html), which he made with Claude. Mine is the small-scale version: a theorem short enough to hold in your head, and a machine that agrees. Whether his holds up is a whole different can of worms, and something I'm out of my depth to really tackle here. Anyway, we're getting off topic.
 
 ## The part I care about
 
