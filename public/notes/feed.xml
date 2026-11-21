@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+<title>Notes · Jasper Kyle Catapang</title>
+<link>https://jaspercatapang.github.io/notes/</link>
+<description>Short notes on language models, code-switching and World Englishes.</description>
+<language>en</language>
+<item><title>Where bilingual speakers can switch: a small theorem</title><link>https://jaspercatapang.github.io/notes/where-bilingual-speakers-can-switch/</link><guid isPermaLink="true">https://jaspercatapang.github.io/notes/where-bilingual-speakers-can-switch/</guid><pubDate>Sat, 21 Nov 2026 00:00:00 GMT</pubDate><description>A common recipe for generating code-switched text defines a set of sentences. The set has a clean shape, and for Tagalog and English it is stricter than real speech.</description></item>
+</channel></rss>

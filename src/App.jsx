@@ -1117,6 +1117,9 @@ function MobileIntro({ theme, setTheme }) {
             {label}
           </a>
         ))}
+        <a href="/notes/" className="text-sm font-medium uppercase tracking-widest text-gray-600 dark:text-neutral-400 hover:text-accent transition-colors">
+          Notes ↗
+        </a>
       </nav>
     </div>
   )
@@ -1256,6 +1259,12 @@ export default function App() {
                 {label}
               </a>
             ))}
+            <a
+              href="/notes/"
+              className="text-sm font-medium uppercase tracking-widest text-gray-600 dark:text-neutral-400 hover:text-accent transition-colors"
+            >
+              Notes ↗
+            </a>
           </nav>
         </header>
 
